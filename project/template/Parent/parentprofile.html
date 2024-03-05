@@ -58,8 +58,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a>
+                        <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
                         <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a>
+                        <a href="#" class="nav-item nav-link">DOCTOR DETAILS</a>
+                        <a href="#" class="nav-item nav-link">BABY DETAILS</a>
+                        <a href="#" class="nav-item nav-link">VACCINATION</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -139,7 +142,7 @@
   </div> -->
 
   <div class="text-center mt-3">
-    <a href="{% url 'parentprofile'%}" class="btn btn-primary">Edit Profile</a>
+    <a href="{% url 'editparentprofile'%}" class="btn btn-primary">Edit Profile</a>
   </div>
 </div>
 

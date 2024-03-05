@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist
+from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
 
@@ -43,8 +43,7 @@ def customer_register(request):
     else:
         return render(request,'Home/creg.html')
 
-        
-    return render(request,'Home/creg.html')
+    # return render(request,'Home/creg.html')
 def hospital_register(request):
     if request.method=='POST':
         hospital_name=request.POST['hospital_name']
@@ -81,6 +80,8 @@ def loginpage(request):
                 return redirect(hospital_profile)
             elif data.user_type=="parent":
                 return redirect(parent_profile)
+            elif data.user_type=="nutritionist":
+                return redirect(n_profile)
             else:
                 return render(request,'Home/login.html',{'message':"please wait for the approval"})
         else:
@@ -89,20 +90,38 @@ def loginpage(request):
     else:
         return render(request,'Home/login.html')
 
-def seller_profile(request):
-    return render(request,'Seller/sellerprofile.html')
-def customer_profile(request):
-    return render(request,'Customer/customerprofile.html')
+
+
+
+
+
+
+
+
+
 def hospital_profile(request):
     return render(request,'Hospital/hospitalprofile.html')
-def purchase(request):
-    return render(request,'Customer/purchase.html')
-def edit_customer(request):
-    return render(request,'Customer/editprofile.html')
+
 def about(request):
     return render(request,'Home/about.html')
 def edit_hospital(request):
-    return render(request,'Hospital/edithprofile.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    if request.method=='POST':
+        hospital_name=request.POST['hospital_name']
+        address=request.POST['Address']
+        email=request.POST['Email']
+        phone_number=request.POST['phone']
+        hospital.hospital_name = hospital_name
+        hospital.Address=address
+        hospital.Email=email
+        hospital.phone=phone_number
+        hospital.save()
+        log_id.username=hospital_name
+        log_id.save()
+        return HttpResponse("updated")
+    else:
+        return render(request,'Hospital/edithprofile.html',{'hospital':hospital})
 def add_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital_id=Hospital.objects.get(login_id=log_id)
@@ -133,8 +152,42 @@ def add_parent(request):
         return render(request,'Hospital/addparent.html',{'message':"PARENT ADDED"})
     else:
         return render(request,'Hospital/addparent.html')
-def add_baby(request):
-    return render(request,'Hospital/addbaby.html')
+def add_baby(request,id):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    parent=Parent.objects.get(id=id)
+    
+    if request.method=='POST':
+        baby_name=request.POST['baby_name']
+        father_name=request.POST['father_name']
+        birth_date=request.POST['birth_date']
+        gender=request.POST['gender']
+        weight=request.POST['weight']
+        blood_group=request.POST['blood_group']
+        baby_data=Baby_details.objects.create(baby_name=baby_name,
+                                              hospital_id=hospital,
+                                              parent_id=parent,
+                                              father_name=father_name,
+                                              birth_date=birth_date,
+                                              gender=gender,
+                                              weight=weight,
+                                              blood_group=blood_group,)
+        baby_data.save()
+        parent.baby_status="True"
+        parent.save()
+        return render(request,'Hospital/addbaby.html',{'message':"Successfully Added",'parent':parent})
+    else:
+        return render(request,'Hospital/addbaby.html',{'parent':parent})
+def view_baby(request,id):
+    parent=Parent.objects.get(id=id)
+    baby=Baby_details.objects.filter(parent_id=parent)
+    print(baby)
+    context={
+        'baby':baby
+    }
+
+    return render(request,'Hospital/viewbabydetails.html',context)    
+
 def add_nutritionist(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital_id=Hospital.objects.get(login_id=log_id)
@@ -149,31 +202,55 @@ def add_nutritionist(request):
         login_data=LoginUser.objects.create_user(username=nutritionist_name,password=password,user_type="nutritionist")
         login_data.save()
         logg_id=LoginUser.objects.get(id=login_data.id)
-        nutritionist_data=Nutritionist.objects.create(login_id=log_id,
+        nutritionist_data=Nutritionist.objects.create(login_id=logg_id,
                                                       hospital_id=hospital_id,
                                                       Nutritionist_name=nutritionist_name,
                                                       consulting_days=consulting_days,
                                                       consulting_time=consulting_time
                                                       )
         nutritionist_data.save()
-        return render(request,'Hospital/addnutritionist.html')
-        
-        
-    return render(request,'Hospital/addnutritionist.html')
-def n_profile(request):
-    return render(request,'Nutritionist/nprofile.html')
+        return render(request,'Hospital/addnutritionist.html',{'message':"Successfully Added"})
+    else:
+         return render(request,'Hospital/addnutritionist.html')
+
 def parent_profile(request):
     return render(request,'Parent/parentprofile.html')
 def baby_details(request):
     return render(request,'Parent/babydetails.html')
-def edit_seller(request):
-    return render(request,'Seller/editsellerprofile.html')
 def edit_baby(request):
     return render(request,'Parent/editbabydetails.html')
 def edit_parent(request):
     return render(request,'Parent/editparent.html')
+def add_doctor_details(request):
+    return render(request,'Hospital/adddoctordetails.html')
+def view_parent(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital_id=Hospital.objects.get(login_id=log_id)
+    parents=Parent.objects.filter(hospital_id=hospital_id)
+    context={
+        'parent': parents
+    }
+    return render(request,'Hospital/viewparents.html',context)
+def edit_doctor(request):
+    return render(request,'Hospital/editdoctor.html')
+
+
+def seller_profile(request):
+    return render(request,'Seller/sellerprofile.html')
 def add_product(request):
     return render(request,'Seller/addproducts.html')
-def doctor_details(request):
-    return render(request,'Hospital/adddoctordetails.html')
+def edit_seller(request):
+    return render(request,'Seller/editsellerprofile.html')
 
+
+
+def customer_profile(request):
+    return render(request,'Customer/customerprofile.html')
+def purchase(request):
+    return render(request,'Customer/purchase.html')
+def edit_customer(request):
+    return render(request,'Customer/editprofile.html')
+
+
+def n_profile(request):
+    return render(request,'Nutritionist/nprofile.html')

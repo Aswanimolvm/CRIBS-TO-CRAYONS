@@ -21,29 +21,45 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #home#
     path('',views.home,name="home"),
     path('sellerreg',views.seller_register,name="sellerreg"),
     path('customerreg',views.customer_register,name="customerreg"),
     path('hospitalreg',views.hospital_register,name="hospitalreg"),
     path('login',views.loginpage,name="login"),
-    path('sellerprofile',views.seller_profile,name="sellerprofile"),
-    path('customerprofile',views.customer_profile,name="customerprofile"),
-    path('hospitalprofile',views.hospital_profile,name="hospitalprofile"),
-    path('purchase',views.purchase,name="purchase"),
-    path('edicustomer',views.edit_customer,name="edicustomer"),
     path('about',views.about,name="about"),
+
+    #seller#
+    path('sellerprofile',views.seller_profile,name="sellerprofile"),
+    path('editseller',views.edit_seller,name="editseller"),
+    path('addproduct',views.add_product,name="addproduct"),
+
+    #customer#
+    path('customerprofile',views.customer_profile,name="customerprofile"),
+    path('edicustomer',views.edit_customer,name="edicustomer"),
+    path('purchase',views.purchase,name="purchase"),
+
+    #hospital#
+    path('hospitalprofile',views.hospital_profile,name="hospitalprofile"),
     path('edithospital',views.edit_hospital,name="edithospital"),
     path('addparent',views.add_parent,name="addparent"),
-    path('addbaby',views.add_baby,name="addbaby"),
+    path('addbaby/<int:id>',views.add_baby,name="addbaby"),
     path('addnutritionist',views.add_nutritionist,name="addnutritionist"),
+    path('adddoctordetails',views.add_doctor_details,name="adddoctordetails"),
+    path('viewparents',views.view_parent,name="viewparents"),
+    path('editdoctordetails',views.edit_doctor,name="editdoctordetails"),
+    path('viewbabyh/<int:id>',views.view_baby,name="viewbabyh"),
+
+    #nutritionist#
     path('nprofile',views.n_profile,name="nprofile"),
+
+    #parent#
     path('parentprofile',views.parent_profile,name="parentprofile"),
     path('babydetails',views.baby_details,name="babydetails"),
-    path('editseller',views.edit_seller,name="editseller"),
     path('editbabydetails',views.edit_baby,name="editbabydetails"),
-    path('editparentprofile',views.edit_parent,name="editparentprofile"),
-    path('addproduct',views.add_product,name="addproduct"),
-    path('adddoctordetails',views.doctor_details,name="adddoctordetails")
+    path('editparentprofile',views.edit_parent,name="editparentprofile")
+    
+    
     
 
 ]

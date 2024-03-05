@@ -47,6 +47,7 @@ class Parent(models.Model):
     Email=models.EmailField()
     phone=models.IntegerField()
     blood_group=models.CharField(max_length=10)
+    baby_status=models.CharField(max_length=50,null=True, blank=True,)
     
 class Nutritionist(models.Model):
     login_id=models.ForeignKey(LoginUser,on_delete=models.CASCADE)
@@ -71,20 +72,26 @@ class Booking(models.Model):
 class Vaccination(models.Model):
      hospital_id=models.ForeignKey(Hospital,on_delete=models.CASCADE)
      Vaccination_name=models.CharField(max_length=100,blank=True,null=True)
-     date=models.DateField(null=True, blank=True)
+     duration=models.IntegerField(null=True, blank=True)
      
 
 class Baby_details(models.Model):
     parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE)
     hospital_id=models.ForeignKey(Hospital,on_delete=models.CASCADE)
-    vaccination_id=models.ForeignKey(Vaccination,on_delete=models.CASCADE,null=True, blank=True)
     baby_name=models.CharField(max_length=20)
     father_name=models.CharField(max_length=20,null=True,blank=True)
     gender=models.CharField(max_length=20,null=True,blank=True)
     blood_group=models.CharField(max_length=20,null=True,blank=True)
     weight=models.IntegerField()
     birth_date=models.DateField()
+    
+
+class Baby_vaccine(models.Model):
+    baby_id=models.ForeignKey(Baby_details,on_delete=models.CASCADE)
+    vaccination_id=models.ForeignKey(Vaccination,on_delete=models.CASCADE,null=True, blank=True)
     vaccination_status=models.CharField(max_length=50,null=True, blank=True,)
+    date=models.DateField(null=True,blank=True)
+
 
 class Product(models.Model):
     seller_id=models.ForeignKey(Seller,on_delete=models.CASCADE)

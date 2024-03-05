@@ -28,6 +28,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <!-- Template Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
@@ -60,8 +61,8 @@
                     <div class="navbar-nav ms-auto">
                         <a href="{% url 'hospitalprofile'%}" class="nav-item nav-link active">HOME</a>
                         <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
+                        <!-- <div class="nav-item dropdown"> -->
+                            <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
                                 <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
@@ -77,134 +78,54 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    <!-- </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGIN</a>
-                </div> -->
+                    </div>
+                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
+                </div>
             </nav>
         </div>
-  <style>
-    /* body {
-      background-color: #f6f8fa;
-    } */
-    /* .registration-container {
-      margin-top: 50px;
-    } */
-    /* .nav-link{
-      background-color: #c8cbeadd;
-     } */
-  .container-fluid{
-  background-color: rgb(126, 28, 223);
-  font-family: Caveat;
-  font-family: Arial, sans-serif;
-  background-color:#c8cbeadd;
-  color: rgb(17, 86, 15); 
-}
-/* .nav-link{
-  color: rgb(1, 56, 3);
-}
-.nav-item{
-    justify-content: right;
-    /* font-family:Mukta ; */
-    color: white;
-} */
-/* .tab-pane{
-  width:20%;
-}
-.image{
-  width:100% ;
-  height: 100%;
-} */
-.card-header{
-  background-color: rgb(123, 105, 238);
-}
-.container{
-  margin-top: 0px;
-}
-h3{
-  margin-top: 100px;
-  color: rgb(8, 7, 35);
-  margin-left: 50px;
-  font-family: Protest Riot;
-}
-h4{
-    color:rgb(31, 4, 100);
-  margin-left: 100px;
-  font-family: Protest Riot;
-}
-.ad{
-  margin-right: 725px;
-}
-  </style>
-<!-- <body background="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F210191507589299745%2F&psig=AOvVaw07W-kMoIfk39vgEyraPDeD&ust=1708182632744000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCIjN-bGSsIQDFQAAAAAdAAAAABAF"">
-  <nav class="navbar fixed-top bg-body-tertiary">
-    <div class="container-fluid">
-      <h1 class="navbar-brand" href="#" style="color:rgb(3, 77, 7); font-family: Protest Riot;">CRIBS TO CRAYONS</h1>
-      <div class="ad">
-        <img src="https://i.pinimg.com/originals/5d/66/64/5d6664ccdb0f0a4865f20f0702ef6dbd.gif" alt="" width="50px" height="50px">
-      </div>
-   
- 
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link ">ABOUT US</button>
-    </li>
-    <!-- <li class="nav-item" role="presentation">
-      <button class="nav-link"> LOGIN</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link"> SIGN IN</button>
-    </li> -->
-    <!-- <li class="nav-item" role="presentation">
-      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;Logout</button>
-    </li> -->
-  <!-- </ul>
-</div>
-</nav> -->
-<!-- <div class="parent" > -->
-  <!-- <img src="https://m.media-amazon.com/images/I/51Axbf7MM2L.jpg" width="100%" height="100%"> -->
-<!-- </div> --> 
+  <!-- Bootstrap CSS -->
+  
+<br>
+<br>
+<br>
+<br>
 
-  <!-- <p><h3 style="color: blue;">Welcome to our registration platform!<br><br>  -->
-
-    <!-- Excited to see you join our platform! Your offerings bring smiles and ease to families everywhere.Let's make parenthood and playtime a breeze together. Happy selling! -->
-  <!-- </h3><br>  
-<p> -->
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6 registration-container">
-        <div class="card">
-          <div class="card-header" style="background-color: rgb(141, 141, 237);">
-            <h2 class="text-center">EDIT PROFILE</h2>
-          </div>
-          <div class="card-body">
-            <form action="{% url 'edithospital'%}" method="POST" enctype="multipart/form-data">
-              {% csrf_token %}
-              <div class="form-group">
-                <label for="username">Hospital Name</label>
-                <input type="text" class="form-control" id="username" name="hospital_name" value="{{ hospital.hospital_name }}">
-              </div><div class="form-group">
-                <label for="username">Address</label>
-                <input type="text" class="form-control" id="username" name="Address" value="{{ hospital.Address }}">
-              </div>
-              <div class="form-group">
-                <label for="username">Phone number</label>
-                <input type="text" class="form-control" id="username" name="phone" value="{{ hospital.phone }}">
-              </div>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="Email" value="{{ hospital.Email}}">
-              </div>
-              
-              <div class="d-flex mt-4">
-              <button type="submit" class="btn btn-primary btn-block mx-auto">SAVE</button>
-            </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="container">
+    <h2>PARENTS</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th></th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in parent %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+         <td>{{ i.parent_name }}</td>
+         <td>{{ i.phone }}</td>
+         <td>{{ i.email }}</td>
+         
+         
+          <td>
+            <a href="{% url 'addbaby' id=i.id %}" class="btn btn-primary">Add baby</a>
+            {% if i.baby_status == "True" %}
+           <a href="{% url 'viewbabyh' id=i.id %}" <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">View</button>
+            {% endif %}
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        {% endfor %}
+        
+      </tbody>
+    </table>
   </div>
-
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -223,5 +144,4 @@ h4{
 <!-- Template Javascript -->
 <script src="{% static 'js/main.js'%}"></script>
 </body>
-
 </html>
