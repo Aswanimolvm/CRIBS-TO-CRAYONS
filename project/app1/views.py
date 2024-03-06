@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details
+from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
 
@@ -214,9 +214,21 @@ def add_nutritionist(request):
          return render(request,'Hospital/addnutritionist.html')
 
 def parent_profile(request):
-    return render(request,'Parent/parentprofile.html')
-def baby_details(request):
-    return render(request,'Parent/babydetails.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    context={
+        'parent':parent
+    }
+    return render(request,'Parent/parentprofile.html',context)
+def baby_details(request,id):
+     parent=LoginUser.objects.get(id=request.user.id)
+     baby=Baby_details.objects.filter(parent_id=parent)
+     print(baby)
+     context={
+        'baby':baby
+     }
+
+     return render(request,'Parent/babydetails.html',context)
 def edit_baby(request):
     return render(request,'Parent/editbabydetails.html')
 def edit_parent(request):
@@ -236,16 +248,67 @@ def edit_doctor(request):
 
 
 def seller_profile(request):
-    return render(request,'Seller/sellerprofile.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    seller=Seller.objects.get(login_id=log_id)
+    context={
+        'seller':seller
+    }
+    return render(request,'Seller/sellerprofile.html',context)
 def add_product(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    seller_id=Seller.objects.get(login_id=log_id)
+    if request.method=='POST':
+        product_name=request.POST['product_name']
+        price=request.POST['price']
+        product_details=request.POST['product_details']
+        location=request.POST['location']
+        image=request.FILES['image']
+        product_data=Product.objects.create(seller_id=seller_id,
+                                            product_name=product_name,
+                                            price=price,
+                                            product_details=product_details,
+                                            location=location,
+                                            image=image)
+        product_data.save()
+        return render(request,'Seller/addproducts.html',{'message':"successfully uploaded!!"})
     return render(request,'Seller/addproducts.html')
+def edit_product(request):
+    return render(request,'Seller/editproduct.html')
 def edit_seller(request):
-    return render(request,'Seller/editsellerprofile.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    seller=Seller.objects.get(login_id=log_id)
+    if request.method=='POST':
+        seller_name=request.POST['seller_name']
+        address=request.POST['address']
+        phone_number=request.POST['phone']
+        email=request.POST['email']
+        seller.seller_name=seller_name
+        seller.Address=address
+        seller.phone=phone_number
+        seller.Email=email
+        seller.save()
+        log_id.username=seller_name
+        log_id.save()
+        return HttpResponse("updated!!")
+    else:
+        return render(request,'Seller/editsellerprofile.html',{'seller':seller})
+def view_product(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    product=Product.objects.get(login_id=log_id)
+    context={
+        'product':product
+    }
+    return render(request,'Seller/viewproduct.html',context)
 
 
 
 def customer_profile(request):
-    return render(request,'Customer/customerprofile.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    customer=Customer.objects.get(login_id=log_id)
+    context={
+        'customer':customer
+    }
+    return render(request,'Customer/customerprofile.html',context)
 def purchase(request):
     return render(request,'Customer/purchase.html')
 def edit_customer(request):
@@ -253,4 +316,9 @@ def edit_customer(request):
 
 
 def n_profile(request):
-    return render(request,'Nutritionist/nprofile.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    nutritionist=Nutritionist.objects.get(login_id=log_id)
+    context={
+        'nutritionist':nutritionist
+    }
+    return render(request,'Nutritionist/nprofile.html',context)

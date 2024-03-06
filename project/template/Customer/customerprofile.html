@@ -120,12 +120,12 @@
 <div class="profile-container">
   <div class="profile-header text-center">
     <img src="{% static 'img/testimonial-1.jpg'%}" alt="Profile Picture" class="profile-picture">
-    <h1 class="profile-name">USER1</h1>
+    <h1 class="profile-name">{{ customer.Customer_name }}</h1>
     <div class="profile-details">
-      <p>Email: john@example.com</p>
-      <p>Address: New York, USA</p>
-      <p>Phone number: 2345671234</p>
-      <p>Joined: January 1, 2022</p>
+      <p>{{ customer.Address }}</p>
+      <p>{{ customer.Email }}</p>
+      <p>{{ customer.phone }}</p>
+      <!-- <p>Joined: January 1, 2022</p> -->
     </div>
   </div>
 

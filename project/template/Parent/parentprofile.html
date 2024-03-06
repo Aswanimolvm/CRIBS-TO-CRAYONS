@@ -61,7 +61,7 @@
                         <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
                         <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a>
                         <a href="#" class="nav-item nav-link">DOCTOR DETAILS</a>
-                        <a href="#" class="nav-item nav-link">BABY DETAILS</a>
+                        <a href="{% url 'babydetails' id=parent.id %}" class="nav-item nav-link">BABY DETAILS</a>
                         <a href="#" class="nav-item nav-link">VACCINATION</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
@@ -123,12 +123,12 @@
 <div class="profile-container">
   <div class="profile-header text-center">
     <img src="{% static 'img/team-1.jpg'%}" alt="Profile Picture" class="profile-picture">
-    <h1 class="profile-name">PARENT NAME</h1>
+    <h1 class="profile-name">{{ parent.parent_name }}</h1>
     <div class="profile-details">
-      <p>Email: john@example.com</p>
-      <p>Address: New York, USA</p>
-      <p>Phone number: 1234567813</p>
-      <p>Joined: January 1, 2022</p>
+      <p>{{ parent.Address }}</p>
+      <p>{{ parent.Email }}</p>
+      <p>{{ parent.phone }}</p>
+      <p>{{ parent.blood_group}}</p>
     </div>
   </div>
 

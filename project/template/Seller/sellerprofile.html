@@ -58,8 +58,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                      <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a>
-                        <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a>
+                      <a href="{% url 'addproduct'%}" class="nav-item nav-link active">ADD PRODUCT</a>
+                        <a href="{% url 'viewproduct'%}" class="nav-item nav-link">VIEW</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -120,12 +120,12 @@
 <div class="profile-container">
   <div class="profile-header text-center">
     <img src="{% static 'img/team-3.jpg'%}" alt="Profile Picture" class="profile-picture">
-    <h1 class="profile-name">SELLER</h1>
+    <h1 class="profile-name">{{ seller.seller_name }}</h1>
     <div class="profile-details">
-      <p>Email: john@example.com</p>
-      <p>Address: New York, USA</p>
-      <p>Phone number: 2345342561</p>
-      <p>Joined: January 1, 2022</p>
+      <p>{{ seller.Email }}</p>
+      <p>{{ seller.Address }}</p>
+      <p>{{ seller.phone }}</p>
+      
     </div>
   </div>
 

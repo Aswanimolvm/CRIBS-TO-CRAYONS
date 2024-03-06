@@ -33,6 +33,7 @@ urlpatterns = [
     path('sellerprofile',views.seller_profile,name="sellerprofile"),
     path('editseller',views.edit_seller,name="editseller"),
     path('addproduct',views.add_product,name="addproduct"),
+    path('viewproduct',views.view_product,name="viewproduct"),
 
     #customer#
     path('customerprofile',views.customer_profile,name="customerprofile"),
@@ -55,7 +56,7 @@ urlpatterns = [
 
     #parent#
     path('parentprofile',views.parent_profile,name="parentprofile"),
-    path('babydetails',views.baby_details,name="babydetails"),
+    path('babydetails/<int:id>',views.baby_details,name="babydetails"),
     path('editbabydetails',views.edit_baby,name="editbabydetails"),
     path('editparentprofile',views.edit_parent,name="editparentprofile")
     

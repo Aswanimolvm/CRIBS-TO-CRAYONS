@@ -58,8 +58,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a>
-                        <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a>
+                      <a href="{% url 'sellerprofile'%}" class="nav-item nav-link active">HOME</a>
+                        <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -67,8 +67,8 @@
                                 <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
                                 <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
                                 <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            <!-- </div> -->
-                        <!-- </div> -->
+                            <!-- </div>
+                        </div> -->
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -119,12 +119,13 @@
 
 <div class="profile-container">
   <div class="profile-header text-center">
-    <img src="{% static 'img/team-4.jpg'%}" alt="Profile Picture" class="profile-picture">
-    <h1 class="profile-name">{{ nutritionist.Nutritionist_name }}</h1>
+    <img src="{% static 'img/team-3.jpg'%}" alt="Profile Picture" class="profile-picture">
+    <h1 class="profile-name">{{ product.product_name }}</h1>
     <div class="profile-details">
-      <p>{{ nutritionist.consulting_days }}</p>
-      <p>{{ nutritionist.consulting_time }}</p>
-      <!-- <p>Joined: January 1, 2022</p> -->
+      <p>{{ product.price }}</p>
+      <p>{{ product.details }}</p>
+      <p>{{ product.location }}</p>
+      
     </div>
   </div>
 
@@ -138,7 +139,7 @@
   </div> -->
 
   <div class="text-center mt-3">
-    <a href="#" class="btn btn-primary">Edit Profile</a>
+    <a href="{% url 'editproduct'%}" class="btn btn-primary">Edit details</a>
   </div>
 </div>
 
