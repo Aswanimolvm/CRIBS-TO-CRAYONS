@@ -91,48 +91,46 @@
 <br>
 
 <div class="container">
-    <h2>PARENTS</h2>
+    <h2>DOCTOR LIST</h2>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th></th>
+          
           <th>Name</th>
-          <th>Phone</th>
+          <th>Qualification</th>
+          <th>Department</th>
+          <th>Consulting days</th>
+          <th>Available slots</th>
           <th></th>
-          <th>Status</th>
+          <th></th>
+          
         </tr>
       </thead>
       <tbody>
+        {% for i in doctor %}
         <tr>
-          <td>1</td>
-          <td>John Doe</td>
-          <td>34356478</td>
+          <td>{{ forloop.counter }}</td>
+         <td>{{ i.Doctor_name }}</td>
+         <td>{{ i.qualification }}</td>
+         <td>{{ i.department }}</td>
+         <td>{{ i.consulting_days }}</td>
+         <td>{{ i.slots }}</td>
+         
+         
           <td>
-            <a href="#" class="btn btn-primary">Add baby</a>
-            <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">View</button>
+            <a href="{% url 'editdoctordetails' id=i.id %}" class="btn btn-primary">Edit</a>
+           
+
+           </td>
+           <td>
+           <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Delete</a>
+            
           </td>
           <td></td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jane Smith</td>
-          <td>6654</td>
-          <td>
-            <a href="#" class="btn btn-primary">Add baby</a>
-            <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">View</button>
-          </td>
           <td></td>
         </tr>
-        <tr>
-          <td>3</td>
-          <td>Michael Johnson</td>
-          <td>4678643783273</td>
-          <td>
-            <a href="#" class="btn btn-primary">Add baby</a>
-            <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">View</button>
-          </td>
-          <td></td>
-        </tr>
+        {% endfor %}
+        
       </tbody>
     </table>
   </div>

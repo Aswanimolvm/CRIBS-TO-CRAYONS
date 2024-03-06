@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product
+from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
 
@@ -12,11 +12,12 @@ def seller_register(request):
         address=request.POST['address']
         phone_number=request.POST['phone']
         email=request.POST['email']
+        username = request.POST['username']
         password=request.POST['password']    
         password2=request.POST['confirmPassword'] 
         if password != password2:
             return render(request,'Home/sreg.html',{'message':"password doesn't match"})   
-        login_data=LoginUser.objects.create_user(username=seller_name,password=password,user_type='seller')
+        login_data=LoginUser.objects.create_user(username=username,password=password,user_type='seller')
         login_data.save()
         log_id=LoginUser.objects.get(id=login_data.id)
         seller_data=Seller.objects.create(login_id=log_id,seller_name=seller_name,Address=address,Email=email,phone=phone_number)
@@ -30,11 +31,12 @@ def customer_register(request):
         address=request.POST['Address']
         email=request.POST['Email']
         phone_number=request.POST['phone']
+        username = request.POST['username']
         password=request.POST['password']
         password1=request.POST['confirmPassword']
         if password != password1:
             return render(request,'Home/creg.html',{'message':"password doesn't match"})
-        login_data=LoginUser.objects.create_user(username=customer_name,password=password,user_type='customer')
+        login_data=LoginUser.objects.create_user(username=username,password=password,user_type='customer')
         login_data.save()
         log_id=LoginUser.objects.get(id=login_data.id)
         customer_data=Customer.objects.create(login_id=log_id,Customer_name=customer_name,Address=address,Email=email,phone=phone_number)
@@ -51,11 +53,12 @@ def hospital_register(request):
         email=request.POST['Email']
         phone_number=request.POST['phone']
         licence_proof=request.FILES['licence_proof']
+        username = request.POST['username']
         password=request.POST['password']
         password2=request.POST['confirmPassword']
         if password != password2:
             return render(request,'Home/hreg.html',{'message':"password doesn't match"})
-        login_data=LoginUser.objects.create_user(username=hospital_name,password=password,user_type="hospital")
+        login_data=LoginUser.objects.create_user(username=username,password=password,user_type="hospital")
         login_data.save()
         log_id=LoginUser.objects.get(id=login_data.id)
         hospital_data=Hospital.objects.create(login_id=log_id,hospital_name=hospital_name,Address=address,Email=email,phone=phone_number,licence_proof=licence_proof)
@@ -96,11 +99,16 @@ def loginpage(request):
 
 
 
-
+#hospital#
 
 
 def hospital_profile(request):
-    return render(request,'Hospital/hospitalprofile.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    context={
+        'hospital':hospital
+    }
+    return render(request,'Hospital/hospitalprofile.html',context)
 
 def about(request):
     return render(request,'Home/about.html')
@@ -117,8 +125,8 @@ def edit_hospital(request):
         hospital.Email=email
         hospital.phone=phone_number
         hospital.save()
-        log_id.username=hospital_name
-        log_id.save()
+        # log_id.username=hospital_name
+        # log_id.save()
         return HttpResponse("updated")
     else:
         return render(request,'Hospital/edithprofile.html',{'hospital':hospital})
@@ -131,12 +139,13 @@ def add_parent(request):
         email=request.POST['Email']
         phone_number=request.POST['phone']
         blood_group=request.POST['blood_group']
+        username = request.POST['username']
         password=request.POST['password']
         password2=request.POST['confirmPassword']
         if password != password2:
             return render(request,'Hospital/addparent.html',{'message':"password doesn't match"})
         
-        login_data=LoginUser.objects.create_user(username=parent_name,password=password,user_type="parent")
+        login_data=LoginUser.objects.create_user(username=username,password=password,user_type="parent")
         login_data.save()
         logg_id=LoginUser.objects.get(id=login_data.id)
         parent_data=Parent.objects.create(
@@ -195,11 +204,12 @@ def add_nutritionist(request):
         nutritionist_name=request.POST['Nutritionist_name']
         consulting_days=request.POST['consulting_days']
         consulting_time=request.POST['consulting_time']
+        username = request.POST['username']
         password=request.POST['password']
         password1=request.POST['confirmPassword']
         if password != password1:
             return render(request,'Hospital/addnutritionist.html',{'message':"password doesn't match"})
-        login_data=LoginUser.objects.create_user(username=nutritionist_name,password=password,user_type="nutritionist")
+        login_data=LoginUser.objects.create_user(username=username,password=password,user_type="nutritionist")
         login_data.save()
         logg_id=LoginUser.objects.get(id=login_data.id)
         nutritionist_data=Nutritionist.objects.create(login_id=logg_id,
@@ -212,6 +222,43 @@ def add_nutritionist(request):
         return render(request,'Hospital/addnutritionist.html',{'message':"Successfully Added"})
     else:
          return render(request,'Hospital/addnutritionist.html')
+def add_doctor_details(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    if request.method=='POST':
+        slots=int(request.POST['slots'])
+        doctor_name=request.POST['Doctor_name']
+        department=request.POST['department']
+        qualification=request.POST['qualification']
+        consulting_days=request.POST['consulting_days']
+        doctor_data=Doctor.objects.create(hospital_id=hospital,
+                                          slots=slots,
+                                          Doctor_name=doctor_name,
+                                          department=department,
+                                          qualification=qualification,
+                                          consulting_days=consulting_days
+                                          )
+        doctor_data.save()
+        return render(request,'Hospital/adddoctordetails.html',{'message':"successfully added!"})
+    else:
+        return render(request,'Hospital/adddoctordetails.html')
+def view_doctor(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    doctor=Doctor.objects.filter(hospital_id=hospital)
+    context={
+        'doctor':doctor
+    }
+    return render(request,'Hospital/viewdoctordetails.html',context)
+def edit_doctor(request,id):
+
+    return render(request,'Hospital/editdoctor.html')
+def delete_doctor(request,id):
+    doctor=Doctor.objects.get(id=id)
+    doctor.delete()
+    return redirect(view_doctor)
+
+#parent#
 
 def parent_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
@@ -220,8 +267,9 @@ def parent_profile(request):
         'parent':parent
     }
     return render(request,'Parent/parentprofile.html',context)
-def baby_details(request,id):
-     parent=LoginUser.objects.get(id=request.user.id)
+def baby_details(request):
+     log_id=LoginUser.objects.get(id=request.user.id)
+     parent=Parent.objects.get(login_id=log_id)
      baby=Baby_details.objects.filter(parent_id=parent)
      print(baby)
      context={
@@ -230,11 +278,48 @@ def baby_details(request,id):
 
      return render(request,'Parent/babydetails.html',context)
 def edit_baby(request):
-    return render(request,'Parent/editbabydetails.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    baby=Baby_details.objects.get(parent_id=parent)
+    if request.method=='POST':
+        baby_name=request.POST['baby_name']
+        father_name=request.POST['father_name']
+        birth_date=request.POST['birth_date']
+        gender=request.POST['gender']
+        weight=request.POST['weight']
+        blood_group=request.POST['blood_group']
+        baby.baby_name=baby_name
+        baby.father_name=father_name
+        baby.birth_date=birth_date
+        baby.gender=gender
+        baby.weight=weight
+        baby.blood_group=blood_group
+        baby.save()
+        return HttpResponse("updated!!")
+    else:
+        return render(request,'Parent/editbabydetails.html',{'baby':baby})
 def edit_parent(request):
-    return render(request,'Parent/editparent.html')
-def add_doctor_details(request):
-    return render(request,'Hospital/adddoctordetails.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    
+    if request.method=='POST':
+        parent_name=request.POST['parent_name']
+        address=request.POST['Address']
+        email=request.POST['Email']
+        phone_number=request.POST['phone']
+        blood_group=request.POST['blood_group']
+        parent.parent_name=parent_name
+        parent.Address=address
+        parent.Email=email
+        parent.blood_group=blood_group
+        parent.phone=phone_number
+        parent.save()
+        # log_id.username=parent_name
+        # log_id.save()
+        return HttpResponse("updated!!")
+    else:
+        return render(request,'Parent/editparent.html',{'parent':parent})
+
 def view_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital_id=Hospital.objects.get(login_id=log_id)
@@ -243,9 +328,10 @@ def view_parent(request):
         'parent': parents
     }
     return render(request,'Hospital/viewparents.html',context)
-def edit_doctor(request):
-    return render(request,'Hospital/editdoctor.html')
 
+
+
+#seller#
 
 def seller_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
@@ -287,8 +373,8 @@ def edit_seller(request):
         seller.phone=phone_number
         seller.Email=email
         seller.save()
-        log_id.username=seller_name
-        log_id.save()
+        # log_id.username=seller_name
+        # log_id.save()
         return HttpResponse("updated!!")
     else:
         return render(request,'Seller/editsellerprofile.html',{'seller':seller})
@@ -300,7 +386,7 @@ def view_product(request):
     }
     return render(request,'Seller/viewproduct.html',context)
 
-
+#customer#
 
 def customer_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
@@ -314,7 +400,7 @@ def purchase(request):
 def edit_customer(request):
     return render(request,'Customer/editprofile.html')
 
-
+#nutritionist#
 def n_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     nutritionist=Nutritionist.objects.get(login_id=log_id)

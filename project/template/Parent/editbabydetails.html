@@ -181,26 +181,26 @@ h4{
               {% csrf_token %}
               <div class="form-group">
                 <label for="username">Baby Name</label>
-                <input type="text" class="form-control" id="username" name="baby_name" required>
+                <input type="text" class="form-control" id="username" name="baby_name" value="{{ baby.baby_name }}">
               </div><div class="form-group">
                 <label for="username">Father Name</label>
-                <input type="text" class="form-control" id="username" name="father_name" required>
+                <input type="text" class="form-control" id="username" name="father_name" value="{{ baby.father_name }}">
               </div>
               <div class="form-group">
                 <label for="username">Gender </label>
-                <input type="text" class="form-control" id="username" name="gender" required>
+                <input type="text" class="form-control" id="username" name="gender" value="{{ baby.gender }}">
               </div>
               <div class="form-group">
                 <label for="username">Weight</label>
-                <input type="text" class="form-control" id="username" name="weight" required>
+                <input type="text" class="form-control" id="username" name="weight" value="{{ baby.weight }}">
               </div>
               <div class="form-group">
                 <label for="username">Blood group</label>
-                <input type="text" class="form-control" id="username" name="blood_group" required>
+                <input type="text" class="form-control" id="username" name="blood_group" value="{{ baby.blood_group }}">
               </div>
               <div class="form-group">
                 <label for="username">Birth Date</label>
-                <input type="text" class="form-control" id="username" name="birth_date" required>
+                <input type="text" class="form-control" id="username" name="birth_date" value="{{ baby.birth_date }}">
               </div>
               <!-- <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>

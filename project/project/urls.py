@@ -48,15 +48,17 @@ urlpatterns = [
     path('addnutritionist',views.add_nutritionist,name="addnutritionist"),
     path('adddoctordetails',views.add_doctor_details,name="adddoctordetails"),
     path('viewparents',views.view_parent,name="viewparents"),
-    path('editdoctordetails',views.edit_doctor,name="editdoctordetails"),
+    path('editdoctordetails/<int:id>',views.edit_doctor,name="editdoctordetails"),
     path('viewbabyh/<int:id>',views.view_baby,name="viewbabyh"),
+    path('viewdoctorlist',views.view_doctor,name="viewdoctorlist"),
+    path('deletedoctor/<int:id>',views.delete_doctor,name="deletedoctor"),
 
     #nutritionist#
     path('nprofile',views.n_profile,name="nprofile"),
 
     #parent#
     path('parentprofile',views.parent_profile,name="parentprofile"),
-    path('babydetails/<int:id>',views.baby_details,name="babydetails"),
+    path('babydetails',views.baby_details,name="babydetails"),
     path('editbabydetails',views.edit_baby,name="editbabydetails"),
     path('editparentprofile',views.edit_parent,name="editparentprofile")
     

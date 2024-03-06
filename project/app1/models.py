@@ -62,6 +62,8 @@ class Doctor(models.Model):
     qualification=models.CharField(max_length=50)
     department=models.CharField(max_length=20)
     consulting_days=models.CharField(max_length=30)
+    slots=models.IntegerField()
+    availability_status=models.CharField(max_length=10,default="AVAILABLE")
 
 class Booking(models.Model):
     doctor_id=models.ForeignKey(Doctor,on_delete=models.CASCADE)
