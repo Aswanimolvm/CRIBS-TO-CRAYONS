@@ -109,7 +109,17 @@ class Video(models.Model):
      title=models.CharField(max_length=30)
      upload_date=models.DateField()
      video=models.FileField(upload_to='videos')
+    
+class Productbooking(models.Model):
+    customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE)
+    date=models.DateField(auto_now=True)
+    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+    status=models.CharField(max_length=15,default="pending")
 
+class Cart(models.Model):
+    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+    customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE)
+    date=models.DateField(auto_now=True)
 
 
 

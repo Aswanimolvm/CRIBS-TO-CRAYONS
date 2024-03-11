@@ -59,6 +59,7 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="{% url 'sellerprofile'%}" class="nav-item nav-link active">HOME</a>
+                        <a href="{% url 'sellerviewproduct'%}" class="dropdown-item">VIEW PRODUCTS</a> 
                         <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
@@ -164,7 +165,7 @@ h4{
   <!-- <img src="https://m.media-amazon.com/images/I/51Axbf7MM2L.jpg" width="100%" height="100%"> -->
 <!-- </div> --> 
 
-  <p><h3 style="color: blue;">ADD YOUR PRODUCT HERE!!<br><br> 
+  <p><h3 style="color: blue;">UPDATE CHANGES<br><br> 
 
     <!-- Excited to see you join our platform! Your offerings bring smiles and ease to families everywhere.Let's make parenthood and playtime a breeze together. Happy selling! -->
   </h3><br>  
@@ -172,31 +173,32 @@ h4{
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6 registration-container">
+        
         <div class="card">
           <div class="card-header" style="background-color: rgb(141, 141, 237);">
             <h2 class="text-center" >ADD</h2>
           </div>
           <div class="card-body">
-            <form action="{% url 'addproduct'%}" method="POST" enctype="multipart/form-data">
+            <form action="{% url 'editproduct' id=product.id %}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group">
                 <label for="username">Product Name</label>
-                <input type="text" class="form-control" id="username" name="product_name" required>
+                <input type="text" class="form-control" id="username" name="product_name" value="{{ product.product_name }}">
               </div><div class="form-group">
                 <label for="username">Price</label>
-                <input type="text" class="form-control" id="username" name="price" required>
+                <input type="text" class="form-control" id="username" name="price" value="{{ product.price }}">
               </div>
               <div class="form-group">
                 <label for="username">Location</label>
-                <input type="text" class="form-control" id="username" name="location" required>
+                <input type="text" class="form-control" id="username" name="location" value="{{ product.location }}">
               </div>
               <div class="form-group">
                 <label for="username">Image </label>
-                <input type="file" class="form-control" id="username" name="image" required>
+                <input type="file" class="form-control" id="username" name="image" value="{{ product.image }}">
               </div>
               <div class="form-group">
                 <label for="email">Product details</label>
-                <input type="email" class="form-control" id="email" name="product_details" required>
+                <input type="email" class="form-control" id="email" name="product_details" value="{{ product.product_details }}">
               </div>
               <!-- <div class="form-group">
                 <label for="password">Password</label>

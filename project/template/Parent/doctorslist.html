@@ -91,34 +91,42 @@
 <br>
 
 <div class="container">
-    <h2>PARENTS</h2>
+    <h2>DOCTOR LIST</h2>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>No.</th>
+          
           <th>Name</th>
-          <th>Phone</th>
-          <th>Email</th>
+          <th>Qualification</th>
+          <th>Department</th>
+          <th>Consulting days</th>
+          <th>Available slots</th>
+          <th></th>
           <th></th>
           
         </tr>
       </thead>
       <tbody>
-        {% for i in parent %}
+        {% for i in doctor %}
         <tr>
           <td>{{ forloop.counter }}</td>
-         <td>{{ i.parent_name }}</td>
-         <td>{{ i.phone }}</td>
-         <td>{{ i.Email }}</td>
+         <td>{{ i.Doctor_name }}</td>
+         <td>{{ i.qualification }}</td>
+         <td>{{ i.department }}</td>
+         <td>{{ i.consulting_days }}</td>
+         <td>{{ i.slots }}</td>
          
          
           <td>
-            <a href="{% url 'addbaby' id=i.id %}" class="btn btn-primary">Add baby</a>
-            {% if i.baby_status == "True" %}
-           <a href="{% url 'viewbabyh' id=i.id %}" <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">View</button>
-            {% endif %}
+            <a href="{% url 'editdoctordetails' id=i.id %}" class="btn btn-primary">Edit</a>
+           
+
+           </td>
+           <td>
+           <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Delete</a>
+            
           </td>
-          <td> <a href="{% url 'deleteparent' id=i.id %}" class="btn btn-primary">Delete</a></td>
+          <td></td>
           <td></td>
         </tr>
         {% endfor %}

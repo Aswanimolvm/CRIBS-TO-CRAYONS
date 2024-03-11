@@ -58,14 +58,13 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                      <a href="{% url 'addproduct'%}" class="nav-item nav-link active">ADD PRODUCT</a>
-                        <a href="{% url 'viewproduct'%}" class="nav-item nav-link">VIEW</a>
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
-                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
+                      <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link active">BOOKINGS</a>
+                        <div class="nav-item dropdown" style="color: #0400ff;">
+                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">PRODUCT</a>
+                            <div class="dropdown-menu rounded-0 m-0" >
+                                
+                                <a href="{% url 'addproduct'%}" class="dropdown-item" style="color: #1500ff;">ADD PRODUCT</a>
+                                <a href="{% url 'sellerviewproduct'%}" class="dropdown-item" style="color: #1500ff;"> VIEW PRODUCTS</a> 
                                 <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
                             <!-- </div>
                         </div> -->
@@ -77,11 +76,15 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+                      </div>  
                     </div>
+                    </div>
+                    <a href="{% url 'sellerviewproduct'%}" class="nav-item nav-link active " style="color: #0400ff;">MESSAGES</a>
+                    
                     <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
-                </div>
+                
             </nav>
-        </div>
+        
         <style>
     .body {
       background-color: #f8f9fa;
@@ -119,7 +122,7 @@
 
 <div class="profile-container">
   <div class="profile-header text-center">
-    <img src="{% static 'img/team-3.jpg'%}" alt="Profile Picture" class="profile-picture">
+    <img src="{% static 'img/person.jpeg'%}" alt="Profile Picture" class="profile-picture">
     <h1 class="profile-name">{{ seller.seller_name }}</h1>
     <div class="profile-details">
       <p>{{ seller.Email }}</p>

@@ -58,8 +58,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a>
                         <a href="{% url 'purchase'%}" class="nav-item nav-link">SHOP HERE</a>
+                        <a href="{% url 'myorders'%}" class="nav-item nav-link active">ORDERS</a>
+                        <a href="{% url 'cart'%}" class="nav-item nav-link active">CART</a>
+
+
                         <!-- <div class="nav-item dropdown">
                             <a href="{% url 'purchase'%}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">SHOP HERE</a> -->
                             <!-- <div class="dropdown-menu rounded-0 m-0">
@@ -119,7 +122,7 @@
 
 <div class="profile-container">
   <div class="profile-header text-center">
-    <img src="{% static 'img/testimonial-1.jpg'%}" alt="Profile Picture" class="profile-picture">
+    <img src="{% static 'img/person.jpeg'%}" alt="Profile Picture" class="profile-picture">
     <h1 class="profile-name">{{ customer.Customer_name }}</h1>
     <div class="profile-details">
       <p>{{ customer.Address }}</p>
