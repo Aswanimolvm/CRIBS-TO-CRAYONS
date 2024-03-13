@@ -59,8 +59,8 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="{% url 'customerprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <a href="about.html" class="nav-item nav-link">CART</a>
-                        <a href="about.html" class="nav-item nav-link">ORDERS</a>
+                        <a href="{% url 'cart'%}" class="nav-item nav-link">CART</a>
+                        <a href="{% url 'myorders'%}" class="nav-item nav-link">ORDERS</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">LOGOUT</a>
                             <div class="dropdown-menu rounded-0 m-0">

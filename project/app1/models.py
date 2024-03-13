@@ -91,7 +91,7 @@ class Baby_details(models.Model):
 class Baby_vaccine(models.Model):
     baby_id=models.ForeignKey(Baby_details,on_delete=models.CASCADE)
     vaccination_id=models.ForeignKey(Vaccination,on_delete=models.CASCADE,null=True, blank=True)
-    vaccination_status=models.CharField(max_length=50,null=True, blank=True,)
+    vaccination_status=models.CharField(max_length=50,null=True, blank=True)
     date=models.DateField(null=True,blank=True)
 
 
@@ -101,13 +101,16 @@ class Product(models.Model):
     price=models.IntegerField()
     product_details=models.CharField(max_length=100)
     location=models.CharField(max_length=30)
-    image=models.FileField(upload_to='product')
+    image1=models.FileField(upload_to='product')
+    image2=models.FileField(upload_to='product')
+    image3=models.FileField(upload_to='product')
 
 
 class Video(models.Model):
      hospital_id=models.ForeignKey(Hospital,on_delete=models.CASCADE)
      title=models.CharField(max_length=30)
-     upload_date=models.DateField()
+     discription=models.CharField(max_length=100,null=True, blank=True)
+     upload_date=models.DateField(auto_now=True)
      video=models.FileField(upload_to='videos')
     
 class Productbooking(models.Model):

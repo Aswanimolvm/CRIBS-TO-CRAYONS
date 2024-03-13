@@ -68,7 +68,7 @@
                             
                                 <a href="{% url 'adddoctordetails' %}" class="dropdown-item">DOCTOR DETAILS</a>
                                 <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
-                                <a href="{% url 'adddoctordetails' %}" class="dropdown-item">DOCTOR DETAILS</a>
+                                <!-- <a href="{% url 'adddoctordetails' %}" class="dropdown-item">DOCTOR DETAILS</a> -->
                             </div>
                         </div>
                         <div class="nav-item dropdown">
@@ -76,10 +76,19 @@
                           <div class="dropdown-menu rounded-0 m-0">
                               <a href="{% url 'viewparents'%}" class="dropdown-item">PARENT LIST</a>
                               <a href="{% url 'viewdoctorlist' %}" class="dropdown-item">DOCTORS LIST</a>
-                              
                               <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
+                              <a href="{% url 'viewappoinment' %}" class="dropdown-item">APPOINMENTS</a>
+
+                              
                           </div>
                       </div>
+                      <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIDEOS</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'addvideos'%}" class="dropdown-item">UPLOAD VIDEOS</a>
+                            <a href="{% url 'viewvideos' %}" class="dropdown-item">VIEW VIDEOS</a>
+                            </div>
+                            </div>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -130,7 +139,7 @@
 
 <div class="profile-container">
   <div class="profile-header text-center">
-    <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-picture">
+    <img src="{% static 'img/h1.jpeg' %}" alt="Profile Picture" class="profile-picture">
     <h1 class="profile-name">{{ hospital.hospital_name }}</h1>
     <div class="profile-details">
       <p>{{ hospital.Address }}</p>

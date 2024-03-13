@@ -58,7 +58,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a>
+                        <a href="{% url 'customerprofile'%}" class="nav-item nav-link active">HOME</a>
                         <a href="{% url 'login'%}" class="nav-item nav-link">LOGOUT</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
@@ -172,7 +172,7 @@ h4{
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6 registration-container">
-        <div class="card">
+        <div class="card" style="margin-top: 30px;">
           <div class="card-header" style="background-color: rgb(141, 141, 237);">
             <h2 class="text-center">EDIT YOUR PROFILE</h2>
           </div>
@@ -181,27 +181,27 @@ h4{
               {% csrf_token %}
               <div class="form-group">
                 <label for="username">Name</label>
-                <input type="text" class="form-control" id="username" name="Customer_name" required>
+                <input type="text" class="form-control" id="username" name="Customer_name" value="{{ customer.Customer_name }}">
               </div><div class="form-group">
                 <label for="username">Address</label>
-                <input type="text" class="form-control" id="username" name="Address" required>
+                <input type="text" class="form-control" id="username" name="Address" value="{{ customer.Address }}">
               </div>
               <div class="form-group">
                 <label for="username">Phone number</label>
-                <input type="text" class="form-control" id="username" name="phone" required>
+                <input type="text" class="form-control" id="username" name="phone" value="{{ customer.phone }}">
               </div>
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="Email" required>
+                <input type="email" class="form-control" id="email" name="Email" value="{{ customer.Email }}">
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
               </div>
               <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-              </div>
+              </div> -->
               {% if message %}
               <div style="color: red;">
                 {{message}}

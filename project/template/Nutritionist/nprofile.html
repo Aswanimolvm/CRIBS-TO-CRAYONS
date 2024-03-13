@@ -59,7 +59,7 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a>
-                        <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a>
+                        <a href="{% url 'viewparentmsg'%}" class="nav-item nav-link">MESSAGES</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -77,9 +77,10 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
+                    
+                    <a href="{% url 'login'%}" class="nav-item nav-link" >LOGOUT</a>
                 </div>
+              </div>
             </nav>
         </div>
         <style>
@@ -119,7 +120,7 @@
 
 <div class="profile-container">
   <div class="profile-header text-center">
-    <img src="{% static 'img/team-4.jpg'%}" alt="Profile Picture" class="profile-picture">
+    <img src="{% static 'img/person.jpeg'%}" alt="Profile Picture" class="profile-picture">
     <h1 class="profile-name">{{ nutritionist.Nutritionist_name }}</h1>
     <div class="profile-details">
       <p>{{ nutritionist.consulting_days }}</p>
@@ -137,9 +138,9 @@
     </div>
   </div> -->
 
-  <div class="text-center mt-3">
+  <!-- <div class="text-center mt-3">
     <a href="#" class="btn btn-primary">Edit Profile</a>
-  </div>
+  </div> -->
 </div>
 
 <!-- Bootstrap JS (Optional) -->

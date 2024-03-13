@@ -59,7 +59,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'hospitalprofile'%}" class="nav-item nav-link active">HOME</a>
+                        <a href="{% url 'sellerprofile'%}" class="nav-item nav-link active">HOME</a>
                         <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
                         <!-- <div class="nav-item dropdown"> -->
                             <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
@@ -91,43 +91,47 @@
 <br>
 
 <div class="container">
-    <h2>APPOINMENTS</h2>
+    <h2>BOOKINGS</h2>
     <table class="table table-striped">
       <thead>
         <tr>
-          
-          <th>Patient name</th>
-          <th>Appt Date</th>
-          <th>Doctor name</th>
-          <th>Accept/Cancel</th>
-          <th></th>
-          
+          <th>No.</th>
+          <th>Seller Name</th>
+          <th>Phone number</th>
+          <th>Product name</th>
+          <th>Message</th>
+          <th>Cancel</th>
+          <th>Status</th>
+         
           
         </tr>
       </thead>
       <tbody>
-        {% for i in doctor %}
+        {% for i in product %}
         <tr>
           <td>{{ forloop.counter }}</td>
-         <td>{{ i.Doctor_name }}</td>
-         <td>{{ i.qualification }}</td>
-         <td>{{ i.department }}</td>
-         <td>{{ i.consulting_days }}</td>
-         <td>{{ i.slots }}</td>
+         <td>{{ i.product_id.seller_id.seller_name }}</td>
+         <td>{{ i.product_id.seller_id.phone }}</td>
+         <td>{{ i.product_id.product_name }}</td>
+         
          
          
           <td>
-           {{ i.}}
+            <a href="{% url 'editdoctordetails' id=i.id %}" class="btn btn-primary">Message</a>
+           
 
            </td>
+           <!-- <td>
+            <a href="{% url 'editdoctordetails' id=i.id %}" class="btn btn-primary">Confirm</a>
+           
+
+           </td> -->
            <td>
-           <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Accept</a>
+           <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Cancel</a>
             
-          
-            <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Cancel</a>
-             
-           </td>
-          
+          </td>
+          <td>{{ i.status }}</td>
+         
         </tr>
         {% endfor %}
         

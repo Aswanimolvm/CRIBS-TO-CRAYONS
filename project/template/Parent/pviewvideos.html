@@ -58,9 +58,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'customerprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <a href="about.html" class="nav-item nav-link">CART</a>
-                        <a href="about.html" class="nav-item nav-link">ORDERS</a>
+                        <a href="{% url 'parentprofile'%}" class="nav-item nav-link active">HOME</a>
+                        <!-- <a href="{% url 'cart' %}" class="nav-item nav-link">CART</a>
+                        <a href="about.html" class="nav-item nav-link">ORDERS</a> -->
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">LOGOUT</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -425,114 +425,31 @@ Everything Your Little One Needs, Resold with Love!"<br>
                     <!-- <div class="w-50 h-50 mt-4 bg-black   ">
                         llkjlkjlkjl
                         </div> -->
-                        <section class="h-100 h-custom" style="background-color: #eee;">
-                            <div class="container py-5 h-100">
-                                <h2 style="text-align:center; color: #711bcd;">Your orders</h2>
-                              <div class="row d-flex justify-content-center align-items-center h-100">
-                                <div class="col-lg-8 col-xl-6">
-                                  <div class="card border-top border-bottom border-3" style="border-color: #6aa0f3 !important;">
-                                    <div class="card-body p-5">
-                          
-                                      
-                          
-                                        <p class="lead fw-bold mb-5" style="color: #2e27f3;">sadfghjk</p>
-
-                          
-                                      <div class="mx-n5 px-5 py-4" style="background-color: #d4ccf1;">
-
-                                        <div class="row">
-                                          <div class="col-md-8 col-lg-9">
-                                            <p>BEATS Solo 3 Wireless Headphones</p>
-                                          </div>
-                                          <div class="col-md-4 col-lg-3">
-                                            <p>£299.99</p>
-                                          </div>
-                                        </div>
-                                        <div class="row">
-                                          <div class="col-md-8 col-lg-9">
-                                            <p class="mb-0">Shipping</p>
-                                          </div>
-                                          <div class="col-md-4 col-lg-3">
-                                            <p class="mb-0">£33.00</p>
-                                          </div>
-                                        </div>
-                                    
-                          
-                                      <div class="row my-4">
-                                        <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
-                                          <p class="lead fw-bold mb-0" style="color: #330bd3;">£262.99</p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                      <div class="row">
-                                        <div class="col mb-3">
-                                          <p class="small text-muted mb-1">Date</p>
-                                          <p>10 April 2021</p>
-                                        </div>
-                                        <div class="col mb-3">
-                                          <p class="small text-muted mb-1">Order No.</p>
-                                          <p>012j1gvs356c</p>
-                                        </div>
-                                      </div>
-                          
-                                      <!-- <p class="lead fw-bold mb-4 pb-2" style="color: #5b4aef;">Tracking Order</p>
-                          
-                                      <div class="row">
-                                        <div class="col-lg-12">
-                          
-                                          <div class="horizontal-timeline">
-                          
-                                            <ul class="list-inline items d-flex justify-content-between">
-                                              <li class="list-inline-item items-list">
-                                                <p class="py-1 px-2 rounded text-white" style="background-color: #27a5f3;">Ordered</p
-                                                  class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">
-                                              </li>
-                                              <li class="list-inline-item items-list">
-                                                <p class="py-1 px-2 rounded text-white" style="background-color: #3f27f3;">Shipped</p
-                                                  class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">
-                                              </li>
-                                              <li class="list-inline-item items-list">
-                                                <p class="py-1 px-2 rounded text-white" style="background-color: #0b0469;">On the way
-                                                </p>
-                                              </li>
-                                              <li class="list-inline-item items-list text-end" style="margin-right: 8px;">
-                                                <p style="margin-right: -8px;">Delivered</p>
-                                              </li>
-                                            </ul>
-                          
-                                          </div> -->
-                          
-                                        <!-- </div>
-                                      </div>
-                           -->
-                                      <p class="mt-4 pt-2 mb-0">Want any help? <a href="#!" style="color: #8d0ce9;">Please contact
-                                          us</a></p>
-                          
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </section>
-                         
                         
-                        <!-- <div class="d-flex justify-content-around w-100  flex-wrap">
-
-
-                        <div class="card" style="width: 18rem;">
-                            <img class="card-img-top" src="{% static 'img/p1.jpg'%}" alt="Card image cap">
+                        <div class="d-flex justify-content-around w-100 gap-5 flex-wrap">
+                       
+                            {% for i in video %}
+                            <!-- <div class="d-flex flex-wrap "> -->
+                        <div class="card" style="width: 25rem;">
+                            <img class="card-img-top" src="{{ i.video.url }}"  style="height: 300px; width:100%;" alt="Card image cap">
                             <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                              <h5 class="card-title">{{ i.video_title }}</h5>
+                              <h6 class="card-title">{{ i.discription }}</h6>
+                              <h6 class="card-title">{{ i.date }}</h6>
+                              <!-- <h6 class="card-title">{{ i.product_details }}</h6> -->
+                              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                               <div class="d-flex gap-2">
 
-                                  <a href="#" class="btn btn-primary">Add to Cart</a>
-                                  <a href="#" class="btn btn-primary">Buy Now</a>
+                                  <a href="{% url 'addtocart'%}" class="btn btn-primary">PLAY</a>
+                                  <!-- <a href="#" class="btn btn-primary">Buy Now</a> -->
                                 </div>
                             </div>
-                          </div>
-
-                          <div class="card" style="width: 18rem;">
+                        <!-- </div> -->
+                        </div>
+                          {% endfor %}
+                       
+                    </div>
+                          <!-- <div class="card" style="width: 18rem;">
                             <img class="card-img-top" src="{% static 'img/p1.jpg'%}" alt="Card image cap">
                             <div class="card-body">
                               <h5 class="card-title">Card title</h5>

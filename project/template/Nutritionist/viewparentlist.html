@@ -59,7 +59,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'hospitalprofile'%}" class="nav-item nav-link active">HOME</a>
+                        <a href="{% url 'nprofile'%}" class="nav-item nav-link active">HOME</a>
                         <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
                         <!-- <div class="nav-item dropdown"> -->
                             <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
@@ -78,9 +78,10 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
+                    
+                    <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
                 </div>
+            </div>
             </nav>
         </div>
   <!-- Bootstrap CSS -->
@@ -91,43 +92,35 @@
 <br>
 
 <div class="container">
-    <h2>APPOINMENTS</h2>
+    <h2>PARENTS</h2>
     <table class="table table-striped">
       <thead>
         <tr>
-          
-          <th>Patient name</th>
-          <th>Appt Date</th>
-          <th>Doctor name</th>
-          <th>Accept/Cancel</th>
+          <th>No.</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
           <th></th>
-          
           
         </tr>
       </thead>
       <tbody>
-        {% for i in doctor %}
+        {% for i in parent %}
         <tr>
           <td>{{ forloop.counter }}</td>
-         <td>{{ i.Doctor_name }}</td>
-         <td>{{ i.qualification }}</td>
-         <td>{{ i.department }}</td>
-         <td>{{ i.consulting_days }}</td>
-         <td>{{ i.slots }}</td>
+         <td>{{ i.parent_name }}</td>
+         <td>{{ i.phone }}</td>
+         <td>{{ i.Email }}</td>
          
          
           <td>
-           {{ i.}}
-
-           </td>
-           <td>
-           <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Accept</a>
-            
-          
-            <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Cancel</a>
-             
-           </td>
-          
+            <!-- <a href="{% url 'addbaby' id=i.id %}" class="btn btn-primary">Add baby</a> -->
+            {% if i.baby_status == "True" %}
+           <a href="{% url 'viewbabyh' id=i.id %}" <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">View Baby</button>
+            {% endif %}
+          </td>
+          <!-- <td> <a href="{% url 'deleteparent' id=i.id %}" class="btn btn-primary">Delete</a></td> -->
+          <td></td>
         </tr>
         {% endfor %}
         

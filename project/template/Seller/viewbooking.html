@@ -78,9 +78,10 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
+                   
+                    <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
                 </div>
+            </div>
             </nav>
         </div>
   <!-- Bootstrap CSS -->
@@ -95,26 +96,25 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          
+          <th>No.</th>
           <th>Customer Name</th>
           <th>Phone number</th>
           <th>Product name</th>
-          <th>Product id</th>
           <th>Message</th>
-          <th>Confirm</th>
-          <th>Delete</th>
+          <th>Accept/Reject</th>
+          <th>Status</th>
          
           
         </tr>
       </thead>
       <tbody>
-        {% for i in doctor %}
+        {% for i in product %}
         <tr>
           <td>{{ forloop.counter }}</td>
-         <td>{{ i. }}</td>
-         <td>{{ i. }}</td>
-         <td>{{ i. }}</td>
-         <td>{{ i. }}</td>
+         <td>{{ i.customer_id.Customer_name }}</td>
+         <td>{{ i.customer_id.phone }}</td>
+         <td>{{ i.product_id.product_name }}</td>
+        
          
          
          
@@ -124,15 +124,29 @@
 
            </td>
            <td>
-            <a href="{% url 'editdoctordetails' id=i.id %}" class="btn btn-primary">Confirm</a>
-           
+            <form method="post" action="{% url 'bookingstatus' id=i.id %}">
+                {% csrf_token %}
+                {% if i.status == "pending" %}
+                <input type="hidden" name="status" >
+                <button title="accept" style="border: none;background-color: white;color: rgb(40, 167, 23); font-size: 20px;" type="submit" name="status" value="approve" >
+                  <i class="fa fa-check"></i> 
+                </button>
+                <button title="reject" style="border: none;background-color: white;color: red; font-size: 20px;" type="submit" name="status" value="reject" >
+                  <i class="fa fa-times"></i> 
+                </button>
+                {% else %}
+                <td>{{ i.status }}</td>
+                {% endif %}
+
+                
+              </form>           
 
            </td>
-           <td>
-           <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Delete</a>
+           <!-- <td>
+           <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Reject</a>
             
           </td>
-         
+          -->
         </tr>
         {% endfor %}
         

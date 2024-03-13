@@ -37,6 +37,7 @@ urlpatterns = [
     path('editproduct/<int:id>',views.edit_product,name="editproduct"),
     path('sellerviewproduct',views.seller_viewproducts,name="sellerviewproduct"),
     path('sellerviewbooking',views.seller_viewbookings,name="sellerviewbooking"),
+    path('bookingstatus/<int:id>',views.booking_status,name="bookingstatus"),
     path('chat',views.chat,name="chat"),
     path('deleteproduct/<int:id>',views.delete_product,name="deleteproduct"),
     
@@ -47,8 +48,11 @@ urlpatterns = [
     path('purchase',views.purchase,name="purchase"),
     path('cart',views.cart_view,name="cart"),
     path('viewproduct',views.view_product,name="viewproduct"),
+    path('productbooking/<int:id>',views.product_booking,name="productbooking"),
     path('myorders',views.my_orders,name="myorders"),
+    path('vieworders',views.view_orders,name="vieworders"),
     path('addtocart/<int:id>',views.add_to_cart,name="addtocart"),
+    path('chatwithseller',views.chat_withseller,name="chatwithseller"),
 
     #hospital#
     path('hospitalprofile',views.hospital_profile,name="hospitalprofile"),
@@ -64,9 +68,15 @@ urlpatterns = [
     path('deletedoctor/<int:id>',views.delete_doctor,name="deletedoctor"),
     path('deleteparent/<int:id>',views.delete_parent,name="deleteparent"),
     path('viewappoinment',views.view_appoinment,name="viewappoinment"),
+    path('addvideos',views.add_videos,name="addvideos"),
+    path('viewvideos',views.view_videos,name="viewvideos"),
+    path('parentviewvideos',views.pview_videos,name="parentviewvideos"),
+    path('editvideos',views.edit_videos,name="editvideos"),
 
     #nutritionist#
     path('nprofile',views.n_profile,name="nprofile"),
+    path('viewparentlist',views.view_parentlist,name="viewparentlist"),
+    path('parentmsg',views.parent_msg,name="parentmsg"),
 
     #parent#
     path('parentprofile',views.parent_profile,name="parentprofile"),
@@ -74,6 +84,8 @@ urlpatterns = [
     path('editbabydetails',views.edit_baby,name="editbabydetails"),
     path('editparentprofile',views.edit_parent,name="editparentprofile"),
     path('doctorlist',views.doctor_list,name="doctorlist"),
+    path('doctorbooking',views.doctor_booking,name="doctorbooking"),
+    
    
     
     

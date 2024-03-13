@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart
+from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
 
@@ -291,6 +291,12 @@ def delete_parent(request,id):
     return redirect(view_parent)
 def view_appoinment(request):
     return render(request,'Hospital/viewappoinmentbooking.html')
+def add_videos(request):
+    return render(request,'Hospital/addvideos.html')
+def view_videos(request):
+    return render(request,'Hospital/viewvideos.html')
+def edit_videos(request):
+    return render(request,'Hospital/editvideos.html')
 
 #parent#
 
@@ -355,7 +361,21 @@ def edit_parent(request):
     else:
         return render(request,'Parent/editparent.html',{'parent':parent})
 def doctor_list(request):
-    return render(request,'Parent/doctorslist.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    hospital= parent.hospital_id
+    doctor=Doctor.objects.filter(hospital_id=hospital)
+    print(doctor)
+    context={
+        'doctor':doctor
+    }
+    
+    return render(request,'Parent/doctorslist.html',context)
+def doctor_booking(request):
+    return render(request,'Parent/doctorbooking.html')
+def pview_videos(request):
+    return render(request,'Parent/pviewvideos.html')
+
 
 
 
@@ -385,7 +405,7 @@ def edit_seller(request):
         seller.save()
         # log_id.username=seller_name
         # log_id.save()
-        return HttpResponse("updated!!")
+        return redirect(seller_profile)
     else:
         return render(request,'Seller/editsellerprofile.html',{'seller':seller})
 def add_product(request):
@@ -396,15 +416,19 @@ def add_product(request):
         price=request.POST['price']
         product_details=request.POST['product_details']
         location=request.POST['location']
-        image=request.FILES['image']
+        image1=request.FILES['image1']
+        image2=request.FILES['image2']
+        image3=request.FILES['image3']
         product_data=Product.objects.create(seller_id=seller_id,
                                             product_name=product_name,
                                             price=price,
                                             product_details=product_details,
                                             location=location,
-                                            image=image)
+                                            image1=image1,
+                                            image2=image2,
+                                            image3=image3)
         product_data.save()
-        return render(request,'Seller/addproducts.html',{'message':"successfully uploaded!!"})
+        return redirect(seller_viewproducts)
     return render(request,'Seller/addproducts.html')
 def edit_product(request,id):
     # log_id=LoginUser.objects.get(id=request.user.id)
@@ -415,14 +439,18 @@ def edit_product(request,id):
         price=request.POST['price']
         product_details=request.POST['product_details']
         location=request.POST['location']
-        image=request.FILES['image']
+        if 'image1' in request.FILES:
+            product.image1=request.FILES['image1']
+        if 'image2' in request.FILES:
+            product.image2=request.FILES['image2']
+        if 'image3' in request.FILES:
+            product.image3=request.FILES['image3']
         product.product_name=product_name
         product.price=price
         product.product_details=product_details
         product.location=location
-        product.image=image
         product.save()
-        return HttpResponse("Updated!")
+        return redirect(seller_viewproducts)
     else:
         return render(request,'Seller/editproduct.html',{'product':product})
 def seller_viewproducts(request):
@@ -440,7 +468,25 @@ def delete_product(request,id):
     product.delete()
     return redirect(seller_viewproducts)
 def seller_viewbookings(request):
-    return render(request,'Seller/viewbooking.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    seller=Seller.objects.get(login_id=log_id)
+    product=Productbooking.objects.filter(product_id__seller_id=seller)
+    print(product)
+    context={
+        'product':product
+    }
+    return render(request,'Seller/viewbooking.html',context)
+def booking_status(request,id):
+    booking=Productbooking.objects.get(id=id)
+    if request.method=='POST':
+        status=request.POST["status"]
+        if status=="approve":
+            booking.status=status
+        elif status=="reject":
+            booking.status=status
+        booking.save()
+    return redirect(seller_viewbookings)
+
 def chat(request):
     return render(request,'Seller/chat.html')
 
@@ -454,18 +500,29 @@ def customer_profile(request):
         'customer':customer
     }
     return render(request,'Customer/customerprofile.html',context)
+
+def edit_customer(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    customer=Customer.objects.get(login_id=log_id)
+    if request.method=='POST':
+        customer_name=request.POST['Customer_name']
+        address=request.POST['Address']
+        email=request.POST['Email']
+        phone_number=request.POST['phone']
+        customer.Customer_name=customer_name
+        customer.Address=address
+        customer.Email=email
+        customer.phone=phone_number
+        customer.save()
+        return redirect(customer_profile)
+    else:
+        return render(request,'Customer/editprofile.html',{'customer':customer})
 def purchase(request):
     product=Product.objects.all()
     context={
         'product':product
     }
     return render(request,'Customer/purchase.html',context)
-def edit_customer(request):
-    return render(request,'Customer/editprofile.html')
-def view_product(request):
-    return render(request,'Customer/viewproduct.html')
-def my_orders(request):
-    return render(request,'Customer/myorder.html')
 def add_to_cart(request,id):
     product=Product.objects.get(id=id)
     log_id=LoginUser.objects.get(id=request.user.id)
@@ -473,7 +530,7 @@ def add_to_cart(request,id):
     cart=Cart.objects.create(product_id=product,customer_id=customer)
     cart.save()
     
-    return render(request,'Customer/cart.html')
+    return redirect(cart_view)
 def cart_view(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     customer=Customer.objects.get(login_id=log_id)
@@ -483,10 +540,37 @@ def cart_view(request):
         'cart':cart
     }
     return render(request,'Customer/cart.html',context)
+def view_product(request):
+    return render(request,'Customer/viewproduct.html')
+def product_booking(request,id):
+    product=Product.objects.get(id=id)
+    log_id=LoginUser.objects.get(id=request.user.id)
+    customer=Customer.objects.get(login_id=log_id)
+    booking=Productbooking.objects.create(product_id=product,customer_id=customer)
+    booking.save()
+    return redirect(my_orders)
+
+def my_orders(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    customer=Customer.objects.get(login_id=log_id)
+    product=Productbooking.objects.filter(customer_id=customer)
+    context={
+        'product':product
+    }
+    return render(request,'Customer/myorders.html',context)
+def view_orders(request):
+    return render(request,'Customer/viewmyorder.html')
+
+
+def chat_withseller(request):
+    return render(request,'Customer/chatwithseller.html')
  
 
 
+
+
 #nutritionist#
+
 def n_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     nutritionist=Nutritionist.objects.get(login_id=log_id)
@@ -494,3 +578,7 @@ def n_profile(request):
         'nutritionist':nutritionist
     }
     return render(request,'Nutritionist/nprofile.html',context)
+def view_parentlist(request):
+    return render(request,'Nutritionist/viewparentlist.html')
+def parent_msg(request):
+    return render(request,'Nutritionist/parentmsg.html')

@@ -58,7 +58,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                      <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link active">BOOKINGS</a>
+                      
                         <div class="nav-item dropdown" style="color: #0400ff;">
                              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">PRODUCT</a>
                             <div class="dropdown-menu rounded-0 m-0" >
@@ -78,11 +78,12 @@
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
                       </div>  
                     </div>
-                    </div>
-                    <a href="{% url 'sellerviewproduct'%}" class="nav-item nav-link active " style="color: #0400ff;">MESSAGES</a>
                     
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
-                
+                    <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link active">BOOKINGS</a>
+                    <a href="#" class="nav-item nav-link active ">MESSAGES</a>
+                    <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
+                  </div>
+                <!-- </div> -->
             </nav>
         
         <style>

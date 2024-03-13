@@ -58,8 +58,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'parentprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
+                        <a href="{% url 'hospitalprofile'%}" class="nav-item nav-link active">HOME</a>
+                        <a href="{% url 'viewvideos'%}" class="nav-item nav-link">VIDEOS</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -77,8 +77,8 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    <!-- </div> -->
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGIN</a>
+                    </div>
+                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
                 </div>
             </nav>
         </div>
@@ -148,7 +148,7 @@ h4{
     <li class="nav-item" role="presentation">
       <button class="nav-link ">ABOUT US</button>
     </li>
-    <li class="nav-item" role="presentation">
+    <!-- <li class="nav-item" role="presentation">
       <button class="nav-link"> LOGIN</button>
     </li>
     <li class="nav-item" role="presentation">
@@ -167,42 +167,47 @@ h4{
   <!-- <p><h3 style="color: blue;">Welcome to our registration platform!<br><br>  -->
 
     <!-- Excited to see you join our platform! Your offerings bring smiles and ease to families everywhere.Let's make parenthood and playtime a breeze together. Happy selling! -->
-  <!-- </h3><br>  
-<p> -->
+  </h3><br>  
+<p>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6 registration-container">
         <div class="card">
           <div class="card-header" style="background-color: rgb(141, 141, 237);">
-            <h2 class="text-center">Edit Baby Detalis</h2>
+            <h2 class="text-center">UPLOAD VIDEOS</h2>
           </div>
           <div class="card-body">
-            <form action="{% url 'editbabydetails'%}" method="POST">
+            <form action="{% url 'adddoctordetails'%}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group">
-                <label for="username">Baby Name</label>
-                <input type="text" class="form-control" id="username" name="baby_name" value="{{ baby.baby_name }}">
-              </div><div class="form-group">
-                <label for="username">Father Name</label>
-                <input type="text" class="form-control" id="username" name="father_name" value="{{ baby.father_name }}">
+                <label for="username">Videos title</label>
+                <input type="text" class="form-control" id="username" name="Doctor_name" required>
               </div>
               <div class="form-group">
-                <label for="username">Gender </label>
-                <input type="text" class="form-control" id="username" name="gender" value="{{ baby.gender }}">
+                <label for="username">Discription</label>
+                <input type="text" class="form-control" id="username" name="qualification" required>
               </div>
               <div class="form-group">
-                <label for="username">Weight</label>
-                <input type="text" class="form-control" id="username" name="weight" value="{{ baby.weight }}">
-              </div>
-              <div class="form-group">
-                <label for="username">Blood group</label>
-                <input type="text" class="form-control" id="username" name="blood_group" value="{{ baby.blood_group }}">
-              </div>
-              <div class="form-group">
-                <label for="username">Birth Date</label>
-                <input type="text" class="form-control" id="username" name="birth_date" value="{{ baby.birth_date }}">
+                <label for="username">Video </label>
+                <input type="file" class="form-control" id="username" name="department" required>
               </div>
               <!-- <div class="form-group">
+                <label for="email">Consulting days</label>
+                <input type="text" class="form-control" id="email" name="consulting_days" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Number of slots </label>
+                <input type="text" class="form-control"  name="slots" required>
+              </div> -->
+              <!-- <div class="form-group">
+                <label for="username">Licence proof</label>
+                <input type="file" class="form-control" id="username" name="licence_proof" required>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+              </div>
+              <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
               </div> -->
@@ -212,7 +217,7 @@ h4{
               </div>
               {% endif %}
               <div class="d-flex mt-4">
-              <button type="submit" class="btn btn-primary btn-block mx-auto">SAVE</button>
+              <button type="submit" class="btn btn-primary btn-block mx-auto">UPLOAD</button>
             </div>
             </form>
           </div>
