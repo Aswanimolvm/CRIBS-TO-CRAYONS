@@ -59,27 +59,33 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                       <a href="{% url 'sellerprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link">BOOKINGS</a>
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
-                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
-                                <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            <!-- </div>
-                        </div> -->
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
-                                <a href="404.html" class="dropdown-item"></a>
-                            </div>
-                        </div> -->
-                        <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
-                </div>
+                        <!-- <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link">BOOKINGS</a> -->
+                        <!-- <div class="nav-item dropdown" style="color: #0400ff;">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">PRODUCT</a>
+                         <div class="dropdown-menu rounded-0 m-0" > -->
+                             
+                             <a href="{% url 'addproduct'%}" class="nav-item nav-link active" >ADD PRODUCT</a>
+                             <!-- <a href="{% url 'sellerviewproduct'%}" class="dropdown-item" style="color: #1500ff;"> VIEW PRODUCTS</a>  -->
+                             <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
+                         <!-- </div>
+                     </div> -->
+                     <!-- <div class="nav-item dropdown">
+                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
+                         <div class="dropdown-menu rounded-0 m-0">
+                             <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
+                             <a href="404.html" class="dropdown-item"></a>
+                         </div>
+                     </div> -->
+                     <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+                   
+                 
+                 <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link active">BOOKINGS</a>
+                 <a href="#" class="nav-item nav-link active ">MESSAGES</a>
+                 <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
+               </div>
+              </div>  
+            </div>
+             <!-- </div> -->
             </nav>
         </div>
         <style>
@@ -123,15 +129,24 @@
 <div class="profile-container">
   
   <div class="profile-header text-center">
-    <img src="{{ i.image1.url }}" alt="Profile Picture" class="profile-picture">
-    <div class="d-flex ">
-    <img src="{{ i.image2.url }}" alt="">
-    <img src="{{ i.image3.url }}" alt="">
-    </div>
+    <!-- <img src="{{ i.image1.url }}" alt="Profile Picture" class="profile-picture"> -->
+    <div class="col-md-6 animated fadeIn">
+      <div class="owl-carousel header-carousel" >
+          <div class="owl-carousel-item">
+              <img class="img-fluid" src="{{ i.image1.url }}"   alt="" >
+          </div>
+          <div class="owl-carousel-item">
+              <img class="img-fluid" src="{{ i.image2.url }}" alt="">
+          </div>
+          <div class="owl-carousel-item">
+              <img class="img-fluid" src="{{ i.image3.url }}" alt="">
+          </div>
+      </div>
+  </div>
     <h1 class="profile-name">{{ i.product_name }}</h1>
     <div class="profile-details">
       <p>{{ i.price }}</p>
-      <p>{{ i.details }}</p>
+      <p>{{ i.product_details }}</p>
       <p>{{ i.location }}</p>
       
     </div>

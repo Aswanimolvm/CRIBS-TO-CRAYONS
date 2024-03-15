@@ -61,27 +61,33 @@
                     <div class="navbar-nav ms-auto">
                         <a href="{% url 'sellerprofile'%}" class="nav-item nav-link active">HOME</a>
                         <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
-                        <!-- <div class="nav-item dropdown"> -->
-                            <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
-                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
-                                <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            <!-- </div>
-                        </div> -->
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
-                                <a href="404.html" class="dropdown-item"></a>
-                            </div>
-                        </div> -->
-                        <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                   
-                    <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
-                </div>
-            </div>
+                        <div class="nav-item dropdown">
+                           <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
+                           <div class="nav-item dropdown" style="color: #0400ff;"> -->
+                                   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">PRODUCT</a>
+                                  <div class="dropdown-menu rounded-0 m-0" >
+                                      
+                                      <a href="{% url 'addproduct'%}" class="dropdown-item" style="color: #1500ff;">ADD PRODUCT</a>
+                                      <a href="{% url 'sellerviewproduct'%}" class="dropdown-item" style="color: #1500ff;"> VIEW PRODUCTS</a> 
+                                      <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a>  -->
+                                  <!-- </div>
+                              </div> -->
+                              <!-- <div class="nav-item dropdown">
+                                  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
+                                  <div class="dropdown-menu rounded-0 m-0">
+                                      <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
+                                      <a href="404.html" class="dropdown-item"></a>
+                                  </div>
+                              </div> -->
+                              <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+                            </div>  
+                          </div>
+                          
+                          <!-- <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link active">BOOKINGS</a> -->
+                          <a href="#" class="nav-item nav-link active ">MESSAGES</a>
+                          <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
+                        </div>
+                      <!-- </div> -->
             </nav>
         </div>
   <!-- Bootstrap CSS -->
@@ -101,7 +107,7 @@
           <th>Phone number</th>
           <th>Product name</th>
           <th>Message</th>
-          <th>Accept/Reject</th>
+          <th></th>
           <th>Status</th>
          
           
@@ -128,10 +134,10 @@
                 {% csrf_token %}
                 {% if i.status == "pending" %}
                 <input type="hidden" name="status" >
-                <button title="accept" style="border: none;background-color: white;color: rgb(40, 167, 23); font-size: 20px;" type="submit" name="status" value="approve" >
+                <button title="accept" style="border: none;background-color: white;color: rgb(40, 167, 23); font-size: 20px;" type="submit" name="status" value="approved" >
                   <i class="fa fa-check"></i> 
                 </button>
-                <button title="reject" style="border: none;background-color: white;color: red; font-size: 20px;" type="submit" name="status" value="reject" >
+                <button title="reject" style="border: none;background-color: white;color: red; font-size: 20px;" type="submit" name="status" value="rejected" >
                   <i class="fa fa-times"></i> 
                 </button>
                 {% else %}

@@ -188,7 +188,8 @@ def add_baby(request,id):
         baby_data.save()
         parent.baby_status="True"
         parent.save()
-        return render(request,'Hospital/addbaby.html',{'message':"Successfully Added",'parent':parent})
+        return redirect(view_parent)
+        
     else:
         return render(request,'Hospital/addbaby.html',{'parent':parent})
 def view_baby(request,id):
@@ -199,7 +200,15 @@ def view_baby(request,id):
         'baby':baby
     }
 
-    return render(request,'Hospital/viewbabydetails.html',context)    
+    return render(request,'Hospital/viewbabydetails.html',context)
+def add_vaccination(requesst):
+    return render(requesst,'Hospital/addvaccination.html')
+def mainview_vaccine(request):
+    return render(request,'Hospital/viewmainvaccine.html') 
+def generate_vaccine(request):
+    return render(request,'Hospital/generatevaccine.html') 
+def viewbaby_vaccine(request):
+    return render(request,'Hospital/babyvaccineview.html')  
 
 def add_nutritionist(request):
     log_id=LoginUser.objects.get(id=request.user.id)
@@ -339,6 +348,8 @@ def edit_baby(request):
         return HttpResponse("updated!!")
     else:
         return render(request,'Parent/editbabydetails.html',{'baby':baby})
+def vaccination_chart(request):
+    return render(request,'Parent/vaccinationchart.html')
 def edit_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
@@ -480,9 +491,9 @@ def booking_status(request,id):
     booking=Productbooking.objects.get(id=id)
     if request.method=='POST':
         status=request.POST["status"]
-        if status=="approve":
+        if status=="approved":
             booking.status=status
-        elif status=="reject":
+        elif status=="rejected":
             booking.status=status
         booking.save()
     return redirect(seller_viewbookings)
@@ -560,6 +571,10 @@ def my_orders(request):
     return render(request,'Customer/myorders.html',context)
 def view_orders(request):
     return render(request,'Customer/viewmyorder.html')
+def delete_order(request,id):
+    product=Productbooking.objects.get(id=id)
+    product.delete()
+    return redirect(my_orders)
 
 
 def chat_withseller(request):

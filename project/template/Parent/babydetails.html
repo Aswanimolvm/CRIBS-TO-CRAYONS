@@ -129,7 +129,7 @@
       <p>{{ i.weight }}</p>
     </div>
   </div>
-{% endfor %}
+
   <!-- <div class="card mt-3">
     <div class="card-header">
       <h5 class="card-title">About Me</h5>
@@ -141,7 +141,9 @@
 
   <div class="text-center mt-3">
     <a href="{% url 'editbabydetails'%}" class="btn btn-primary">Edit Profile</a>
+    <a href="{% url 'vaccinationchart'%}" class="btn btn-primary">Vaccination Chart</a>
   </div>
+  {% endfor %}
 </div>
 
 <!-- Bootstrap JS (Optional) -->

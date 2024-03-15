@@ -53,6 +53,7 @@ urlpatterns = [
     path('vieworders',views.view_orders,name="vieworders"),
     path('addtocart/<int:id>',views.add_to_cart,name="addtocart"),
     path('chatwithseller',views.chat_withseller,name="chatwithseller"),
+    path('deleteorder/<int:id>',views.delete_order,name="deleteorder"),
 
     #hospital#
     path('hospitalprofile',views.hospital_profile,name="hospitalprofile"),
@@ -72,6 +73,11 @@ urlpatterns = [
     path('viewvideos',views.view_videos,name="viewvideos"),
     path('parentviewvideos',views.pview_videos,name="parentviewvideos"),
     path('editvideos',views.edit_videos,name="editvideos"),
+    path('addvaccination',views.add_vaccination,name="addvaccination"),
+    path('mainviewvaccine',views.mainview_vaccine,name="mainviewvaccine"),
+    path('generatevaccine',views.generate_vaccine,name="generatevaccine"),
+    path('viewbabyvaccine',views.viewbaby_vaccine,name="viewbabyvaccine"),
+    
 
     #nutritionist#
     path('nprofile',views.n_profile,name="nprofile"),
@@ -85,6 +91,7 @@ urlpatterns = [
     path('editparentprofile',views.edit_parent,name="editparentprofile"),
     path('doctorlist',views.doctor_list,name="doctorlist"),
     path('doctorbooking',views.doctor_booking,name="doctorbooking"),
+    path('vaccinationchart',views.vaccination_chart,name="vaccinationchart"),
     
    
     

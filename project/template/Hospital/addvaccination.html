@@ -59,7 +59,7 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="{% url 'hospitalprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
+                        <a href="{% url 'viewvideos'%}" class="nav-item nav-link">VIDEOS</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -82,63 +82,133 @@
                 </div>
             </nav>
         </div>
-        <style>
-    .body {
-      background-color: #f8f9fa;
-    }
-    .profile-container {
-      max-width: 800px;
-      margin: 50px auto;
-    }
-    .profile-header {
-      background-color: #007bff;
-      color: #fff;
-      padding: 30px 20px;
-      border-radius: 8px;
-    }
-    .profile-picture {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: 5px solid #fff;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    }
-    .profile-name {
-      font-size: 28px;
-      margin-top: 20px;
-    }
-    .profile-details {
-      margin-top: 20px;
-    }
-    .profile-details p {
-      font-size: 18px;
-      margin-bottom: 5px;
-    }
+  <style>
+    /* body {
+      background-color: #f6f8fa;
+    } */
+    /* .registration-container {
+      margin-top: 50px;
+    } */
+    /* .nav-link{
+      background-color: #c8cbeadd;
+     } */
+  .container-fluid{
+  background-color: rgb(126, 28, 223);
+  font-family: Caveat;
+  font-family: Arial, sans-serif;
+  background-color:#c8cbeadd;
+  color: rgb(17, 86, 15); 
+}
+/* .nav-link{
+  color: rgb(1, 56, 3);
+}
+.nav-item{
+    justify-content: right;
+    /* font-family:Mukta ; */
+    color: white;
+} */
+/* .tab-pane{
+  width:20%;
+}
+.image{
+  width:100% ;
+  height: 100%;
+} */
+.card-header{
+  background-color: rgb(123, 105, 238);
+}
+.container{
+  margin-top: 50px;
+  text-align: center;
+}
+h3{
+  margin-top: 100px;
+  color: rgb(8, 7, 35);
+  margin-left: 50px;
+  font-family: Protest Riot;
+}
+h4{
+    color:rgb(31, 4, 100);
+  margin-left: 100px;
+  font-family: Protest Riot;
+}
+.ad{
+  margin-right: 725px;
+}
   </style>
-
-{% for i in baby %}
-<div class="profile-container">
-
-  <div class="profile-header text-center">
-    <img src="{% static 'img/b4.jpeg' %}" alt="Profile Picture" class="profile-picture">
-    <h1 class="profile-name">{{ i.baby_name }}</h1>
-    <div class="profile-details">
-      <p>{{ i.father_name }}</p>
-      <p>{{ i.birth_date }}</p>
-      <p>{{ i.gender }}</p>
-      <p>{{ i.blood_group }}</p>
-      <p>{{ i.weight }}</p>
-    </div>
-  </div>
-  <div class="text-center mt-3">
-    <a href="{% url 'generatevaccine'%}" class="btn btn-primary">VACCINATION</a>
-  </div>
+<!-- <body background="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F210191507589299745%2F&psig=AOvVaw07W-kMoIfk39vgEyraPDeD&ust=1708182632744000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCIjN-bGSsIQDFQAAAAAdAAAAABAF"">
+  <nav class="navbar fixed-top bg-body-tertiary">
+    <div class="container-fluid">
+      <h1 class="navbar-brand" href="#" style="color:rgb(3, 77, 7); font-family: Protest Riot;">CRIBS TO CRAYONS</h1>
+      <div class="ad">
+        <img src="https://i.pinimg.com/originals/5d/66/64/5d6664ccdb0f0a4865f20f0702ef6dbd.gif" alt="" width="50px" height="50px">
+      </div>
+   
+ 
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link ">ABOUT US</button>
+    </li>
+    <!-- <li class="nav-item" role="presentation">
+      <button class="nav-link"> LOGIN</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link"> SIGN IN</button>
+    </li> -->
+    <!-- <li class="nav-item" role="presentation">
+      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;Logout</button>
+    </li> -->
+  <!-- </ul>
 </div>
-{% endfor %}
-<!-- Bootstrap JS (Optional) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</nav> -->
 
-<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+<div class="container" style="color: #04189b;" >
+  <h2>VACCINATION DETAILS</h2>
+  <form>
+    <!-- Table inside the form -->
+    <div class="ss">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Vaccination Name</th>
+          <th>Age</th>
+          <!-- <th>Department</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" class="form-control" name="name" placeholder="Vaccine Name"></td>
+          <td><input type="email" class="form-control" name="email" placeholder="Date"></td>
+          <!-- <td>
+            <select class="form-control" name="department">
+              <option>Select Department</option>
+              <option value="IT">IT</option>
+              <option value="HR">HR</option>
+              <option value="Finance">Finance</option>
+            </select>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+</div>
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<style>
+    .ss{
+        background-color: #6dc3e5;
+    }
+</style>
+<!-- Link Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ <!-- Bootstrap JS -->
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
 <!-- JavaScript Libraries -->
@@ -152,5 +222,4 @@
 <!-- Template Javascript -->
 <script src="{% static 'js/main.js'%}"></script>
 </body>
-
 </html>

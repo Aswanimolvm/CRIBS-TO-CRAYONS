@@ -60,6 +60,7 @@
                     <div class="navbar-nav ms-auto">
                         <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a>
                         <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a>
+                        <a href="{% url 'login'%}" class="nav-item nav-link" >LOGIN</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -180,34 +181,34 @@ h4{
             <form action="{% url 'hospitalreg'%}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group">
-                <label for="username">Hospital Name</label>
+                <label for="username"style="color: black;">Hospital Name</label>
                 <input type="text" class="form-control" id="username" name="hospital_name" required>
               </div><div class="form-group">
-                <label for="username">Address</label>
+                <label for="username"style="color: black;">Address</label>
                 <input type="text" class="form-control" id="username" name="Address" required>
               </div>
               <div class="form-group">
-                <label for="username">Phone number</label>
+                <label for="username"style="color: black;">Phone number</label>
                 <input type="text" class="form-control" id="username" name="phone" required>
               </div>
               <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email"style="color: black;">Email</label>
                 <input type="email" class="form-control" id="email" name="Email" required>
               </div>
               <div class="form-group">
-                <label for="username">Licence proof</label>
+                <label for="username"style="color: black;">Licence proof</label>
                 <input type="file" class="form-control" id="username" name="licence_proof" required>
               </div>
               <div class="form-group">
-                <label for="username">Username</label>
+                <label for="username"style="color: black;">Username</label>
                 <input type="text" class="form-control" id="username" name="username" required>
               </div>
               <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password"style="color: black;">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
               </div>
               <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
+                <label for="confirmPassword"style="color: black;">Confirm Password</label>
                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
               </div>
               {% if message %}

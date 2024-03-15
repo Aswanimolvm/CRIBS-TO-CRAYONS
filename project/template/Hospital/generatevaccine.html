@@ -58,35 +58,28 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'sellerprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <!-- <div class="collapse navbar-collapse" id="navbarCollapse">
-                          <div class="navbar-nav ms-auto"> -->
-                            
-                              <div class="nav-item dropdown" style="color: #0400ff;">
-                                   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">PRODUCT</a>
-                                  <div class="dropdown-menu rounded-0 m-0" >
-                                      
-                                      <a href="{% url 'addproduct'%}" class="dropdown-item" style="color: #1500ff;">ADD PRODUCT</a>
-                                      <a href="{% url 'sellerviewproduct'%}" class="dropdown-item" style="color: #1500ff;"> VIEW PRODUCTS</a> 
-                                      <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                                  <!-- </div>
-                              </div> -->
-                              <!-- <div class="nav-item dropdown">
-                                  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
-                                  <div class="dropdown-menu rounded-0 m-0">
-                                      <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
-                                      <a href="404.html" class="dropdown-item"></a>
-                                  </div>
-                              </div> -->
-                              <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                            </div>  
-                          </div>
-                          
-                          <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link active">BOOKINGS</a>
-                          <a href="#" class="nav-item nav-link active ">MESSAGES</a>
-                          <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
-                        </div>
-                      <!-- </div> -->
+                        <a href="{% url 'hospitalprofile'%}" class="nav-item nav-link active">HOME</a>
+                        <a href="{% url 'viewvideos'%}" class="nav-item nav-link">VIDEOS</a>
+                        <!-- <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
+                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
+                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
+                                <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
+                            <!-- </div>
+                        </div> -->
+                        <!-- <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
+                                <a href="404.html" class="dropdown-item"></a>
+                            </div>
+                        </div> -->
+                        <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+                    </div>
+                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
+                </div>
             </nav>
         </div>
   <style>
@@ -141,9 +134,6 @@ h4{
 .ad{
   margin-right: 725px;
 }
-.dd{
-  margin-top: 50px;
-}
   </style>
 <!-- <body background="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F210191507589299745%2F&psig=AOvVaw07W-kMoIfk39vgEyraPDeD&ust=1708182632744000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCIjN-bGSsIQDFQAAAAAdAAAAABAF"">
   <nav class="navbar fixed-top bg-body-tertiary">
@@ -158,7 +148,7 @@ h4{
     <li class="nav-item" role="presentation">
       <button class="nav-link ">ABOUT US</button>
     </li>
-    <li class="nav-item" role="presentation">
+    <!-- <li class="nav-item" role="presentation">
       <button class="nav-link"> LOGIN</button>
     </li>
     <li class="nav-item" role="presentation">
@@ -174,37 +164,46 @@ h4{
   <!-- <img src="https://m.media-amazon.com/images/I/51Axbf7MM2L.jpg" width="100%" height="100%"> -->
 <!-- </div> --> 
 
-  <!-- <p><h3 style="color: blue;">Welcome to our registration platform!<br><br> 
+  <!-- <p><h3 style="color: blue;">Welcome to our registration platform!<br><br>  -->
 
-    Excited to see you join our platform! Your offerings bring smiles and ease to families everywhere.Let's make parenthood and playtime a breeze together. Happy selling!
+    <!-- Excited to see you join our platform! Your offerings bring smiles and ease to families everywhere.Let's make parenthood and playtime a breeze together. Happy selling! -->
   </h3><br>  
-<p> -->
-  <div class="dd container">
+<p>
+  <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6 registration-container">
         <div class="card">
           <div class="card-header" style="background-color: rgb(141, 141, 237);">
-            <h2 class="text-center">EDIT YOUR PROFILE</h2>
+            <h2 class="text-center">GENERATE VACCINATION DETAILS</h2>
           </div>
           <div class="card-body">
-            <form action="{% url 'editseller'%}" method="POST">
+            <form action="{% url 'generatevaccine'%}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group">
-                <label for="username" style="color: black;">Name</label>
-                <input type="text" class="form-control" id="username" name="seller_name" value="{{ seller.seller_name }}">
-              </div><div class="form-group">
-                <label for="username"style="color: black;">Address</label>
-                <input type="text" class="form-control" id="username" name="address" value="{{ seller.Address }}">
-              </div>
-              <div class="form-group">
-                <label for="username"style="color: black;">Phone number</label>
-                <input type="text" class="form-control" id="username" name="phone" value="{{ seller.phone }}">
-              </div>
-              <div class="form-group">
-                <label for="email"style="color: black;">Email</label>
-                <input type="email" class="form-control" id="email" name="email" value="{{ seller.Email }}">
+                <label for="username">Baby Birth Date</label>
+                <input type="text" class="form-control" id="username" name="babybirthdate" required>
               </div>
               <!-- <div class="form-group">
+                <label for="username">Discription</label>
+                <input type="text" class="form-control" id="username" name="qualification" required>
+              </div>
+              <div class="form-group">
+                <label for="username">Video </label>
+                <input type="file" class="form-control" id="username" name="department" required>
+              </div> -->
+              <!-- <div class="form-group">
+                <label for="email">Consulting days</label>
+                <input type="text" class="form-control" id="email" name="consulting_days" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Number of slots </label>
+                <input type="text" class="form-control"  name="slots" required>
+              </div> -->
+              <!-- <div class="form-group">
+                <label for="username">Licence proof</label>
+                <input type="file" class="form-control" id="username" name="licence_proof" required>
+              </div>
+              <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
               </div>
@@ -218,7 +217,7 @@ h4{
               </div>
               {% endif %}
               <div class="d-flex mt-4">
-              <button type="submit" class="btn btn-primary btn-block mx-auto">SAVE</button>
+              <button type="submit" class="btn btn-primary btn-block mx-auto">GENERATE</button>
             </div>
             </form>
           </div>

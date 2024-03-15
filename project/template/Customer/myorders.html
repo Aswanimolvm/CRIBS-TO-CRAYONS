@@ -117,7 +117,7 @@
          
          
           <td>
-            <a href="{% url 'editdoctordetails' id=i.id %}" class="btn btn-primary">Message</a>
+            <a href="{% url 'chatwithseller' %}" class="btn btn-primary">Message</a>
            
 
            </td>
@@ -127,7 +127,7 @@
 
            </td> -->
            <td>
-           <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Cancel</a>
+           <a href="{% url 'deleteorder' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Cancel</a>
             
           </td>
           <td>{{ i.status }}</td>
