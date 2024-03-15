@@ -59,8 +59,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'hospitalprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <a href="{% url 'addvideos'%}" class="nav-item nav-link">UPLOAD</a>
+                        <a href="{% url 'parentprofile'%}" class="nav-item nav-link active">HOME</a>
+                        <a href="#" class="nav-item nav-link">BOOKING</a>
                         <!-- <div class="nav-item dropdown"> -->
                             <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -91,35 +91,45 @@
 <br>
 
 <div class="container">
-    <h2>VACCINATION CHART</h2>
+    <h2>MY APPOINMENTS</h2>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>No.</th>
-          <th>Vaccine Name</th>
-          <th>Dose</th>
-          <th>Age</th>
-          
-           <!-- <th>Discription</th>
-          <th>uploaded date</th>
+            <th>No.</th>
+          <th>Name</th>
+          <th>Qualification</th>
+          <th>Department</th>
+          <th>Booking date</th>
+          <th>Booking Time</th>
           <th></th>
           <th></th>
-          <th></th>  -->
           
         </tr>
       </thead>
       <tbody>
-        {% for i in hospital %}
+        {% for i in booking %}
         <tr>
           <td>{{ forloop.counter }}</td>
-          <td>{{ i.Vaccination_name }}</td>
-         <td>{{ i.Dose }}</td>
-         <td>{{ i.Age }}</td>
-         </tr>
-         {% endfor %}
+         <td>{{ i.doctor_id.Doctor_name }}</td>
+         <td>{{ i.doctor_id.qualification }}</td>
+         <td>{{ i.doctor_id.department }}</td>
+         <td>{{ i.booking_date }}</td>
          
          
-          
+         
+          <td>
+            <a href="{% url 'cancelbooking' id=i.id %}" class="btn btn-primary">Cancel</a>
+           
+
+           </td>
+           <!-- <td>
+           <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Delete</a>
+            
+          </td> -->
+          <td></td>
+          <td></td>
+        </tr>
+        {% endfor %}
         
       </tbody>
     </table>

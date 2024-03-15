@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking
+from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking,Booking,Vaccination
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
 
@@ -202,9 +202,27 @@ def view_baby(request,id):
 
     return render(request,'Hospital/viewbabydetails.html',context)
 def add_vaccination(requesst):
+    log_id=LoginUser.objects.get(id=requesst.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    if requesst.method=='POST':
+        vaccine_name=requesst.POST['Vaccination_name']
+        dose=requesst.POST['Dose']
+        age=requesst.POST['Age']
+        vaccine=Vaccination.objects.create(hospital_id=hospital,
+                                           Vaccination_name=vaccine_name,
+                                           Dose=dose,
+                                           Age=age)
+        vaccine.save()
+        return redirect(mainview_vaccine)
     return render(requesst,'Hospital/addvaccination.html')
 def mainview_vaccine(request):
-    return render(request,'Hospital/viewmainvaccine.html') 
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    vaccine=Vaccination.objects.create(hospital_id=hospital)
+    context={
+        'vaccine':vaccine
+    }
+    return render(request,'Hospital/viewmainvaccine.html',context) 
 def generate_vaccine(request):
     return render(request,'Hospital/generatevaccine.html') 
 def viewbaby_vaccine(request):
@@ -298,8 +316,15 @@ def delete_parent(request,id):
     parent=Parent.objects.get(id=id)
     parent.delete()
     return redirect(view_parent)
-def view_appoinment(request):
-    return render(request,'Hospital/viewappoinmentbooking.html')
+def view_appoinment(request,id):
+    doctor=Doctor.objects.get(id=id)
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    booking=Booking.objects.filter(doctor_id__hospital_id=hospital,doctor_id=doctor)
+    context={
+        'booking':booking
+    }
+    return render(request,'Hospital/viewappoinmentbooking.html',context)
 def add_videos(request):
     return render(request,'Hospital/addvideos.html')
 def view_videos(request):
@@ -382,7 +407,34 @@ def doctor_list(request):
     }
     
     return render(request,'Parent/doctorslist.html',context)
-def doctor_booking(request):
+def doctor_booking(request,id):
+    doctor=Doctor.objects.get(id=id)
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    
+
+    booking=Booking.objects.create(parent_id=parent,doctor_id=doctor)
+    
+
+    booking.save()
+    doctor.slots = doctor.slots-1
+    doctor.save()
+    return redirect(my_appoinments)
+def my_appoinments(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    booking=Booking.objects.filter(parent_id=parent)
+    context={
+        'booking':booking
+    }
+    return render(request,'Parent/myappoinments.html',context)
+
+def cancel_booking(request,id):
+    booking=Booking.objects.get(id=id)
+    booking.delete()
+    return redirect(my_appoinments)
+
+    
     return render(request,'Parent/doctorbooking.html')
 def pview_videos(request):
     return render(request,'Parent/pviewvideos.html')
@@ -497,7 +549,6 @@ def booking_status(request,id):
             booking.status=status
         booking.save()
     return redirect(seller_viewbookings)
-
 def chat(request):
     return render(request,'Seller/chat.html')
 

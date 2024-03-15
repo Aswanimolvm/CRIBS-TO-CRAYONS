@@ -68,7 +68,7 @@ urlpatterns = [
     path('viewdoctorlist',views.view_doctor,name="viewdoctorlist"),
     path('deletedoctor/<int:id>',views.delete_doctor,name="deletedoctor"),
     path('deleteparent/<int:id>',views.delete_parent,name="deleteparent"),
-    path('viewappoinment',views.view_appoinment,name="viewappoinment"),
+    path('viewappoinment/<int:id>',views.view_appoinment,name="viewappoinment"),
     path('addvideos',views.add_videos,name="addvideos"),
     path('viewvideos',views.view_videos,name="viewvideos"),
     path('parentviewvideos',views.pview_videos,name="parentviewvideos"),
@@ -90,8 +90,11 @@ urlpatterns = [
     path('editbabydetails',views.edit_baby,name="editbabydetails"),
     path('editparentprofile',views.edit_parent,name="editparentprofile"),
     path('doctorlist',views.doctor_list,name="doctorlist"),
-    path('doctorbooking',views.doctor_booking,name="doctorbooking"),
+    path('doctorbooking/<int:id>',views.doctor_booking,name="doctorbooking"),
+    path('myappoinments',views.my_appoinments,name="myappoinments"),
+    path('cancelbooking/<int:id>',views.cancel_booking,name="cancelbooking"),
     path('vaccinationchart',views.vaccination_chart,name="vaccinationchart"),
+
     
    
     

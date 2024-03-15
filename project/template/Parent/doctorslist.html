@@ -2,8 +2,9 @@
 <html lang="en">
 
 {% load static %}
+
 <head>
-    
+
     <meta charset="utf-8">
     <title>CRIBS TO CRAYONS</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -16,8 +17,9 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap"
+        rel="stylesheet">
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -37,7 +39,8 @@
 <body>
     <div class="container-xxl bg-white p-0">
         <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
@@ -50,10 +53,11 @@
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
                 <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
-                        <img class="img-fluid" src="{% static 'img/logo.gif' %}" alt="Icon" style="width: 30px; height: 30px;">
+                        <img class="img-fluid" src="{% static 'img/logo.gif' %}" alt="Icon"
+                            style="width: 30px; height: 30px;">
                     </div>
-                    <h1 class="m-0 " >CRIBS TO CRAYONS</h1>
-                </a> 
+                    <h1 class="m-0 ">CRIBS TO CRAYONS</h1>
+                </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -62,13 +66,13 @@
                         <a href="{% url 'parentprofile'%}" class="nav-item nav-link active">HOME</a>
                         <a href="#" class="nav-item nav-link">BOOKING</a>
                         <!-- <div class="nav-item dropdown"> -->
-                            <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
+                        <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
                                 <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
                                 <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
-                                <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            <!-- </div>
+                        <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
+                        <!-- </div>
                         </div> -->
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
@@ -79,77 +83,81 @@
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
                     </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
+                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex">LOGOUT</a>
                 </div>
             </nav>
         </div>
-  <!-- Bootstrap CSS -->
-  
-<br>
-<br>
-<br>
-<br>
+        <!-- Bootstrap CSS -->
 
-<div class="container">
-    <h2>DOCTOR LIST</h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-            <th>No.</th>
-          <th>Name</th>
-          <th>Qualification</th>
-          <th>Department</th>
-          <th>Consulting days</th>
-          <th>Available slots</th>
-          <th></th>
-          <th></th>
-          
-        </tr>
-      </thead>
-      <tbody>
-        {% for i in doctor %}
-        <tr>
-          <td>{{ forloop.counter }}</td>
-         <td>{{ i.Doctor_name }}</td>
-         <td>{{ i.qualification }}</td>
-         <td>{{ i.department }}</td>
-         <td>{{ i.consulting_days }}</td>
-         <td>{{ i.slots }}</td>
-         
-         
-          <td>
-            <a href="{% url 'doctorbooking' %}" class="btn btn-primary">Book</a>
-           
+        <br>
+        <br>
+        <br>
+        <br>
 
-           </td>
-           <!-- <td>
+        <div class="container">
+            <h2>DOCTOR LIST</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Qualification</th>
+                        <th>Department</th>
+                        <th>Consulting days</th>
+                        <th>Available slots</th>
+                        <th></th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in doctor %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.Doctor_name }}</td>
+                        <td>{{ i.qualification }}</td>
+                        <td>{{ i.department }}</td>
+                        <td>{{ i.consulting_days }}</td>
+                        <td>{{ i.slots }}</td>
+
+                        {% if i.slots != 0 %}
+                        <td>
+
+                            <a href="{% url 'doctorbooking' id=i.id %}" class="btn btn-primary">Book</a>
+                        </td>
+                        {% else %}
+
+                        <td></td>
+                        {% endif %}
+                        <!-- <td>
            <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Delete</a>
             
           </td> -->
-          <td></td>
-          <td></td>
-        </tr>
-        {% endfor %}
-        
-      </tbody>
-    </table>
-  </div>
-  <!-- Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-</div>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
 
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'js/wow.min.js'%}"></script>
-<script src="{% static 'js/easing.min.js'%}"></script>
-<script src="{% static 'js/waypoints.min.js'%}"></script>
-<script src="{% static 'js/owl.carousel.min.js'%}"></script>
+                </tbody>
+            </table>
+        </div>
+        <!-- Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
 
-<!-- Template Javascript -->
-<script src="{% static 'js/main.js'%}"></script>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/wow.min.js'%}"></script>
+    <script src="{% static 'js/easing.min.js'%}"></script>
+    <script src="{% static 'js/waypoints.min.js'%}"></script>
+    <script src="{% static 'js/owl.carousel.min.js'%}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js'%}"></script>
 </body>
+
 </html>

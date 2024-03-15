@@ -68,13 +68,15 @@ class Doctor(models.Model):
 class Booking(models.Model):
     doctor_id=models.ForeignKey(Doctor,on_delete=models.CASCADE)
     parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE)
-    booking_date=models.CharField(max_length=10)
-    booking_time=models.TimeField(auto_now=True)
+    booking_date=models.DateTimeField(auto_now=True)
+   
 
 class Vaccination(models.Model):
      hospital_id=models.ForeignKey(Hospital,on_delete=models.CASCADE)
      Vaccination_name=models.CharField(max_length=100,blank=True,null=True)
-     duration=models.IntegerField(null=True, blank=True)
+     Dose=models.IntegerField(null=True, blank=True)
+     Age=models.IntegerField(null=True, blank=True)
+     
      
 
 class Baby_details(models.Model):

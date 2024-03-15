@@ -95,38 +95,37 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          
+            <th>No.</th>
           <th>Patient name</th>
           <th>Appt Date</th>
-          <th>Doctor name</th>
-          <th>Accept/Cancel</th>
-          <th></th>
+          <!-- <th>Doctor name</th>
+          <th>Remaining Slots</th> -->
+          
           
           
         </tr>
       </thead>
       <tbody>
-        {% for i in doctor %}
+        {% for i in booking %}
         <tr>
           <td>{{ forloop.counter }}</td>
-         <td>{{ i.Doctor_name }}</td>
-         <td>{{ i.qualification }}</td>
-         <td>{{ i.department }}</td>
-         <td>{{ i.consulting_days }}</td>
-         <td>{{ i.slots }}</td>
+         <td>{{ i.parent_id.parent_name }}</td>
+         <td>{{ i.booking_date }}</td>
+         <!-- <td>{{ i.doctor_id.Doctor_name }}</td> -->
+         <!-- <td>{{ i.doctor_id.slots }}</td> -->
          
          
-          <td>
+          <!-- <td>
            {{ i.}}
 
-           </td>
-           <td>
+           </td> -->
+           <!-- <td>
            <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Accept</a>
             
           
             <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Cancel</a>
              
-           </td>
+           </td> -->
           
         </tr>
         {% endfor %}
