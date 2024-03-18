@@ -94,6 +94,7 @@
     <h2>VACCINATION CHART</h2>
     <table class="table table-striped">
       <thead>
+        
         <tr>
           <th>No.</th>
           <th>Vaccine Name</th>
@@ -109,15 +110,15 @@
         </tr>
       </thead>
       <tbody>
-        {% for i in hospital %}
+        {% for i in vaccine %}
         <tr>
           <td>{{ forloop.counter }}</td>
           <td>{{ i.Vaccination_name }}</td>
          <td>{{ i.Dose }}</td>
          <td>{{ i.Age }}</td>
          </tr>
+       
          {% endfor %}
-         
          
           
         

@@ -85,15 +85,34 @@
         </div>
   <!-- Bootstrap CSS -->
   
-<br>
-<br>
-<br>
-<br>
 
+<br>
+<br>
+ <!-- Search Start -->
+ <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+    <div class="container">
+        <div class="row g-2">
+            <div class="col-md-6">
+
+            </div>
+           
+            <form method="get" action="{% url 'searchdoctor'%}">
+            <div class=" col-md-6 d-flex ">
+                <input type="text" class="form-control border-0 py-xl-4  " placeholder="Doctor name" name="search" >
+                <div>
+                <button class="btn btn-dark border-0 w-100 py-3">Search</button>
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+</div>
+<!-- Search End -->
 <div class="container">
     <h2>DOCTOR LIST</h2>
     <table class="table table-striped">
       <thead>
+        
         <tr>
             <th>No.</th>
           <th>Name</th>
@@ -107,8 +126,10 @@
           
           
         </tr>
+        
       </thead>
       <tbody>
+
         {% for i in doctor %}
         <tr>
           <td>{{ forloop.counter }}</td>
@@ -134,7 +155,17 @@
         {% endfor %}
         
       </tbody>
+
     </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>
   </div>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

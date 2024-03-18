@@ -57,31 +57,63 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto">
-                        <a href="{% url 'hospitalprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <a href="{% url 'viewvideos'%}" class="nav-item nav-link">VIDEOS</a>
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
-                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
-                                <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            <!-- </div>
-                        </div> -->
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
-                                <a href="404.html" class="dropdown-item"></a>
-                            </div>
-                        </div> -->
-                        <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+                  <div class="navbar-nav ms-auto">
+                      <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
+                      <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
+                      <!-- <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a> -->
+                      <div class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">ADD</a>
+                          <div class="dropdown-menu rounded-0 m-0">
+                              <a href="{% url 'addparent'%}" class="dropdown-item">PARENT</a>
+                          
+                              <a href="{% url 'adddoctordetails' %}" class="dropdown-item">DOCTOR DETAILS</a>
+                              <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
+                              <!-- <a href="{% url 'adddoctordetails' %}" class="dropdown-item">DOCTOR DETAILS</a> -->
+                          </div>
+                      </div>
+                      <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEW</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'viewparents'%}" class="dropdown-item">PARENT LIST</a>
+                            <a href="{% url 'viewdoctorlist' %}" class="dropdown-item">DOCTORS LIST</a>
+                            <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
+                            
+
+                            
+                        </div>
                     </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
-                </div>
-            </nav>
-        </div>
+                    <!-- <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VACCINATION</a>
+                      <div class="dropdown-menu rounded-0 m-0">
+                          <a href="{% url 'addvaccination'%}" class="dropdown-item">ADD VACCINATION LIST</a> -->
+                          <a href="{% url 'mainviewvaccine' %}" class="nav-item nav-link active">VIEW VACCINATION</a>
+                          <!-- <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
+                          
+
+                          
+                      </div>
+                  </div>
+                    <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIDEOS</a>
+                      <div class="dropdown-menu rounded-0 m-0">
+                          <a href="{% url 'addvideos'%}" class="dropdown-item">UPLOAD VIDEOS</a>
+                          <a href="{% url 'viewvideos' %}" class="dropdown-item">VIEW VIDEOS</a>
+                          </div>
+                          </div>
+                      <div class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
+                          <div class="dropdown-menu rounded-0 m-0">
+                              <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
+                              <a href="404.html" class="dropdown-item"></a>
+                          </div>
+                      </div> -->
+                      <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+                  <!-- </div>
+                </div> -->
+                  <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
+              </div>
+          </nav>
+      </div>
   <style>
     /* body {
       background-color: #f6f8fa;
@@ -118,8 +150,7 @@
   background-color: rgb(123, 105, 238);
 }
 .container{
-  margin-top: 50px;
-  text-align: center;
+  margin-top: 0px;
 }
 h3{
   margin-top: 100px;
@@ -161,58 +192,76 @@ h4{
   <!-- </ul>
 </div>
 </nav> -->
+<!-- <div class="parent" > -->
+  <!-- <img src="https://m.media-amazon.com/images/I/51Axbf7MM2L.jpg" width="100%" height="100%"> -->
+<!-- </div> --> 
 
-<div class="container" style="color: #04189b;" >
-  <h2>VACCINATION DETAILS</h2>
-  <form>
-    <!-- Table inside the form -->
-    <div class="ss">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Vaccin Name</th>
-          <th>Dose</th>
-          <th>Month</th>
-          
-          <!-- <th>Department</th> -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><input type="text" class="form-control" name="name" placeholder="Vaccine Name"></td>
-          <td><input type="text" class="form-control" name="name" placeholder="Dose"></td>
-          <td><input type="text" class="form-control" name="name" placeholder="Month"></td>
-          
-          <!-- <td>
-            <select class="form-control" name="department">
-              <option>Select Department</option>
-              <option value="IT">IT</option>
-              <option value="HR">HR</option>
-              <option value="Finance">Finance</option>
-            </select>
-          </td> -->
-        </tr>
-      </tbody>
-    </table>
-</div>
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</div>
-<style>
-    .ss{
-        background-color: #6dc3e5;
-    }
-</style>
-<!-- Link Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- <!-- Bootstrap JS -->
- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+  <!-- <p><h3 style="color: blue;">Welcome to our registration platform!<br><br>  -->
+
+    <!-- Excited to see you join our platform! Your offerings bring smiles and ease to families everywhere.Let's make parenthood and playtime a breeze together. Happy selling! -->
+  </h3><br>  
+<p>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 registration-container">
+        <div class="card">
+          <div class="card-header" style="background-color: rgb(141, 141, 237);">
+            <h2 class="text-center">ADD VACCINATION</h2>
+          </div>
+          <div class="card-body">
+            <form action="{% url 'addvaccination'%}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="username">Vaccine Name</label>
+                <input type="text" class="form-control" id="username" name="Vaccination_name" required>
+              </div><div class="form-group">
+                <label for="username">Dose</label>
+                <input type="text" class="form-control" id="username" name="Dose" required>
+              </div>
+              <div class="form-group">
+                <label for="username">Age</label>
+                <input type="text" class="form-control" id="username" name="Age" required>
+              </div>
+              <!-- <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="Email" required>
+              </div>
+              <div class="form-group">
+                <label for="username">Blood group</label>
+                <input type="text" class="form-control" id="username" name="blood_group" required>
+              </div>
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+              </div> -->
+              {% if message %}
+              <div style="color: red;">
+                {{message}}
+              </div>
+              {% endif %}
+              <div class="d-flex mt-4">
+              <button type="submit" class="btn btn-primary btn-block mx-auto">Upolad</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
 
 <!-- JavaScript Libraries -->
@@ -226,4 +275,5 @@ h4{
 <!-- Template Javascript -->
 <script src="{% static 'js/main.js'%}"></script>
 </body>
+
 </html>

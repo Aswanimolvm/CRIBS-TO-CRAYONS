@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking,Booking,Vaccination
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
+from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 def home(request):
@@ -162,9 +164,25 @@ def add_parent(request):
                                         blood_group=blood_group
                                         )
         parent_data.save()
-        return render(request,'Hospital/addparent.html',{'message':"PARENT ADDED"})
+        return redirect(view_parent)
     else:
         return render(request,'Hospital/addparent.html')
+def search_parent(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    parents=Parent.objects.filter(hospital_id=hospital)
+    if request.method=='GET':
+        parent_name=request.GET['search']
+        parents=Parent.objects.filter(hospital_id=hospital,
+                                      parent_name__icontains=parent_name)
+        context={
+            'parent':parents
+            }
+        return render(request,'Hospital/viewparents.html',context)
+def delete_parent(request,id):
+    parent=Parent.objects.get(id=id)
+    parent.delete()
+    return redirect(view_parent)
 def add_baby(request,id):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -213,12 +231,13 @@ def add_vaccination(requesst):
                                            Dose=dose,
                                            Age=age)
         vaccine.save()
+       
         return redirect(mainview_vaccine)
     return render(requesst,'Hospital/addvaccination.html')
 def mainview_vaccine(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
-    vaccine=Vaccination.objects.create(hospital_id=hospital)
+    vaccine=Vaccination.objects.filter(hospital_id=hospital)
     context={
         'vaccine':vaccine
     }
@@ -277,9 +296,35 @@ def view_doctor(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
     doctor=Doctor.objects.filter(hospital_id=hospital)
+    items_per_page = 5
+
+        # Use Paginator to paginate the products
+    paginator = Paginator(doctor, items_per_page)
+    page = request.GET.get('page', 1)
+
+    try:
+        doctors = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver the first page
+        doctors = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver the last page of results
+        doctors = paginator.page(paginator.num_pages)
     context={
-        'doctor':doctor
+        'doctor':doctors
     }
+    return render(request,'Hospital/viewdoctordetails.html',context)
+def search_doctor(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    doctors=Doctor.objects.filter(hospital_id=hospital)
+    if request.method=='GET':
+        doctor_name=request.GET['search']
+        doctors=Doctor.objects.filter(hospital_id=hospital,
+                                      Doctor_name__icontains=doctor_name)
+        context={
+        'doctor':doctors
+        }
     return render(request,'Hospital/viewdoctordetails.html',context)
 def edit_doctor(request,id):
     # log_id=LoginUser.objects.get(id=request.user.id)
@@ -312,10 +357,7 @@ def view_parent(request):
         'parent': parents
     }
     return render(request,'Hospital/viewparents.html',context)
-def delete_parent(request,id):
-    parent=Parent.objects.get(id=id)
-    parent.delete()
-    return redirect(view_parent)
+
 def view_appoinment(request,id):
     doctor=Doctor.objects.get(id=id)
     log_id=LoginUser.objects.get(id=request.user.id)
@@ -407,6 +449,20 @@ def doctor_list(request):
     }
     
     return render(request,'Parent/doctorslist.html',context)
+def parentsearch_doctor(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    hospital=parent.hospital_id
+    doctors=Doctor.objects.filter(hospital_id=hospital)
+    if request.method=='GET':
+        doctor_name=request.GET['search']
+        doctors=Doctor.objects.filter(Doctor_name__icontains=doctor_name,
+                                hospital_id=hospital)
+        context={
+            'doctor':doctors
+
+        }
+        return render(request,'Parent/doctorslist.html',context)
 def doctor_booking(request,id):
     doctor=Doctor.objects.get(id=id)
     log_id=LoginUser.objects.get(id=request.user.id)
@@ -585,6 +641,16 @@ def purchase(request):
         'product':product
     }
     return render(request,'Customer/purchase.html',context)
+def product_search(request):
+    if request.method=='GET':
+        search=request.GET['search']
+        products=Product.objects.filter(
+            Q(product_name__icontains=search) |
+            Q(location__icontains=search))
+        context={
+            'product':products
+        }
+        return render(request,'Customer/purchase.html',context)
 def add_to_cart(request,id):
     product=Product.objects.get(id=id)
     log_id=LoginUser.objects.get(id=request.user.id)
