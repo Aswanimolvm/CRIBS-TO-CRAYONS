@@ -57,29 +57,72 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto">
-                        <a href="{% url 'hospitalprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
-                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
-                                <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            <!-- </div>
-                        </div> -->
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
-                                <a href="404.html" class="dropdown-item"></a>
-                            </div>
-                        </div> -->
-                        <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    <!-- </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGIN</a>
-                </div> -->
+                  <div class="navbar-nav ms-auto">
+                      <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
+                      <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
+                      <!-- <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a> -->
+                      <div class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">ADD</a>
+                          <div class="dropdown-menu rounded-0 m-0">
+                              <a href="{% url 'addparent'%}" class="dropdown-item">PARENT</a>
+                          
+                              <a href="{% url 'adddoctordetails' %}" class="dropdown-item">DOCTOR DETAILS</a>
+                              <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
+                              <!-- <a href="{% url 'adddoctordetails' %}" class="dropdown-item">DOCTOR DETAILS</a> -->
+                          </div>
+                      </div>
+                      <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEW</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'viewparents'%}" class="dropdown-item">PARENT LIST</a>
+                            <a href="{% url 'viewdoctorlist' %}" class="dropdown-item">DOCTORS LIST</a>
+                            <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
+                            
+
+                            
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIDEOS</a>
+                      <div class="dropdown-menu rounded-0 m-0">
+                          <a href="{% url 'addvideos'%}" class="dropdown-item">UPLOAD</a>
+                          <a href="{% url 'viewvideos' %}" class="dropdown-item">VIEW</a>
+                          <!-- <a href="{% url 'addnutritionist' %}" class="dropdown-item"></a> -->
+                          
+
+                          
+                      </div>
+                  </div>
+                    <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VACCINATION</a>
+                      <div class="dropdown-menu rounded-0 m-0">
+                          <a href="{% url 'addvaccination'%}" class="dropdown-item">ADD VACCINATION LIST</a>
+                          <a href="{% url 'mainviewvaccine' %}" class="dropdown-item">VIEW VACCINATION</a>
+                          <!-- <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
+                          
+
+                          
+                      </div>
+                  </div>
+                    <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIDEOS</a>
+                      <div class="dropdown-menu rounded-0 m-0">
+                          <a href="{% url 'addvideos'%}" class="dropdown-item">UPLOAD VIDEOS</a>
+                          <a href="{% url 'viewvideos' %}" class="dropdown-item">VIEW VIDEOS</a>
+                          </div>
+                          </div>
+                      <div class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
+                          <div class="dropdown-menu rounded-0 m-0">
+                              <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
+                              <a href="404.html" class="dropdown-item"></a>
+                          </div>
+                      </div> -->
+                      <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+                  </div>
+                </div>
+                  <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
+              </div>
             </nav>
         </div>
   <style>

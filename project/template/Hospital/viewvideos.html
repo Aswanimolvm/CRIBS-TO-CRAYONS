@@ -59,18 +59,60 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'hospitalprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <a href="{% url 'addvideos'%}" class="nav-item nav-link">UPLOAD</a>
-                        <!-- <div class="nav-item dropdown"> -->
-                            <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
+                        <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
+                        <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
+                        <!-- <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a> -->
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">ADD</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
-                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
-                                <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            <!-- </div>
-                        </div> -->
-                        <!-- <div class="nav-item dropdown">
+                                <a href="{% url 'addparent'%}" class="dropdown-item">PARENT</a>
+                            
+                                <a href="{% url 'adddoctordetails' %}" class="dropdown-item">DOCTOR DETAILS</a>
+                                <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
+                                <!-- <a href="{% url 'adddoctordetails' %}" class="dropdown-item">DOCTOR DETAILS</a> -->
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEW</a>
+                          <div class="dropdown-menu rounded-0 m-0">
+                              <a href="{% url 'viewparents'%}" class="dropdown-item">PARENT LIST</a>
+                              <a href="{% url 'viewdoctorlist' %}" class="dropdown-item">DOCTORS LIST</a>
+                              <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
+                              
+  
+                              
+                          </div>
+                      </div>
+                      <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIDEOS</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'addvideos'%}" class="dropdown-item">UPLOAD</a>
+                            <a href="{% url 'viewvideos' %}" class="dropdown-item">VIEW</a>
+                            <!-- <a href="{% url 'addnutritionist' %}" class="dropdown-item"></a> -->
+                            
+  
+                            
+                        </div>
+                    </div>
+                      <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VACCINATION</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'addvaccination'%}" class="dropdown-item">ADD VACCINATION LIST</a>
+                            <a href="{% url 'mainviewvaccine' %}" class="dropdown-item">VIEW VACCINATION</a>
+                            <!-- <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
+                            
+  
+                            
+                        </div>
+                    </div>
+                      <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIDEOS</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'addvideos'%}" class="dropdown-item">UPLOAD VIDEOS</a>
+                            <a href="{% url 'viewvideos' %}" class="dropdown-item">VIEW VIDEOS</a>
+                            </div>
+                            </div>
+                        <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
@@ -79,7 +121,8 @@
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
                     </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
+                  </div>
+                    <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
                 </div>
             </nav>
         </div>
@@ -110,25 +153,48 @@
         {% for i in video %}
         <tr>
           <td>{{ forloop.counter }}</td>
-          <td>{{ i.videos }}</td>
-         <td>{{ i.videos_title }}</td>
+          <td><video width="320" height="240" controls>
+            <source src="{{ i.video.url }}">
+        </video></td>
+         <td>{{ i.title }}</td>
          <td>{{ i.discription }}</td>
-         <td>{{ i.Date }}</td>
+         <td>{{ i.upload_date }}</td>
          
          
           <td>
-            <a href="{% url 'addbaby' id=i.id %}" class="btn btn-primary">Edit</a>
-            {% if i.baby_status == "True" %}
+            <a href="{% url 'editvideos' id=i.id %}" class="btn btn-primary">Edit</a>
+            <!-- {% if i.baby_status == "True" %}
            <a href="{% url 'viewbabyh' id=i.id %}" <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">View</button>
-            {% endif %}
+            {% endif %} -->
           </td>
-          <td> <a href="{% url 'deleteparent' id=i.id %}" class="btn btn-primary">Delete</a></td>
+          <td> <a href="{% url 'deletevideos' id=i.id %}" class="btn btn-primary">Delete</a></td>
           <td></td>
         </tr>
         {% endfor %}
         
       </tbody>
     </table>
+    <!-- Pagination links -->
+  <div class="pagination mt-3 d-flex justify-content-end pe-5 mb-4  fw-bold text-white text-end ">
+    <span class="step-links  ">
+      {% if video.has_previous %}
+      <a class="btn btn-dark" href="?page=1">&laquo; first</a>
+      <a class="btn btn-dark" href="?page={{ video.previous_page_number }}">previous</a>
+      {% endif %}
+      {% if video.has_next %}
+
+      <!-- <a href="?page={{ hist.paginator.num_pages }}" class="text-decoration-none text-white btn btn-dark ">last &raquo;</a> -->
+      {% endif %}
+      <span class="current text-dark">
+        Page {{ video.number }} of {{ video.paginator.num_pages }}.
+      </span>
+
+      {% if video.has_next %}WV
+
+      <a href="?page={{ video.next_page_number }}" class="text-decoration-none text-white btn btn-dark ">next</a>
+      {% endif %}
+    </span>
+  </div>
   </div>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

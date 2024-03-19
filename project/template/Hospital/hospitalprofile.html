@@ -83,6 +83,17 @@
                           </div>
                       </div>
                       <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIDEOS</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'addvideos'%}" class="dropdown-item">UPLOAD</a>
+                            <a href="{% url 'viewvideos' %}" class="dropdown-item">VIEW</a>
+                            <!-- <a href="{% url 'addnutritionist' %}" class="dropdown-item"></a> -->
+                            
+  
+                            
+                        </div>
+                    </div>
+                      <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VACCINATION</a>
                         <div class="dropdown-menu rounded-0 m-0">
                             <a href="{% url 'addvaccination'%}" class="dropdown-item">ADD VACCINATION LIST</a>
@@ -110,6 +121,7 @@
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
                     </div>
                   </div>
+
                     <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
                 </div>
             </nav>

@@ -83,6 +83,17 @@
                         </div>
                     </div>
                     <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIDEOS</a>
+                      <div class="dropdown-menu rounded-0 m-0">
+                          <!-- <a href="{% url 'addvideos'%}" class="dropdown-item">UPLOAD</a> -->
+                          <a href="{% url 'viewvideos' %}" class="dropdown-item">VIEW</a>
+                          <!-- <a href="{% url 'addnutritionist' %}" class="dropdown-item"></a> -->
+                          
+
+                          
+                      </div>
+                  </div>
+                    <div class="nav-item dropdown">
                       <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VACCINATION</a>
                       <div class="dropdown-menu rounded-0 m-0">
                           <a href="{% url 'addvaccination'%}" class="dropdown-item">ADD VACCINATION LIST</a>
@@ -209,19 +220,19 @@ h4{
             <h2 class="text-center">UPLOAD VIDEOS</h2>
           </div>
           <div class="card-body">
-            <form action="{% url 'adddoctordetails'%}" method="POST" enctype="multipart/form-data">
+            <form action="{% url 'addvideos'%}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group">
                 <label for="username">Videos title</label>
-                <input type="text" class="form-control" id="username" name="Doctor_name" required>
+                <input type="text" class="form-control" id="username" name="title" required>
               </div>
               <div class="form-group">
                 <label for="username">Discription</label>
-                <input type="text" class="form-control" id="username" name="qualification" required>
+                <input type="text" class="form-control" id="username" name="discription" required>
               </div>
               <div class="form-group">
                 <label for="username">Video </label>
-                <input type="file" class="form-control" id="username" name="department" required>
+                <input type="file" class="form-control" id="username" name="video" required>
               </div>
               <!-- <div class="form-group">
                 <label for="email">Consulting days</label>

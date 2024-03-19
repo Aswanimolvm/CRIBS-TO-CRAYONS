@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking,Booking,Vaccination
+from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking,Booking,Vaccination,Video
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
 from django.db.models import Q
@@ -353,6 +353,20 @@ def view_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital_id=Hospital.objects.get(login_id=log_id)
     parents=Parent.objects.filter(hospital_id=hospital_id)
+    items_per_page = 5
+
+        # Use Paginator to paginate the products
+    paginator = Paginator(parents, items_per_page)
+    page = request.GET.get('page', 1)
+
+    try:
+        parents = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver the first page
+        parents = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver the last page of results
+        parents = paginator.page(paginator.num_pages)
     context={
         'parent': parents
     }
@@ -368,11 +382,45 @@ def view_appoinment(request,id):
     }
     return render(request,'Hospital/viewappoinmentbooking.html',context)
 def add_videos(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    
+    if request.method=='POST':
+        video_title=request.POST['title']
+        discription=request.POST['discription']
+        videos=request.FILES['video']
+        video=Video.objects.create(title=video_title,
+                                   hospital_id=hospital,
+                                   discription=discription,
+                                   video=videos)
+        video.save()
+
+        return redirect(view_videos)
     return render(request,'Hospital/addvideos.html')
 def view_videos(request):
-    return render(request,'Hospital/viewvideos.html')
-def edit_videos(request):
-    return render(request,'Hospital/editvideos.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    videos=Video.objects.filter(hospital_id=hospital)
+    print(videos)
+    context={
+        'video':videos
+    }
+    return render(request,'Hospital/viewvideos.html',context)
+def edit_videos(request,id):
+    video=Video.objects.get(id=id)
+    if request.method=='POST':
+        video_title=request.POST['title']
+        discription=request.POST['discription']
+        video.title=video_title
+        video.discription=discription
+        video.save()
+        return redirect(view_videos)
+    
+    return render(request,'Hospital/editvideos.html',{'video':video})
+def delete_videos(request,id):
+    video=Video.objects.get(id=id)
+    video.delete()
+    return redirect(view_videos)
 
 #parent#
 
@@ -710,7 +758,41 @@ def n_profile(request):
         'nutritionist':nutritionist
     }
     return render(request,'Nutritionist/nprofile.html',context)
-def view_parentlist(request):
-    return render(request,'Nutritionist/viewparentlist.html')
+def nview_parent(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    nutritionist=Nutritionist.objects.get(login_id=log_id)
+    parents=Parent.objects.filter(hospital_id=nutritionist.hospital_id)
+    items_per_page = 5
+
+        # Use Paginator to paginate the products
+    paginator = Paginator(parents, items_per_page)
+    page = request.GET.get('page', 1)
+
+    try:
+        parents = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver the first page
+        parents = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver the last page of results
+        parents = paginator.page(paginator.num_pages)
+    context={
+        'parent': parents
+    }
+    return render(request,'Nutritionist/viewparentlist.html',context)
+def nsearch_parent(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    nutritionist=Nutritionist.objects.get(login_id=log_id)
+    hospital=Hospital.objects.filter(id=nutritionist.hospital_id.id)
+    print(hospital)
+    if request.method=='GET':
+        parent_name=request.GET['search']
+        parents=Parent.objects.filter(hospital_id=hospital,
+                                      parent_name=parent_name)
+        print("jhk nknkjnkjnkjnlkjnlk",parents)
+        context={
+            'parent':parents
+            }
+        return render(request,'Nutritionist/viewparentlist.html',context)
 def parent_msg(request):
     return render(request,'Nutritionist/parentmsg.html')

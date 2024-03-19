@@ -59,17 +59,18 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'nprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
-                        <!-- <div class="nav-item dropdown"> -->
-                            <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
+                        <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a>
+                        <a href="{% url 'parentmsg'%}" class="nav-item nav-link">PARENT LIST</a>
+                        <a href="{% url 'parentmsg'%}" class="nav-item nav-link">MESSAGES</a>
+                        <!-- <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
                                 <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
                                 <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
                                 <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            <!-- </div>
-                        </div> -->
+                            <!-- </div> -->
+                        <!-- </div> -->
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -79,9 +80,9 @@
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
                     
-                    <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
+                    <a href="{% url 'login'%}" class="nav-item nav-link" >LOGOUT</a>
                 </div>
-            </div>
+              </div>
             </nav>
         </div>
   <!-- Bootstrap CSS -->
@@ -90,7 +91,26 @@
 <br>
 <br>
 <br>
+ <!-- Search Start -->
+ <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+    <div class="container">
+        <div class="row g-2">
+            <div class="col-md-6">
 
+            </div>
+           
+           <form method="get" action="{% url 'nsearchparent' %}">
+            <div class=" col-md-6 d-flex ">
+                <input type="text" class="form-control border-0 py-4" placeholder="Search parent" name="search">
+                <div>
+                <button class="btn btn-dark border-0 w-100 py-3">Search</button>
+            </div>
+        </div>
+        </form> 
+    </div>
+    </div>
+</div>
+<!-- Search End -->
 <div class="container">
     <h2>PARENTS</h2>
     <table class="table table-striped">
@@ -116,7 +136,7 @@
           <td>
             <!-- <a href="{% url 'addbaby' id=i.id %}" class="btn btn-primary">Add baby</a> -->
             {% if i.baby_status == "True" %}
-           <a href="{% url 'viewbabyh' id=i.id %}" <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">View Baby</button>
+           <a href="{% url 'viewbabyh' id=i.id %}" <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Baby View</button>
             {% endif %}
           </td>
           <!-- <td> <a href="{% url 'deleteparent' id=i.id %}" class="btn btn-primary">Delete</a></td> -->
@@ -126,6 +146,27 @@
         
       </tbody>
     </table>
+    <!-- Pagination links -->
+  <div class="pagination mt-3 d-flex justify-content-end pe-5 mb-4  fw-bold text-white text-end ">
+    <span class="step-links  ">
+      {% if parent.has_previous %}
+      <a class="btn btn-dark" href="?page=1">&laquo; first</a>
+      <a class="btn btn-dark" href="?page={{ parent.previous_page_number }}">previous</a>
+      {% endif %}
+      {% if parent.has_next %}
+
+      <!-- <a href="?page={{ hist.paginator.num_pages }}" class="text-decoration-none text-white btn btn-dark ">last &raquo;</a> -->
+      {% endif %}
+      <span class="current text-dark">
+        Page {{ parent.number }} of {{ parent.paginator.num_pages }}.
+      </span>
+
+      {% if parent.has_next %}WV
+
+      <a href="?page={{ parent.next_page_number }}" class="text-decoration-none text-white btn btn-dark ">next</a>
+      {% endif %}
+    </span>
+  </div>
   </div>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

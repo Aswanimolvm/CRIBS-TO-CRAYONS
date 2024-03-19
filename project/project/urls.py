@@ -75,7 +75,8 @@ urlpatterns = [
     path('addvideos',views.add_videos,name="addvideos"),
     path('viewvideos',views.view_videos,name="viewvideos"),
     path('parentviewvideos',views.pview_videos,name="parentviewvideos"),
-    path('editvideos',views.edit_videos,name="editvideos"),
+    path('editvideos/<int:id>',views.edit_videos,name="editvideos"),
+    path('deletevideos/<int:id>',views.delete_videos,name="deletevideos"),
     path('addvaccination',views.add_vaccination,name="addvaccination"),
     path('mainviewvaccine',views.mainview_vaccine,name="mainviewvaccine"),
     path('generatevaccine',views.generate_vaccine,name="generatevaccine"),
@@ -84,7 +85,8 @@ urlpatterns = [
 
     #nutritionist#
     path('nprofile',views.n_profile,name="nprofile"),
-    path('viewparentlist',views.view_parentlist,name="viewparentlist"),
+    path('viewparentlist',views.nview_parent,name="viewparentlist"),
+    path('nsearchparent',views.nsearch_parent,name="nsearchparent"),
     path('parentmsg',views.parent_msg,name="parentmsg"),
 
     #parent#
