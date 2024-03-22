@@ -18,7 +18,9 @@ def seller_register(request):
         email=request.POST['email']
         username = request.POST['username']
         password=request.POST['password']    
-        password2=request.POST['confirmPassword'] 
+        password2=request.POST['confirmPassword']
+        if LoginUser.objects.filter(username=username).exists():
+            return render(request,'Home/sreg.html',{'message':"username already exists!!"}) 
         if password != password2:
             return render(request,'Home/sreg.html',{'message':"password doesn't match"})   
         login_data=LoginUser.objects.create_user(username=username,password=password,user_type='seller')
@@ -38,6 +40,8 @@ def customer_register(request):
         username = request.POST['username']
         password=request.POST['password']
         password1=request.POST['confirmPassword']
+        if LoginUser.objects.filter(username=username).exists():
+            return render(request,'Home/creg.html',{'message':"username already exists!!"})
         if password != password1:
             return render(request,'Home/creg.html',{'message':"password doesn't match"})
         login_data=LoginUser.objects.create_user(username=username,password=password,user_type='customer')
@@ -60,6 +64,8 @@ def hospital_register(request):
         username = request.POST['username']
         password=request.POST['password']
         password2=request.POST['confirmPassword']
+        if LoginUser.objects.filter(username=username).exists():
+            return render(request,'Home/hreg.html',{'message':"username already exists!!"})
         if password != password2:
             return render(request,'Home/hreg.html',{'message':"password doesn't match"})
         login_data=LoginUser.objects.create_user(username=username,password=password,user_type="hospital")
@@ -148,6 +154,8 @@ def add_parent(request):
         username = request.POST['username']
         password=request.POST['password']
         password2=request.POST['confirmPassword']
+        if LoginUser.objects.filter(username=username).exists():
+            return render(request,'Hospital/addparent.html',{'message':"username already exists!!"})
         if password != password2:
             return render(request,'Hospital/addparent.html',{'message':"password doesn't match"})
         
@@ -257,6 +265,8 @@ def add_nutritionist(request):
         username = request.POST['username']
         password=request.POST['password']
         password1=request.POST['confirmPassword']
+        if LoginUser.objects.filter(username=username).exists():
+            return render(request,'Hospital/addnutritionist.html',{'message':"username already exists!!"})
         if password != password1:
             return render(request,'Hospital/addnutritionist.html',{'message':"password doesn't match"})
         login_data=LoginUser.objects.create_user(username=username,password=password,user_type="nutritionist")
@@ -742,8 +752,10 @@ def delete_order(request,id):
     return redirect(my_orders)
 
 
-def chat_withseller(request):
-    return render(request,'Customer/chatwithseller.html')
+def chatlist_seller(request):
+    return render(request,'Customer/chatlistseller.html')
+def chat_seller(request):
+    return render(request,'Customer/chat.html')
  
 
 
@@ -783,13 +795,13 @@ def nview_parent(request):
 def nsearch_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     nutritionist=Nutritionist.objects.get(login_id=log_id)
-    hospital=Hospital.objects.filter(id=nutritionist.hospital_id.id)
+    hospital=Hospital.objects.get(id=nutritionist.hospital_id.id)
     print(hospital)
     if request.method=='GET':
         parent_name=request.GET['search']
         parents=Parent.objects.filter(hospital_id=hospital,
-                                      parent_name=parent_name)
-        print("jhk nknkjnkjnkjnlkjnlk",parents)
+                                      parent_name__icontains=parent_name)
+        
         context={
             'parent':parents
             }

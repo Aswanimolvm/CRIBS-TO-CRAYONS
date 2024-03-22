@@ -47,7 +47,7 @@
         <!-- Navbar Start -->
         <div class="container-fluid nav-bar bg-transparent">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
+                <a href="" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="{% static 'img/logo.gif' %}" alt="Icon" style="width: 30px; height: 30px;">
                     </div>
@@ -57,29 +57,35 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto">
-                        <a href="{% url 'parentprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <a href="#" class="nav-item nav-link">VACCINATION</a>
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
-                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
-                                <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            <!-- </div>
-                        </div> -->
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
-                                <a href="404.html" class="dropdown-item"></a>
-                            </div>
-                        </div> -->
-                        <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
-                </div>
+                  <div class="navbar-nav ms-auto">
+                      <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
+                      <a href="{% url 'parentprofile'%}" class="nav-item nav-link">PROFILE</a>
+                      <a href="{% url 'doctorlist' %}"class="nav-item nav-link">DOCTOR DETAILS</a>
+                      <a href="{% url 'babydetails' %}" class="nav-item nav-link">BABY DETAILS</a>
+                      <a href="#" class="nav-item nav-link">VIDEOS</a>
+                      <a href="{% url 'myappoinments' %}" class="nav-item nav-link">APPOINMENTS</a>
+                      <a href="#" class="nav-item nav-link">MESSAGES</a>
+
+                      <!-- <div class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
+                          <div class="dropdown-menu rounded-0 m-0">
+                              <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
+                              <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
+                              <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
+                              <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
+                          <!-- </div>
+                      </div> -->
+                      <!-- <div class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
+                          <div class="dropdown-menu rounded-0 m-0">
+                              <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
+                              <a href="404.html" class="dropdown-item"></a>
+                          </div>
+                      </div> -->
+                      <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+                  </div>
+                  <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
+              </div>
             </nav>
         </div>
         <style>

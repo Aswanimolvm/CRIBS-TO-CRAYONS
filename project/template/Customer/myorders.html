@@ -48,7 +48,7 @@
         <!-- Navbar Start -->
         <div class="container-fluid nav-bar bg-transparent">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
+                <a href="" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="{% static 'img/logo.gif' %}" alt="Icon" style="width: 30px; height: 30px;">
                     </div>
@@ -59,11 +59,17 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'sellerprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
-                        <!-- <div class="nav-item dropdown"> -->
-                            <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
-                            <div class="dropdown-menu rounded-0 m-0">
+                        
+                        <a href="{% url 'customerprofile'%}" class="nav-item nav-link">PROFILE</a>
+                        <a href="{% url 'purchase'%}" class="nav-item nav-link">SHOP HERE</a>
+                        <!-- <a href="{% url 'myorders'%}" class="nav-item nav-link active">ORDERS</a> -->
+                        <a href="{% url 'cart'%}" class="nav-item nav-link active">CART</a>
+                        <a href="{% url 'chatlistseller'%}" class="nav-item nav-link active">MESSAGES</a>
+
+
+                        <!-- <div class="nav-item dropdown">
+                            <a href="{% url 'purchase'%}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">SHOP HERE</a> -->
+                            <!-- <div class="dropdown-menu rounded-0 m-0">
                                 <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
                                 <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
                                 <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
@@ -78,9 +84,10 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
+                    
+                    <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
                 </div>
+              </div>
             </nav>
         </div>
   <!-- Bootstrap CSS -->

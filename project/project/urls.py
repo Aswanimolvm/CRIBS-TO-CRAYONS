@@ -53,7 +53,8 @@ urlpatterns = [
     path('myorders',views.my_orders,name="myorders"),
     path('vieworders',views.view_orders,name="vieworders"),
     path('addtocart/<int:id>',views.add_to_cart,name="addtocart"),
-    path('chatwithseller',views.chat_withseller,name="chatwithseller"),
+    path('chatlistseller',views.chatlist_seller,name="chatlistseller"),
+    path('chatseller',views.chat_seller,name="chatseller"),
     path('deleteorder/<int:id>',views.delete_order,name="deleteorder"),
 
     #hospital#

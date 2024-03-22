@@ -12,6 +12,8 @@
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,7 +50,7 @@
         <!-- Navbar Start -->
         <div class="container-fluid nav-bar bg-transparent">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
+                <a href="" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="{% static 'img/logo.gif' %}" alt="Icon" style="width: 30px; height: 30px;">
                     </div>
@@ -144,7 +146,7 @@
             <div class=" col-md-6 d-flex ">
                 <input type="text" class="form-control border-0 py-4" placeholder="Search parent" name="search">
                 <div>
-                <button class="btn btn-dark border-0 w-100 py-3">Search</button>
+                <button class="btn btn-dark border-0 w-100 py-3" style="height: 85%;" ><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </div>
         </form> 
@@ -152,6 +154,7 @@
     </div>
 </div>
 <!-- Search End -->
+
 <div class="container">
     <h2>PARENTS</h2>
     <table class="table table-striped">
@@ -162,13 +165,14 @@
           <th>Phone</th>
           <th>Email</th>
           <th></th>
+          <th></th>
           
         </tr>
       </thead>
       <tbody>
         {% for i in parent %}
         <tr>
-          <td>{{ forloop.counter }}</td>
+          <td>{{ forloop.counter0|add:parent.start_index }}</td>
          <td>{{ i.parent_name }}</td>
          <td>{{ i.phone }}</td>
          <td>{{ i.Email }}</td>
@@ -177,11 +181,12 @@
           <td>
             <a href="{% url 'addbaby' id=i.id %}" class="btn btn-primary">Add baby</a>
             {% if i.baby_status == "True" %}
-           <a href="{% url 'viewbabyh' id=i.id %}" <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">View</button>
+           <a href="{% url 'viewbabyh' id=i.id %}" <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);"><i class="fa-regular fa-eye"></i></button>
+            {% else %}
             {% endif %}
           </td>
-          <td> <a href="{% url 'deleteparent' id=i.id %}" class="btn btn-primary">Delete</a></td>
-          <td></td>
+          <td> <a href="{% url 'deleteparent' id=i.id %}" class="btn btn-primary"><i class="fa-solid fa-trash-can"></i></a></td>
+          
         </tr>
         {% endfor %}
         
