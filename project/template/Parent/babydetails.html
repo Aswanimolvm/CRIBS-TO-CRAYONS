@@ -59,9 +59,20 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                   <div class="navbar-nav ms-auto">
                       <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
-                      <a href="{% url 'parentprofile'%}" class="nav-item nav-link">PROFILE</a>
+                      <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEWS</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'parentprofile'%}" class="dropdown-item">PROFILE</a>
+                            <a href="{% url 'babydetails' %}" class="dropdown-item">BABY</a>
+                            <!-- <a href="{% url 'addnutritionist' %}" class="dropdown-item"></a> -->
+                            
+  
+                            
+                        </div>
+                    </div>
+                      <!-- <a href="{% url 'parentprofile'%}" class="nav-item nav-link">PROFILE</a> -->
                       <a href="{% url 'doctorlist' %}"class="nav-item nav-link">DOCTOR DETAILS</a>
-                      <a href="{% url 'babydetails' %}" class="nav-item nav-link">BABY DETAILS</a>
+                      <!-- <a href="{% url 'babydetails' %}" class="nav-item nav-link">BABY DETAILS</a> -->
                       <a href="#" class="nav-item nav-link">VIDEOS</a>
                       <a href="{% url 'myappoinments' %}" class="nav-item nav-link">APPOINMENTS</a>
                       <a href="#" class="nav-item nav-link">MESSAGES</a>
@@ -125,7 +136,7 @@
 
 <div class="profile-container">
   <div class="profile-header text-center">
-    <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-picture">
+    <img src="{% static 'img/b4.jpeg' %}" alt="Profile Picture" class="profile-picture">
     <h1 class="profile-name">{{ i.baby_name }}</h1>
     <div class="profile-details">
       <p>{{ i.father_name }}</p>

@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking,Booking,Vaccination,Video
+from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking,Booking,Vaccination,Video,Baby_vaccine
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
 from django.db.models import Q
@@ -190,11 +190,15 @@ def search_parent(request):
 def delete_parent(request,id):
     parent=Parent.objects.get(id=id)
     parent.delete()
+    parents=LoginUser.objects.get(id=parent.login_id.id)
+    parents.delete()
     return redirect(view_parent)
 def add_baby(request,id):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
     parent=Parent.objects.get(id=id)
+    vaccine=Vaccination.objects.filter(hospital_id=hospital.id,Age=0)
+    print(vaccine)
     
     if request.method=='POST':
         baby_name=request.POST['baby_name']
@@ -203,8 +207,10 @@ def add_baby(request,id):
         gender=request.POST['gender']
         weight=request.POST['weight']
         blood_group=request.POST['blood_group']
+        vaccine=request.POST['vaccine']
         baby_data=Baby_details.objects.create(baby_name=baby_name,
                                               hospital_id=hospital,
+                                              
                                               parent_id=parent,
                                               father_name=father_name,
                                               birth_date=birth_date,
@@ -212,12 +218,23 @@ def add_baby(request,id):
                                               weight=weight,
                                               blood_group=blood_group,)
         baby_data.save()
+        vaccine_id=Vaccination.objects.get(id=vaccine)
+        baby_id=Baby_details.objects.get(id=baby_data.id)
+        baby_vaccine=Baby_vaccine.objects.create(vaccination_id=vaccine_id,
+                                                 baby_id=baby_id,
+                                                date=birth_date)
+        baby_vaccine.save()
         parent.baby_status="True"
         parent.save()
         return redirect(view_parent)
         
+        
     else:
-        return render(request,'Hospital/addbaby.html',{'parent':parent})
+        context ={
+            'parent':parent,
+            'vaccines':vaccine
+        }
+        return render(request,'Hospital/addbaby.html',context)
 def view_baby(request,id):
     parent=Parent.objects.get(id=id)
     baby=Baby_details.objects.filter(parent_id=parent)

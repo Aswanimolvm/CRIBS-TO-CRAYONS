@@ -225,38 +225,59 @@ h4{
               <div class="form-group">
                 <label for="username">Baby Name</label>
                 <input type="text" class="form-control" id="username" name="baby_name" required>
-              </div><div class="form-group">
+              </div>
+              <div class="form-group">
                 <label for="username">Father Name</label>
                 <input type="text" class="form-control" id="username" name="father_name" required>
               </div>
               <div class="form-group">
-                <label for="username">Gender </label>
-                <input type="text" class="form-control" id="username" name="gender" required>
+                <label for="gender">Gender</label>
+                <select class="form-control" id="gender" name="gender" required>
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
               <div class="form-group">
                 <label for="username">Weight</label>
                 <input type="text" class="form-control" id="username" name="weight" required>
               </div>
               <div class="form-group">
-                <label for="username">Blood group</label>
-                <input type="text" class="form-control" id="username" name="blood_group" required>
+                <label for="gender">Blood Group</label>
+                <select class="form-control" id="gender" name="blood_group" required>
+                  <option value="">Select Blood Group</option>
+                  <option value="A+">A+</option>
+                  <option value="B+">B+</option>
+                  <option value="AB+">AB+</option>
+                  <option value="A-">A-</option>
+                  <option value="B-">B-</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                </select>
               </div>
               <div class="form-group">
                 <label for="username">Birth Date</label>
                 <input type="date" class="form-control" id="username" name="birth_date" required>
               </div>
-              <!-- <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-              </div> -->
+              <div class="form-group">
+                <label for="gender">Select Vaccine</label>
+                <select class="form-control" id="gender" name="vaccine" required>
+                  <option value="">Select Vaccine</option>
+                  {% for i in vaccines %}
+                  <option value="{{ i.id }}">{{ i.Vaccination_name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
               {% if message %}
               <div style="color: red;">
                 {{message}}
               </div>
               {% endif %}
               <div class="d-flex mt-4">
-              <button type="submit" class="btn btn-primary btn-block mx-auto">Register</button>
-            </div>
+                <button type="submit" class="btn btn-primary btn-block mx-auto">Register</button>
+              </div>
             </form>
           </div>
         </div>

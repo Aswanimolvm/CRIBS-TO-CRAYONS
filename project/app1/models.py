@@ -49,6 +49,8 @@ class Parent(models.Model):
     phone=models.IntegerField()
     blood_group=models.CharField(max_length=10)
     baby_status=models.CharField(max_length=50,null=True, blank=True,)
+    def __str__(self):
+        return self.parent_name
     
 class Nutritionist(models.Model):
     login_id=models.ForeignKey(LoginUser,on_delete=models.CASCADE)
@@ -78,7 +80,8 @@ class Vaccination(models.Model):
      Dose=models.IntegerField(null=True, blank=True)
      Age=models.IntegerField(null=True, blank=True)
      
-     
+     def __str__(self):
+        return self.Vaccination_name
 
 class Baby_details(models.Model):
     parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE)
@@ -89,7 +92,8 @@ class Baby_details(models.Model):
     blood_group=models.CharField(max_length=20,null=True,blank=True)
     weight=models.IntegerField()
     birth_date=models.DateField()
-    
+    def __str__(self):
+        return self.baby_name
 
 class Baby_vaccine(models.Model):
     baby_id=models.ForeignKey(Baby_details,on_delete=models.CASCADE)

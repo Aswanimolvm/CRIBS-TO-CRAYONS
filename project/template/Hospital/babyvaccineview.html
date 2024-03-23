@@ -141,8 +141,9 @@
         <tr>
           <th>No.</th>
           <th>Vacine Name</th>
+          <th>Dose</th>
           <th>Age</th>
-          <th>Date</th>
+          <th>Date to taken/Done</th>
           
           <th>Status</th>
           
@@ -152,12 +153,12 @@
         </tr>
       </thead>
       <tbody>
-        {% for i in video %}
+        {% for i in vaccine %}
         <tr>
           <td>{{ forloop.counter }}</td>
-          <td>{{ i.videos }}</td>
-         <td>{{ i.videos_title }}</td>
-         <td>{{ i.discription }}</td>
+          <td>{{ i.Vaccination_name }}</td>
+         <td>{{ i.Dose }}</td>
+         <td>{{ i.Age }}</td>
          <td>{{ i.Date }}</td>
          
          

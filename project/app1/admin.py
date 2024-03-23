@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Seller,Customer,Hospital,LoginUser, Parent,Booking,Productbooking,Vaccination,Video
+from .models import Seller,Customer,Hospital,LoginUser, Parent,Booking,Productbooking,Vaccination,Video,Baby_details
 
 # Register your models here.
 admin.site.register(Seller)
@@ -11,3 +11,4 @@ admin.site.register(Booking)
 admin.site.register(Productbooking)
 admin.site.register(Vaccination)
 admin.site.register(Video)
+admin.site.register(Baby_details)

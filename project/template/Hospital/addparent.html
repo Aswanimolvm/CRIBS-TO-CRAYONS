@@ -222,6 +222,11 @@ h4{
           <div class="card-body">
             <form action="{% url 'addparent'%}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
+              {% if message %}
+              <div style="color: red;">
+                {{message}}
+              </div>
+              {% endif %}
               <div class="form-group">
                 <label for="username">Parent Name</label>
                 <input type="text" class="form-control" id="username" name="parent_name" required>
@@ -253,11 +258,7 @@ h4{
                 <label for="confirmPassword">Confirm Password</label>
                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
               </div>
-              {% if message %}
-              <div style="color: red;">
-                {{message}}
-              </div>
-              {% endif %}
+              
               <div class="d-flex mt-4">
               <button type="submit" class="btn btn-primary btn-block mx-auto">Register</button>
             </div>
