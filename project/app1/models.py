@@ -139,5 +139,12 @@ class Chat(models.Model):
     message=models.CharField(max_length=250,null=True,blank=True)
 
 
+class Notification(models.Model):
+    hospital_id=models.ForeignKey(Hospital,on_delete=models.CASCADE)
+    Parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE)
+    content=models.CharField(max_length=100,null=True, blank=True)
+    date=models.DateField(auto_now=True)
+
+
 
     

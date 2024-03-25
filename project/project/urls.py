@@ -80,8 +80,8 @@ urlpatterns = [
     path('deletevideos/<int:id>',views.delete_videos,name="deletevideos"),
     path('addvaccination',views.add_vaccination,name="addvaccination"),
     path('mainviewvaccine',views.mainview_vaccine,name="mainviewvaccine"),
-    path('generatevaccine',views.generate_vaccine,name="generatevaccine"),
-    path('viewbabyvaccine',views.viewbaby_vaccine,name="viewbabyvaccine"),
+    path('viewbabyvaccine/<int:id>',views.viewbaby_vaccine,name="viewbabyvaccine"),
+    path('vtaken/<int:id>',views.date_vtaken,name="vtaken"),
     
 
     #nutritionist#
@@ -100,7 +100,7 @@ urlpatterns = [
     path('doctorbooking/<int:id>',views.doctor_booking,name="doctorbooking"),
     path('myappoinments',views.my_appoinments,name="myappoinments"),
     path('cancelbooking/<int:id>',views.cancel_booking,name="cancelbooking"),
-    path('vaccinationchart',views.vaccination_chart,name="vaccinationchart"),
+    path('vaccinationchart/<int:id>',views.vaccination_chart,name="vaccinationchart"),
 
     
    

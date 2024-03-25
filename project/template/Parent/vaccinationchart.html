@@ -114,10 +114,10 @@
         <tr>
           <th>No.</th>
           <th>Vacine Name</th>
+          <th>Dose</th>
           <th>Age</th>
-          <th>Date</th>
-          <th></th>
           <th>Status</th>
+          <th>Date</th>
           
           <!-- <th></th>
           <th></th> -->
@@ -125,25 +125,39 @@
         </tr>
       </thead>
       <tbody>
-        {% for i in video %}
+        {% for i in baby %}
         <tr>
           <td>{{ forloop.counter }}</td>
-          <td>{{ i.videos }}</td>
-         <td>{{ i.videos_title }}</td>
-         <td>{{ i.discription }}</td>
-         <td>{{ i.Date }}</td>
+          <td>{{ i.vaccination_id.Vaccination_name }}</td>
+          <td>{{ i.vaccination_id.Dose }}</td>
+          <td>{{ i.vaccination_id.Age }}</td>
+          <td>Taken</td>
+          <td>{{ i.date }}</td>
          
          
-          <td>
+          <!-- <td>
             <a href="{% url 'addbaby' id=i.id %}" class="btn btn-primary">Edit</a>
             {% if i.baby_status == "True" %}
            <a href="{% url 'viewbabyh' id=i.id %}" <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">View</button>
             {% endif %}
           </td>
           <td> <a href="{% url 'deleteparent' id=i.id %}" class="btn btn-primary">Delete</a></td>
-          <td></td>
+          <td></td> -->
         </tr>
         {% endfor %}
+        {% for vaccine in not_taken_vaccines %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ vaccine.Vaccination_name }}</td>
+            <td>{{ vaccine.Dose }}</td>
+            <td>{{ vaccine.Age }}</td>
+            <td>Not Taken</td>
+            <td>
+              {% if vaccine.vaccination_date %}
+              {{ vaccine.vaccination_date }}
+              {% endif %}
+            </td>
+            {% endfor %}
         
       </tbody>
     </table>

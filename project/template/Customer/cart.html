@@ -89,7 +89,11 @@
             </nav>
         </div>
         <!-- Navbar End -->
-
+<style>
+    .header-carousel .owl-nav .owl-prev, .header-carousel .owl-nav .owl-next {
+ display: none;
+}
+</style>
 
         <!-- Header Start -->
         <!-- <div class="container-fluid header bg-white p-0">
@@ -494,8 +498,8 @@ Everything Your Little One Needs, Resold with Love!"<br>
                               <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                               <div class="d-flex gap-2">
 
-                                  <a href="" class="btn btn-primary">View</a>
-                                  <a href="{% url 'productbooking' id=i.id %}" class="btn btn-primary">Buy Now</a>
+                                  <!-- <a href="" class="btn btn-primary">View</a> -->
+                                  <!-- <a href="{% url 'productbooking' id=i.id %}" class="btn btn-primary">Buy Now</a> -->
                                   <a href="{% url 'productbooking' id=i.id %}" class="btn btn-primary">delete</a>
                                 </div>
                             </div>

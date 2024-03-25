@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from datetime import timedelta
 
 # Create your views here.
 def home(request):
@@ -187,6 +188,28 @@ def search_parent(request):
             'parent':parents
             }
         return render(request,'Hospital/viewparents.html',context)
+def view_parent(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital_id=Hospital.objects.get(login_id=log_id)
+    parents=Parent.objects.filter(hospital_id=hospital_id)
+    items_per_page = 5
+
+        # Use Paginator to paginate the products
+    paginator = Paginator(parents, items_per_page)
+    page = request.GET.get('page', 1)
+
+    try:
+        parents = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver the first page
+        parents = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver the last page of results
+        parents = paginator.page(paginator.num_pages)
+    context={
+        'parent': parents
+    }
+    return render(request,'Hospital/viewparents.html',context)
 def delete_parent(request,id):
     parent=Parent.objects.get(id=id)
     parent.delete()
@@ -267,11 +290,41 @@ def mainview_vaccine(request):
         'vaccine':vaccine
     }
     return render(request,'Hospital/viewmainvaccine.html',context) 
-def generate_vaccine(request):
-    return render(request,'Hospital/generatevaccine.html') 
-def viewbaby_vaccine(request):
-    return render(request,'Hospital/babyvaccineview.html')  
+# def generate_vaccine(request):
+#     return render(request,'Hospital/generatevaccine.html') 
+def viewbaby_vaccine(request,id):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    vaccine=Vaccination.objects.filter(hospital_id=hospital)
+    b_id=Baby_details.objects.get(id=id)
+    babyvaccine=Baby_vaccine.objects.filter(baby_id=b_id)
+    taken_vaccine_ids = babyvaccine.values_list('vaccination_id', flat=True)
+    not_taken_vaccines = vaccine.exclude(id__in=taken_vaccine_ids)
+    for vaccine in not_taken_vaccines:
+        vaccine.age_in_months = vaccine.Age
+        vaccine.vaccination_date = b_id.birth_date + timedelta(days=30 * vaccine.age_in_months)
+    not_taken_vaccines = sorted(not_taken_vaccines, key=lambda x: x.vaccination_date)
+    
+    context={
+        'vaccines':vaccine,
+        'baby':babyvaccine,
+        'not_taken_vaccines':not_taken_vaccines,
+        'b_id':b_id
 
+    }
+    return render(request,'Hospital/babyvaccineview.html',context) 
+def date_vtaken(request,id):
+    baby=Baby_details.objects.get(id=id)
+    if request.method=='POST':
+        date=request.POST['date']
+        vaccine=request.POST['vaccine_id']
+        vaccine_id=Vaccination.objects.get(id=vaccine)
+        vdate=Baby_vaccine.objects.create(date=date,
+                                          vaccination_id=vaccine_id,
+                                          baby_id=baby)
+        vdate.save()
+        return redirect(viewbaby_vaccine,id=baby.id)
+   
 def add_nutritionist(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital_id=Hospital.objects.get(login_id=log_id)
@@ -376,28 +429,7 @@ def delete_doctor(request,id):
     doctor=Doctor.objects.get(id=id)
     doctor.delete()
     return redirect(view_doctor)
-def view_parent(request):
-    log_id=LoginUser.objects.get(id=request.user.id)
-    hospital_id=Hospital.objects.get(login_id=log_id)
-    parents=Parent.objects.filter(hospital_id=hospital_id)
-    items_per_page = 5
 
-        # Use Paginator to paginate the products
-    paginator = Paginator(parents, items_per_page)
-    page = request.GET.get('page', 1)
-
-    try:
-        parents = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver the first page
-        parents = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver the last page of results
-        parents = paginator.page(paginator.num_pages)
-    context={
-        'parent': parents
-    }
-    return render(request,'Hospital/viewparents.html',context)
 
 def view_appoinment(request,id):
     doctor=Doctor.objects.get(id=id)
@@ -449,6 +481,9 @@ def delete_videos(request,id):
     video.delete()
     return redirect(view_videos)
 
+
+
+
 #parent#
 
 def parent_profile(request):
@@ -490,8 +525,29 @@ def edit_baby(request):
         return HttpResponse("updated!!")
     else:
         return render(request,'Parent/editbabydetails.html',{'baby':baby})
-def vaccination_chart(request):
-    return render(request,'Parent/vaccinationchart.html')
+def vaccination_chart(request,id):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    hospital=parent.hospital_id
+    vaccine=Vaccination.objects.filter(hospital_id=hospital)
+    b_id=Baby_details.objects.get(id=id)
+    babyvaccine=Baby_vaccine.objects.filter(baby_id=b_id)
+    taken_vaccine_ids = babyvaccine.values_list('vaccination_id', flat=True)
+    not_taken_vaccines = vaccine.exclude(id__in=taken_vaccine_ids)
+    for vaccine in not_taken_vaccines:
+        vaccine.age_in_months = vaccine.Age
+        vaccine.vaccination_date = b_id.birth_date + timedelta(days=30 * vaccine.age_in_months)
+    not_taken_vaccines = sorted(not_taken_vaccines, key=lambda x: x.vaccination_date)
+    
+    context={
+        'vaccines':vaccine,
+        'baby':babyvaccine,
+        'not_taken_vaccines':not_taken_vaccines,
+        'b_id':b_id
+
+    }
+
+    return render(request,'Parent/vaccinationchart.html',context)
 def edit_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
@@ -743,6 +799,17 @@ def cart_view(request):
         'cart':cart
     }
     return render(request,'Customer/cart.html',context)
+def cart_booking(request,id):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    customer=Customer.objects.get(login_id=log_id)
+    product=Product.objects.get(id=id)
+    cart=Cart.objects.get(customer_id=customer)
+    for i in cart:
+     cartbooking=Productbooking.objects.create=(product_id=product,
+                                                customer_id=customer)
+     cartbooking.save()
+
+    return redirect(my_orders)
 def view_product(request):
     return render(request,'Customer/viewproduct.html')
 def product_booking(request,id):

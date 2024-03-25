@@ -158,7 +158,7 @@
 
   <div class="text-center mt-3">
     <a href="{% url 'editbabydetails'%}" class="btn btn-primary">Edit Profile</a>
-    <a href="{% url 'vaccinationchart'%}" class="btn btn-primary">Vaccination Chart</a>
+    <a href="{% url 'vaccinationchart' id=i.id %}" class="btn btn-primary">Vaccination Chart</a>
   </div>
   {% endfor %}
 </div>
