@@ -624,7 +624,14 @@ def cancel_booking(request,id):
     
     return render(request,'Parent/doctorbooking.html')
 def pview_videos(request):
-    return render(request,'Parent/pviewvideos.html')
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    hospital=parent.hospital_id
+    videos=Video.objects.filter(hospital_id=hospital)
+    context={
+        'video':videos
+    }
+    return render(request,'Parent/pviewvideos.html',context)
 
 
 
@@ -736,6 +743,7 @@ def booking_status(request,id):
             booking.status=status
         booking.save()
     return redirect(seller_viewbookings)
+
 def chat(request):
     return render(request,'Seller/chat.html')
 
@@ -799,15 +807,20 @@ def cart_view(request):
         'cart':cart
     }
     return render(request,'Customer/cart.html',context)
-def cart_booking(request,id):
+def cart_delete(request,id):
+    cart=Cart.objects.get(id=id)
+    cart.delete()
+    return redirect(cart_view)
+def cart_booking(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     customer=Customer.objects.get(login_id=log_id)
-    product=Product.objects.get(id=id)
-    cart=Cart.objects.get(customer_id=customer)
+    cart=Cart.objects.filter(customer_id=customer)
     for i in cart:
-     cartbooking=Productbooking.objects.create=(product_id=product,
-                                                customer_id=customer)
+     cartbooking=Productbooking.objects.create(product_id=i.product_id,
+                                                customer_id=i.customer_id,
+                                                status='PENDING')
      cartbooking.save()
+    cart.delete()
 
     return redirect(my_orders)
 def view_product(request):
@@ -828,6 +841,8 @@ def my_orders(request):
         'product':product
     }
     return render(request,'Customer/myorders.html',context)
+def payment(request):
+    return render(request,'Customer/payment.html')
 def view_orders(request):
     return render(request,'Customer/viewmyorder.html')
 def delete_order(request,id):

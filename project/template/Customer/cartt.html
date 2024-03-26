@@ -58,23 +58,22 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
-                        <!-- <a href="{% url 'parentprofile'%}" class="nav-item nav-link">PROFILE</a> -->
-                        <a href="{% url 'doctorlist' %}"class="nav-item nav-link">DOCTOR DETAILS</a>
-                        <!-- <a href="{% url 'babydetails' %}" class="nav-item nav-link">BABY DETAILS</a> -->
-                        <!-- <a href="#" class="nav-item nav-link">VIDEOS</a> -->
-                        <a href="{% url 'myappoinments' %}" class="nav-item nav-link">APPOINMENTS</a>
-                        <a href="#" class="nav-item nav-link">MESSAGES</a>
-  
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEW</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'parentprofile'%}" class="dropdown-item">PROFILE</a>
-                                <a href="{% url 'babydetails'%}" class="dropdown-item">BABY DETAILS</a>
-                                <!-- <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a>
-                                <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            </div>
-                        </div>
+                        <a href="{% url 'customerprofile'%}" class="nav-item nav-link">PROFILE</a>
+                        <a href="{% url 'purchase'%}" class="nav-item nav-link">SHOP HERE</a>
+                        <a href="{% url 'myorders'%}" class="nav-item nav-link active">ORDERS</a>
+                        <!-- <a href="{% url 'cart'%}" class="nav-item nav-link active">CART</a> -->
+                        <a href="{% url 'chatlistseller'%}" class="nav-item nav-link active">MESSAGES</a>
+
+
+                        <!-- <div class="nav-item dropdown">
+                            <a href="{% url 'purchase'%}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">SHOP HERE</a> -->
+                            <!-- <div class="dropdown-menu rounded-0 m-0">
+                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
+                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
+                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
+                                <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
+                            <!-- </div>
+                        </div> -->
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -83,14 +82,23 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                   
-                    <a href="{% url 'login'%}" class="nav-item nav-link" >LOGOUT</a>
+                    
+                    <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
                 </div>
-            </div>
+              </div>
             </nav>
         </div>
         <!-- Navbar End -->
-
+<style>
+    .header-carousel .owl-nav .owl-prev, .header-carousel .owl-nav .owl-next {
+ display: none;
+}
+.ss{
+    display: flex;
+    flex-wrap:wrap ;
+    
+}
+</style>
 
         <!-- Header Start -->
         <!-- <div class="container-fluid header bg-white p-0">
@@ -428,47 +436,89 @@ Everything Your Little One Needs, Resold with Love!"<br>
                             </li>
                         </ul>
                     </div> -->
-                    <style>
-                        .nn{
-                            padding-top: 40px;
-                        }
-                        .ww{
-                            margin-left: 40px;
-                        }
-                        .qq{
-                            margin-left: 40px;
-                        }
-                    </style>
                     <!-- <div class="w-50 h-50 mt-4 bg-black   ">
                         llkjlkjlkjl
                         </div> -->
-                        <div class="nn">
-                        <div class="d-flex justify-content-around w-100 gap-5 flex-wrap">
-                       
-                            {% for i in video %}
-                            <!-- <div class="d-flex flex-wrap "> -->
-                        <div class="card" style="width: 25rem;">
-                            <div class="ww">
-                            <video width="320" height="240" controls>
-                                <source src="{{ i.video.url }}">
-                            </video>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="ss">
+                            <h2>YOUR CART</h2>
+                            <a href="{% url 'cartbooking' %}" class="btn btn-primary">BOOK NOW</a>
                         </div>
-                        <div class="qq">
-                            <div class="card-body">
-                              <h5 class="card-title">{{ i.title }}</h5>
-                              <h6 class="card-title">{{ i.discription }}</h6>
-                              <h6 class="card-title">{{ i.upload_date }}</h6>
-                              <!-- <h6 class="card-title">{{ i.product_details }}</h6> -->
-                              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                              
+                        <br>
+                        <br>
+
+                        <div class="d-flex justify-content-around w-100  flex-wrap">
+
+                        <!-- <div class="d-flex">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{% static 'img/p1.jpg'%}" alt="Card image cap">
+                            <div class="d-flex ">
+                                <div>
+                                <img class="card-img-top" src="{% static 'img/p1.jpg'%}" style="height: 90px; width: 90px;" alt="Card image cap">
+                            </div>
+                            <div>
+                                <img class="card-img-top" src="{% static 'img/p1.jpg'%}" style="height: 90px; width: 90px;" alt="Card image cap">
+                            </div>
+                            <div>
+
+                            
+                                <img class="card-img-top" src="{% static 'img/p1.jpg'%}" style="height: 90px; width: 90px;" alt="Card image cap">
+                            </div>
+
                             </div>
                         </div>
+                            <div class="card-body ">
+                              <h5 class="card-title">Card title</h5>
+                              <p class="card-text">tysrtgdfvdc</p>
+                              <p class="card-text">jhngbvcx</p>
+
+                              <p class="card-text">hgfdvc</p>
+
+                              <div class="d-flex gap-2">
+
+                                  <a href="#" class="btn btn-primary">View</a>
+                                  <a href="#" class="btn btn-primary">Buy Now</a>
+                                </div>
+                            </div>
+                          </div> -->
+                          <div class="d-flex justify-content-around w-100 gap-5 flex-wrap">
+                       
+                            {% for i in cart %}
+                            <!-- <div class="d-flex flex-wrap "> -->
+                        <div class="card" style="width: 25rem;">
+                            <div class="owl-carousel header-carousel" >
+                                <div class="owl-carousel-item">
+                                    <img class="" src="{{ i.product_id.image1.url }}"   alt="" height="250px">
+                                </div>
+                                <div class="owl-carousel-item">
+                                    <img class="" src="{{ i.product_id.image2.url }}" alt="" height="250px">
+                                </div>
+                                <div class="owl-carousel-item">
+                                    <img class="" src="{{ i.product_id.image3.url }}" alt="" height="250px">
+                                </div>
+                            </div>
+                            <div class="card-body">
+                              <h5 class="card-title">{{ i.product_id.product_name }}</h5>
+                              <h6 class="card-title">{{ i.product_id.price }}</h6>
+                              <h6 class="card-title">{{ i.product_id.location }}</h6>
+                              <h6 class="card-title">{{ i.product_id.product_details }}</h6>
+                              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                              <div class="d-flex gap-2">
+
+                                  <!-- <a href="" class="btn btn-primary">View</a> -->
+                                  <!-- <a href="{% url 'productbooking' id=i.id %}" class="btn btn-primary">Buy Now</a> -->
+                                  <a href="{% url 'cartdelete' id=i.id %}" class="btn btn-primary">delete</a>
+                                </div>
+                            </div>
                         <!-- </div> -->
                         </div>
                           {% endfor %}
                        
                     </div>
-                </div>
+                            
+
                           <!-- <div class="card" style="width: 18rem;">
                             <img class="card-img-top" src="{% static 'img/p1.jpg'%}" alt="Card image cap">
                             <div class="card-body">
@@ -493,9 +543,9 @@ Everything Your Little One Needs, Resold with Love!"<br>
                                   <a href="#" class="btn btn-primary">Buy Now</a>
                                 </div>
                             </div>
-                          </div>
+                          </div> -->
 
-                          <div class="card" style="width: 18rem;">
+                          <!-- <div class="card" style="width: 18rem;">
                             <img class="card-img-top" src="{% static 'img/p1.jpg'%}" alt="Card image cap">
                             <div class="card-body">
                               <h5 class="card-title">Card title</h5>
@@ -506,13 +556,13 @@ Everything Your Little One Needs, Resold with Love!"<br>
                                   <a href="#" class="btn btn-primary">Buy Now</a>
                                 </div>
                             </div>
-                          </div>
+                          </div> -->
 
 
                         </div>
 
 
-                -->
+               
         <!-- Testimonial End -->
         
 

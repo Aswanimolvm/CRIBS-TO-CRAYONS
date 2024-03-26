@@ -138,7 +138,12 @@
             
           </td>
           <td>{{ i.status }}</td>
-         
+          <td>
+            {% if i.status == "approved" %}
+            <a href="{% url 'payment' %}" class="btn btn-primary">PAYMENT</a>
+           {% endif %}
+
+           </td>
         </tr>
         {% endfor %}
         

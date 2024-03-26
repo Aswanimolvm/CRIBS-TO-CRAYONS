@@ -60,21 +60,21 @@
                     <div class="navbar-nav ms-auto">
                         <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
                         <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
-                        <a href="{% url 'doctorlist' %}"class="nav-item nav-link">DOCTOR DETAILS</a>
+                        <!-- <a href="{% url 'doctorlist' %}"class="nav-item nav-link">DOCTOR DETAILS</a> -->
                         <a href="{% url 'babydetails' %}" class="nav-item nav-link">BABY DETAILS</a>
-                        <a href="#" class="nav-item nav-link">VIDEOS</a>
-                        <a href="{% url 'myappoinments' %}" class="nav-item nav-link">APPOINMENTS</a>
+                        <a href="{% url 'pviewvideos' %}" class="nav-item nav-link">VIDEOS</a>
+                        <!-- <a href="{% url 'myappoinments' %}" class="nav-item nav-link">APPOINMENTS</a> -->
                         <a href="#" class="nav-item nav-link">MESSAGES</a>
 
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">DOCTOR</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
-                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
+                                <a href="{% url 'doctorlist'%}" class="dropdown-item">DOCTOR DETAILS</a>
+                                <a href="{% url 'myappoinments'%}" class="dropdown-item">APPOINMENTS</a>
+                                <!-- <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
                                 <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            <!-- </div>
-                        </div> -->
+                            </div>
+                        </div>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -83,8 +83,9 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
+                    
+                    <a href="{% url 'login'%}" class="nav-item nav-link" >LOGOUT</a>
+                  </div>
                 </div>
             </nav>
         </div>

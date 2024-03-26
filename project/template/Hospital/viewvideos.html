@@ -12,6 +12,7 @@
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -139,7 +140,7 @@
       <thead>
         <tr>
           <th>No.</th>
-          <th>Video</th>
+          <th></th>
           <th>Video title</th>
           <th>Discription</th>
           <th>uploaded date</th>
@@ -153,9 +154,33 @@
         {% for i in video %}
         <tr>
           <td>{{ forloop.counter }}</td>
-          <td><video width="320" height="240" controls>
-            <source src="{{ i.video.url }}">
-        </video></td>
+          <td><!-- Button trigger modal -->
+            <button type="button" class="btn " data-toggle="modal" data-target="#exampleModalCenter">
+              <i class="fa-solid fa-video"></i>
+            </button>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Video</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <video width="320" height="240" controls>
+                      <source src="{{ i.video.url }}">
+                  </video>
+                  </div>
+                  <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div> -->
+                </div>
+              </div>
+            </div></td>
          <td>{{ i.title }}</td>
          <td>{{ i.discription }}</td>
          <td>{{ i.upload_date }}</td>

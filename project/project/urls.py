@@ -51,8 +51,11 @@ urlpatterns = [
     path('productsearch',views.product_search,name="productsearch"),
     path('productbooking/<int:id>',views.product_booking,name="productbooking"),
     path('myorders',views.my_orders,name="myorders"),
+    path('payment',views.payment,name="payment"),
     path('vieworders',views.view_orders,name="vieworders"),
     path('addtocart/<int:id>',views.add_to_cart,name="addtocart"),
+    path('cartdelete/<int:id>',views.cart_delete,name="cartdelete"),
+    path('cartbooking',views.cart_booking,name="cartbooking"),
     path('chatlistseller',views.chatlist_seller,name="chatlistseller"),
     path('chatseller',views.chat_seller,name="chatseller"),
     path('deleteorder/<int:id>',views.delete_order,name="deleteorder"),
@@ -101,6 +104,8 @@ urlpatterns = [
     path('myappoinments',views.my_appoinments,name="myappoinments"),
     path('cancelbooking/<int:id>',views.cancel_booking,name="cancelbooking"),
     path('vaccinationchart/<int:id>',views.vaccination_chart,name="vaccinationchart"),
+    path('pviewvideos',views.pview_videos,name="pviewvideos"),
+    
 
     
    
