@@ -51,7 +51,8 @@ urlpatterns = [
     path('productsearch',views.product_search,name="productsearch"),
     path('productbooking/<int:id>',views.product_booking,name="productbooking"),
     path('myorders',views.my_orders,name="myorders"),
-    path('payment',views.payment,name="payment"),
+    path('payment/<int:id>',views.payment,name="payment"),
+    path('confirmpayment/<int:id>',views.confirm_payment,name="confirmpayment"),
     path('vieworders',views.view_orders,name="vieworders"),
     path('addtocart/<int:id>',views.add_to_cart,name="addtocart"),
     path('cartdelete/<int:id>',views.cart_delete,name="cartdelete"),
@@ -66,6 +67,8 @@ urlpatterns = [
     path('addparent',views.add_parent,name="addparent"),
     path('addbaby/<int:id>',views.add_baby,name="addbaby"),
     path('addnutritionist',views.add_nutritionist,name="addnutritionist"),
+    path('viewnutritionist',views.view_nutritionist,name="viewnutritionist"),
+    path('deletenutritionist/<int:id>',views.delete_nutritionist,name="deletenutritionist"),
     path('adddoctordetails',views.add_doctor_details,name="adddoctordetails"),
     path('viewparents',views.view_parent,name="viewparents"),
     path('searchparent',views.search_parent,name="searchparent"),
@@ -89,7 +92,10 @@ urlpatterns = [
 
     #nutritionist#
     path('nprofile',views.n_profile,name="nprofile"),
+    path('editnutritionist',views.edit_nutritionist,name="editnutritionist"),
     path('viewparentlist',views.nview_parent,name="viewparentlist"),
+    path('nviewbaby/<int:id>',views.nview_baby,name="nviewbaby"),
+    path('nbabyvaccine/<int:id>',views.nbaby_vaccine,name="nbabyvaccine"),
     path('nsearchparent',views.nsearch_parent,name="nsearchparent"),
     path('parentmsg',views.parent_msg,name="parentmsg"),
 

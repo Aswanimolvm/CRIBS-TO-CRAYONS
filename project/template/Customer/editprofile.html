@@ -63,7 +63,7 @@
                       <a href="{% url 'purchase'%}" class="nav-item nav-link">SHOP HERE</a>
                       <a href="{% url 'myorders'%}" class="nav-item nav-link active">ORDERS</a>
                       <a href="{% url 'cart'%}" class="nav-item nav-link active">CART</a>
-                      <a href="{% url 'chatlistseller'%}" class="nav-item nav-link active">MESSAGES</a>
+                      <!-- <a href="{% url 'chatlistseller'%}" class="nav-item nav-link active">MESSAGES</a> -->
 
 
                       <!-- <div class="nav-item dropdown">
@@ -195,7 +195,7 @@ h4{
               </div>
               <div class="form-group">
                 <label for="username">Phone number</label>
-                <input type="text" class="form-control" id="username" name="phone" value="{{ customer.phone }}">
+                <input type="text" class="form-control" id="username" name="phone" value="{{ customer.phone }}"required pattern="[0-9]{10}" minlength="10" maxlength="10" class="form-control">
               </div>
               <div class="form-group">
                 <label for="email">Email</label>

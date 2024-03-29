@@ -84,7 +84,7 @@
                           </div>
                           
                           <!-- <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link active">BOOKINGS</a> -->
-                          <a href="#" class="nav-item nav-link active ">MESSAGES</a>
+                          <!-- <a href="{% url 'chat'%}" class="nav-item nav-link active ">MESSAGES</a> -->
                           <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
                         </div>
                       <!-- </div> -->
@@ -106,9 +106,9 @@
           <th>Customer Name</th>
           <th>Phone number</th>
           <th>Product name</th>
-          <th>Message</th>
           <th></th>
           <th>Status</th>
+          <th></th>
          
           
         </tr>
@@ -124,11 +124,7 @@
          
          
          
-          <td>
-            <a href="{% url 'editdoctordetails' id=i.id %}" class="btn btn-primary">Message</a>
-           
-
-           </td>
+          
            <td>
             <form method="post" action="{% url 'bookingstatus' id=i.id %}">
                 {% csrf_token %}
@@ -142,6 +138,12 @@
                 </button>
                 {% else %}
                 <td>{{ i.status }}</td>
+                <td>
+                  {% if i.status == "approved" %}
+                  <a href="{% url 'editdoctordetails' id=i.id %}" class="btn btn-primary">Message</a>
+                 
+                  {% endif %}
+                 </td>
                 {% endif %}
 
                 

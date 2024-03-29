@@ -83,7 +83,7 @@
                           </div>
                           
                           <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link active">BOOKINGS</a>
-                          <a href="#" class="nav-item nav-link active ">MESSAGES</a>
+                          <!-- <a href="{% url 'chat'%}" class="nav-item nav-link active ">MESSAGES</a> -->
                           <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
                         </div>
                       <!-- </div> -->
@@ -198,7 +198,7 @@ h4{
               </div>
               <div class="form-group">
                 <label for="username"style="color: black;">Phone number</label>
-                <input type="text" class="form-control" id="username" name="phone" value="{{ seller.phone }}">
+                <input type="text" class="form-control" id="username" name="phone" value="{{ seller.phone }}" required pattern="[0-9]{10}" minlength="10" maxlength="10" class="form-control">
               </div>
               <div class="form-group">
                 <label for="email"style="color: black;">Email</label>

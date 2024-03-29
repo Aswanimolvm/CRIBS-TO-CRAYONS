@@ -64,7 +64,7 @@
                         <a href="{% url 'purchase'%}" class="nav-item nav-link">SHOP HERE</a>
                         <!-- <a href="{% url 'myorders'%}" class="nav-item nav-link active">ORDERS</a> -->
                         <a href="{% url 'cart'%}" class="nav-item nav-link active">CART</a>
-                        <a href="{% url 'chatlistseller'%}" class="nav-item nav-link active">MESSAGES</a>
+                        <!-- <a href="{% url 'chatlistseller'%}" class="nav-item nav-link active">MESSAGES</a> -->
 
 
                         <!-- <div class="nav-item dropdown">
@@ -124,6 +124,7 @@
          
          
           <td>
+            
             <a href="{% url 'chatseller' %}" class="btn btn-primary">MESSAGE</a>
            
 
@@ -140,7 +141,8 @@
           <td>{{ i.status }}</td>
           <td>
             {% if i.status == "approved" %}
-            <a href="{% url 'payment' %}" class="btn btn-primary">PAYMENT</a>
+            <a href="{% url 'payment' id=i.id %}" class="btn btn-primary">PAYMENT</a>
+            
            {% endif %}
 
            </td>

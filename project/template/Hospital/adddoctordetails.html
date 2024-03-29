@@ -58,6 +58,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                   <div class="navbar-nav ms-auto">
+                    <a href="{% url 'hospitalprofile'%}" class="nav-item nav-link active" >HOME</a>
                       <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
                       <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
                       <!-- <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a> -->
@@ -76,7 +77,7 @@
                         <div class="dropdown-menu rounded-0 m-0">
                             <a href="{% url 'viewparents'%}" class="dropdown-item">PARENT LIST</a>
                             <a href="{% url 'viewdoctorlist' %}" class="dropdown-item">DOCTORS LIST</a>
-                            <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
+                            <a href="{% url 'viewnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
                             
 
                             
@@ -239,7 +240,7 @@ h4{
               </div>
               <div class="form-group">
                 <label for="email">Number of slots </label>
-                <input type="text" class="form-control"  name="slots" required>
+                <input type="text" class="form-control"  name="slots" required pattern="[0-9]{10}" minlength="1" maxlength="5" class="form-control">
               </div>
               <!-- <div class="form-group">
                 <label for="username">Licence proof</label>

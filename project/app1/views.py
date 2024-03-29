@@ -5,6 +5,9 @@ from django.http import HttpResponse
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import timedelta
+from django.shortcuts import reverse
+from django.utils import timezone
+from django.core.mail import send_mail
 
 # Create your views here.
 def home(request):
@@ -83,6 +86,10 @@ def loginpage(request):
     if request.method=='POST':
         username=request.POST['username']
         password=request.POST['password']
+        admin_user = authenticate(request, username=username, password=password)
+        if admin_user is not None and admin_user.is_staff:
+            login(request, admin_user)
+            return redirect(reverse('admin:index'))
         data=authenticate(username=username,password=password)
         if data is not None:
             login(request,data)
@@ -140,7 +147,7 @@ def edit_hospital(request):
         hospital.save()
         # log_id.username=hospital_name
         # log_id.save()
-        return HttpResponse("updated")
+        return redirect(hospital_profile)
     else:
         return render(request,'Hospital/edithprofile.html',{'hospital':hospital})
 def add_parent(request):
@@ -187,7 +194,7 @@ def search_parent(request):
         context={
             'parent':parents
             }
-        return render(request,'Hospital/viewparents.html',context)
+        return render(request,'Hospital/viewparents2.html',context)
 def view_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital_id=Hospital.objects.get(login_id=log_id)
@@ -303,6 +310,11 @@ def viewbaby_vaccine(request,id):
     for vaccine in not_taken_vaccines:
         vaccine.age_in_months = vaccine.Age
         vaccine.vaccination_date = b_id.birth_date + timedelta(days=30 * vaccine.age_in_months)
+
+        notification_date = vaccine.vaccination_date - timedelta(days=7)
+
+        if notification_date >= timezone.now().date():
+            send_notification_to_parent(b_id, vaccine, notification_date)
     not_taken_vaccines = sorted(not_taken_vaccines, key=lambda x: x.vaccination_date)
     
     context={
@@ -313,6 +325,14 @@ def viewbaby_vaccine(request,id):
 
     }
     return render(request,'Hospital/babyvaccineview.html',context) 
+def send_notification_to_parent(baby, vaccine, notification_date):
+    subject = f"Upcoming Vaccination Reminder for {baby.baby_name}"
+    message = f"Dear parent,\n\nThis is a reminder that your child {baby.baby_name} has a vaccination appointment coming up on {vaccine.vaccination_date}. Please ensure that your child is prepared.\n\nSincerely,\nHospital"
+    sender = "aswanisubin02@gmail.com"
+    recipient = baby.parent_id.Email
+
+    send_mail(subject, message, sender, [recipient]) 
+
 def date_vtaken(request,id):
     baby=Baby_details.objects.get(id=id)
     if request.method=='POST':
@@ -342,16 +362,30 @@ def add_nutritionist(request):
         login_data=LoginUser.objects.create_user(username=username,password=password,user_type="nutritionist")
         login_data.save()
         logg_id=LoginUser.objects.get(id=login_data.id)
-        nutritionist_data=Nutritionist.objects.create(login_id=logg_id,
+        nutritionist=Nutritionist.objects.create(login_id=logg_id,
                                                       hospital_id=hospital_id,
                                                       Nutritionist_name=nutritionist_name,
                                                       consulting_days=consulting_days,
                                                       consulting_time=consulting_time
                                                       )
-        nutritionist_data.save()
-        return render(request,'Hospital/addnutritionist.html',{'message':"Successfully Added"})
+        nutritionist.save()
+        return redirect(view_nutritionist)
     else:
          return render(request,'Hospital/addnutritionist.html')
+def view_nutritionist(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    nutritionist=Nutritionist.objects.filter(hospital_id=hospital)
+    print(nutritionist)
+    context={
+        'nutritionist':nutritionist
+    }
+    return render(request,'Hospital/viewnutritionist.html',context)
+def delete_nutritionist(request,id):
+    nutritionist=Nutritionist.objects.get(id=id)
+    nutritionist.delete()
+    return redirect(view_nutritionist)
+
 def add_doctor_details(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -405,7 +439,7 @@ def search_doctor(request):
         context={
         'doctor':doctors
         }
-    return render(request,'Hospital/viewdoctordetails.html',context)
+        return render(request,'Hospital/viewdoctordetails2.html',context)
 def edit_doctor(request,id):
     # log_id=LoginUser.objects.get(id=request.user.id)
     # hospital=Hospital.objects.get(login_id=log_id)
@@ -739,10 +773,13 @@ def booking_status(request,id):
         status=request.POST["status"]
         if status=="approved":
             booking.status=status
+            booking.save()
+            Productbooking.objects.filter(product_id=booking.product_id).exclude(status='approved').delete()
+            return redirect(seller_viewbookings)
         elif status=="rejected":
             booking.status=status
-        booking.save()
-    return redirect(seller_viewbookings)
+            booking.save()
+            return redirect(seller_viewbookings)
 
 def chat(request):
     return render(request,'Seller/chat.html')
@@ -841,8 +878,17 @@ def my_orders(request):
         'product':product
     }
     return render(request,'Customer/myorders.html',context)
-def payment(request):
-    return render(request,'Customer/payment.html')
+def payment(request,id):
+    booking=Productbooking.objects.get(id=id)
+    context={
+        'booking':booking
+    }
+    return render(request,'Customer/payment.html',context)
+def confirm_payment(request,id):
+    booking=Productbooking.objects.get(id=id)
+    booking.status="booked"
+    booking.save()
+    return redirect(my_orders)
 def view_orders(request):
     return render(request,'Customer/viewmyorder.html')
 def delete_order(request,id):
@@ -869,6 +915,21 @@ def n_profile(request):
         'nutritionist':nutritionist
     }
     return render(request,'Nutritionist/nprofile.html',context)
+def edit_nutritionist(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    nutritionist=Nutritionist.objects.get(login_id=log_id)
+    if request.method=='POST':
+        nutritionist_name=request.POST['Nutritionist_name']
+        consulting_days=request.POST['consulting_days']
+        consulting_time=request.POST['consulting_time']
+        nutritionist.Nutritionist_name=nutritionist_name
+        nutritionist.consulting_days=consulting_days
+        nutritionist.consulting_time=consulting_time
+        nutritionist.save()
+        return redirect(n_profile)
+    else:
+        return render(request,'Nutritionist/neditprofile.html',{'nutritionist':nutritionist})
+    
 def nview_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     nutritionist=Nutritionist.objects.get(login_id=log_id)
@@ -891,6 +952,40 @@ def nview_parent(request):
         'parent': parents
     }
     return render(request,'Nutritionist/viewparentlist.html',context)
+def nview_baby(request,id):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    nutritionist=Nutritionist.objects.get(login_id=log_id)
+    hospital= nutritionist.hospital_id
+    parent=Parent.objects.get(id=id)
+    baby=Baby_details.objects.filter(hospital_id=hospital,parent_id=parent)
+    context={
+        'baby':baby
+    }
+    return render(request,'Nutritionist/viewbaby.html',context)
+def nbaby_vaccine(request,id):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    nutritionist=Nutritionist.objects.get(login_id=log_id)
+    hospital=Hospital.objects.get(id=nutritionist.hospital_id.id)
+    baby=Baby_details.objects.get(id=id)
+    babyvaccine=Baby_vaccine.objects.filter(baby_id=baby)
+    vaccine=Vaccination.objects.filter(hospital_id=hospital)
+
+    taken_vaccine_ids = babyvaccine.values_list('vaccination_id', flat=True)
+    print(taken_vaccine_ids)
+    not_taken_vaccines = vaccine.exclude(id__in=taken_vaccine_ids)
+    for vaccine in not_taken_vaccines:
+        vaccine.age_in_months = vaccine.Age
+        vaccine.vaccination_date = baby.birth_date + timedelta(days=30 * vaccine.age_in_months)
+    not_taken_vaccines = sorted(not_taken_vaccines, key=lambda x: x.vaccination_date)
+    
+    context={
+        'vaccines':vaccine,
+        'baby':babyvaccine,
+        'not_taken_vaccines':not_taken_vaccines,
+        'b_id':baby
+
+    }
+    return render(request,'Nutritionist/babyvaccine.html',context)
 def nsearch_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     nutritionist=Nutritionist.objects.get(login_id=log_id)
@@ -904,6 +999,6 @@ def nsearch_parent(request):
         context={
             'parent':parents
             }
-        return render(request,'Nutritionist/viewparentlist.html',context)
+        return render(request,'Nutritionist/parentlist2.html',context)
 def parent_msg(request):
     return render(request,'Nutritionist/parentmsg.html')

@@ -47,7 +47,7 @@
         <!-- Navbar Start -->
         <div class="container-fluid nav-bar bg-transparent">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <a href="" class="navbar-brand d-flex align-items-center text-center">
+                <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="{% static 'img/logo.gif' %}" alt="Icon" style="width: 30px; height: 30px;">
                     </div>
@@ -58,30 +58,34 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
-                        <a href="{% url 'viewparentlist'%}" class="nav-item nav-link">PARENT LIST</a>
-                        <a href="{% url 'parentmsg'%}" class="nav-item nav-link">MESSAGES</a>
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
-                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
-                                <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            <!-- </div> -->
-                        <!-- </div> -->
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
-                                <a href="404.html" class="dropdown-item"></a>
-                            </div>
-                        </div> -->
-                        <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    
-                    <a href="{% url 'login'%}" class="nav-item nav-link" >LOGOUT</a>
-                </div>
-              </div>
+                      <a href="{% url 'sellerprofile'%}" class="nav-item nav-link active">HOME</a>
+                        <!-- <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link">BOOKINGS</a> -->
+                        <!-- <div class="nav-item dropdown" style="color: #0400ff;">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">PRODUCT</a>
+                         <div class="dropdown-menu rounded-0 m-0" > -->
+                             
+                             <a href="{% url 'addproduct'%}" class="nav-item nav-link active" >ADD PRODUCT</a>
+                             <!-- <a href="{% url 'sellerviewproduct'%}" class="dropdown-item" style="color: #1500ff;"> VIEW PRODUCTS</a>  -->
+                             <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
+                         <!-- </div>
+                     </div> -->
+                     <!-- <div class="nav-item dropdown">
+                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
+                         <div class="dropdown-menu rounded-0 m-0">
+                             <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
+                             <a href="404.html" class="dropdown-item"></a>
+                         </div>
+                     </div> -->
+                     <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+                   
+                 
+                 <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link active">BOOKINGS</a>
+                 <!-- <a href="{% url 'chat'%}" class="nav-item nav-link active ">MESSAGES</a> -->
+                 <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
+               </div>
+              </div>  
+            </div>
+             <!-- </div> -->
             </nav>
         </div>
         <style>
@@ -116,23 +120,43 @@
       font-size: 18px;
       margin-bottom: 5px;
     }
+    .aa{
+      margin-left: 325px;
+    }
+    .col-md-6{
+      margin-left: 170px;
+    }
   </style>
-
+{% for i in product %}
 
 <div class="profile-container">
+  
   <div class="profile-header text-center">
-    <img src="{% static 'img/person.jpeg'%}" alt="Profile Picture" class="profile-picture">
-    <h1 class="profile-name">{{ nutritionist.Nutritionist_name }}</h1>
+    <!-- <img src="{{ i.image1.url }}" alt="Profile Picture" class="profile-picture"> -->
+    <div class="col-md-6 animated fadeIn ">
+      <div class="owl-carousel header-carousel " >
+          <div class="owl-carousel-item">
+              <img class="" src="{{ i.image1.url }}"   alt="" height="250px">
+          </div>
+          <div class="owl-carousel-item">
+              <img class="" src="{{ i.image2.url }}" alt="" height="250px">
+          </div>
+          <div class="owl-carousel-item">
+              <img class="" src="{{ i.image3.url }}" alt="" height="250px">
+          </div>
+      </div>
+  </div>
+    <h1 class="profile-name">{{ i.product_name }}</h1>
     <div class="profile-details">
-      <p>{{ nutritionist.consulting_days }}</p>
-      <p>{{ nutritionist.consulting_time }}</p>
-      <!-- <p>Joined: January 1, 2022</p> -->
+      <p>{{ i.price }}</p>
+      <p>{{ i.product_details }}</p>
+      <p>{{ i.location }}</p>
+      
     </div>
-    
+   
   </div>
-  <div class="text-center mt-3">
-    <a href="{% url 'editnutritionist'%}" class="btn btn-primary">Edit Profile</a>
-  </div>
+  
+
   <!-- <div class="card mt-3">
     <div class="card-header">
       <h5 class="card-title">About Me</h5>
@@ -141,10 +165,15 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.</p>
     </div>
   </div> -->
-
-  <!-- <div class="text-center mt-3">
-    <a href="#" class="btn btn-primary">Edit Profile</a>
-  </div> -->
+<div class="aa d-flex gap-2 ">
+  <div class="text-center mt-3">
+    <a href="{% url 'editproduct' id=i.id %}" class="btn btn-primary">EDIT</a>
+  </div>
+  <div class="text-center mt-3">
+    <a href="{% url 'deleteproduct' id=i.id %}" class="btn btn-primary">DELETE</a>
+  </div>
+</div>
+  {% endfor %}
 </div>
 
 <!-- Bootstrap JS (Optional) -->

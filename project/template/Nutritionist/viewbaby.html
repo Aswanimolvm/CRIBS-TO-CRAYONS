@@ -85,68 +85,69 @@
             </nav>
         </div>
         <style>
-    .body {
-      background-color: #f8f9fa;
-    }
-    .profile-container {
-      max-width: 800px;
-      margin: 50px auto;
-    }
-    .profile-header {
-      background-color: #007bff;
-      color: #fff;
-      padding: 30px 20px;
-      border-radius: 8px;
-    }
-    .profile-picture {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: 5px solid #fff;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    }
-    .profile-name {
-      font-size: 28px;
-      margin-top: 20px;
-    }
-    .profile-details {
-      margin-top: 20px;
-    }
-    .profile-details p {
-      font-size: 18px;
-      margin-bottom: 5px;
-    }
-  </style>
-
-
-<div class="profile-container">
-  <div class="profile-header text-center">
-    <img src="{% static 'img/person.jpeg'%}" alt="Profile Picture" class="profile-picture">
-    <h1 class="profile-name">{{ nutritionist.Nutritionist_name }}</h1>
-    <div class="profile-details">
-      <p>{{ nutritionist.consulting_days }}</p>
-      <p>{{ nutritionist.consulting_time }}</p>
-      <!-- <p>Joined: January 1, 2022</p> -->
-    </div>
-    
-  </div>
-  <div class="text-center mt-3">
-    <a href="{% url 'editnutritionist'%}" class="btn btn-primary">Edit Profile</a>
-  </div>
-  <!-- <div class="card mt-3">
-    <div class="card-header">
-      <h5 class="card-title">About Me</h5>
-    </div>
-    <div class="card-body">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.</p>
-    </div>
-  </div> -->
-
-  <!-- <div class="text-center mt-3">
-    <a href="#" class="btn btn-primary">Edit Profile</a>
-  </div> -->
-</div>
-
+            .body {
+              background-color: #f8f9fa;
+            }
+            .profile-container {
+              max-width: 800px;
+              margin: 50px auto;
+            }
+            .profile-header {
+              background-color: #007bff;
+              color: #fff;
+              padding: 30px 20px;
+              border-radius: 8px;
+            }
+            .profile-picture {
+              width: 150px;
+              height: 150px;
+              border-radius: 50%;
+              border: 5px solid #fff;
+              box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            }
+            .profile-name {
+              font-size: 28px;
+              margin-top: 20px;
+            }
+            .profile-details {
+              margin-top: 20px;
+            }
+            .profile-details p {
+              font-size: 18px;
+              margin-bottom: 5px;
+            }
+          </style>
+        {% for i in baby %}
+        
+        <div class="profile-container">
+          <div class="profile-header text-center">
+            <img src="{% static 'img/b4.jpeg' %}" alt="Profile Picture" class="profile-picture">
+            <h1 class="profile-name">{{ i.baby_name }}</h1>
+            <div class="profile-details">
+              <p>{{ i.father_name }}</p>
+              <p>{{ i.birth_date }}</p>
+              <p>{{ i.gender }}</p>
+              <p>{{ i.blood_group }}</p>
+              <p>{{ i.weight }}</p>
+            </div>
+          </div>
+        
+          <!-- <div class="card mt-3">
+            <div class="card-header">
+              <h5 class="card-title">About Me</h5>
+            </div>
+            <div class="card-body">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.</p>
+            </div>
+          </div> -->
+        
+          <div class="text-center mt-3">
+            <!-- <a href="{% url 'editbabydetails'%}" class="btn btn-primary">Edit Profile</a> -->
+            <a href="{% url 'nbabyvaccine' id=i.id %}" class="btn btn-primary">Vaccination Chart</a>
+          </div>
+          {% endfor %}
+        </div>
+        
 <!-- Bootstrap JS (Optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 

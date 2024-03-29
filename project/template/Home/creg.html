@@ -187,14 +187,14 @@ h4{
               {% endif %}
               <div class="form-group">
                 <label for="username"style="color: black;">Name</label>
-                <input type="text" class="form-control" id="username" name="Customer_name" required>
+                <input type="text" class="form-control" pattern="[a-z A-Z]+" id="username" name="Customer_name" required>
               </div><div class="form-group">
                 <label for="username"style="color: black;">Address</label>
                 <input type="text" class="form-control" id="username" name="Address" required>
               </div>
               <div class="form-group">
                 <label for="username"style="color: black;">Phone number</label>
-                <input type="text" class="form-control" id="username" name="phone" required>
+                <input type="text" class="form-control" id="username" name="phone" required pattern="[0-9]{10}" minlength="10" maxlength="10" class="form-control">
               </div>
               <div class="form-group">
                 <label for="email"style="color: black;">Email</label>
@@ -206,8 +206,8 @@ h4{
               </div>
               <div class="form-group">
                 <label for="password"style="color: black;">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-              </div>
+                <input type="password" class="form-control" id="password" name="password"  required>
+              <!-- </div>pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}" minlength="8" title="Password must contain atleast one number ,an Uppercase letter and aleast 8 characters. " -->
               <div class="form-group">
                 <label for="confirmPassword"style="color: black;">Confirm Password</label>
                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
