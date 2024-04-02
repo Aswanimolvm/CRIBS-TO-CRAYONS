@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+	<title>CHAT</title>
+</head>
+<body>
+<center>
+<div class="col-lg-11 col-md-6 mb-5" style="background-color:#194376">
+                    <br>
+            <h4 class="text-white mb-4">USERS LIST</h4>
+
+
+                <table class="table" border="1">
+                        <tr class="btn-secondary">
+                            <td>Name</td>
+                        </tr>
+
+                    {% for i in u %}
+
+                        <tr class="bg-light">
+                            <td><a href="/chat/std/{{ i.user_id }}"><img src="/static/av.png" alt="Avatar" style="border-radius: 50%; height: 30px; width:30px;">&nbsp;&nbsp;{{ i.user_name }}</a></td>
+                        </tr>
+
+                    {% endfor %}
+
+                </table>
+                    <br>
+            </div>
+</center>
+</body>
+</html>

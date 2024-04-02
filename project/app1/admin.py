@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
-from .models import Seller,Customer,Hospital,LoginUser, Parent,Booking,Productbooking,Vaccination,Video,Baby_details,Cart,Nutritionist,Doctor,Baby_vaccine,Product
+from .models import Seller,Customer,Hospital,LoginUser, Parent,Booking,Productbooking,Vaccination,Video,Baby_details,Cart,Nutritionist,Doctor,Baby_vaccine,Product,Chat
 
 
 class seller(admin.ModelAdmin):
@@ -52,4 +52,5 @@ admin.site.register(Product)
 admin.site.register(Baby_details)
 admin.site.register(Cart)
 admin.site.unregister(Group)
+admin.site.register(Chat)
 admin.site.site_header='CRIBS TO CRAYONS'

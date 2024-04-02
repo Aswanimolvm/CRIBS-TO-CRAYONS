@@ -134,10 +134,12 @@ class Cart(models.Model):
 
 
 class Chat(models.Model):
-    Seller_id=models.ForeignKey(Seller,on_delete=models.CASCADE)  
-    Customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE)    
-    message=models.CharField(max_length=250,null=True,blank=True)
-
+    sender=models.ForeignKey(LoginUser,on_delete=models.CASCADE,related_name="send_messages")  
+    receiver=models.ForeignKey(LoginUser,on_delete=models.CASCADE,related_name="received_messages")    
+    message=models.TextField()
+    timestamp=models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.sender} -> {self.receiver}: {self.message}"
 
 class Notification(models.Model):
     hospital_id=models.ForeignKey(Hospital,on_delete=models.CASCADE)

@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking,Booking,Vaccination,Video,Baby_vaccine
+from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking,Booking,Vaccination,Video,Baby_vaccine,Chat
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
 from django.db.models import Q
@@ -8,6 +8,8 @@ from datetime import timedelta
 from django.shortcuts import reverse
 from django.utils import timezone
 from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def home(request):
@@ -781,8 +783,13 @@ def booking_status(request,id):
             booking.save()
             return redirect(seller_viewbookings)
 
-def chat(request):
-    return render(request,'Seller/chat.html')
+def chat(request,id):
+    seller = LoginUser.objects.get(id=request.user.id)
+    productbooking = Productbooking.objects.get(id=id)
+    customer_id = Customer.objects.get(id=productbooking.customer_id.id)
+    customer = customer_id.login_id
+    messages = Chat.objects.filter(Q(sender=seller.id, receiver=customer) | Q(sender=customer, receiver=seller.id)).order_by('timestamp')
+    return render(request, 'Seller/chat.html', {'sender': seller, 'receiver': customer, 'messages': messages})
 
 
 #customer#
@@ -794,6 +801,40 @@ def customer_profile(request):
         'customer':customer
     }
     return render(request,'Customer/customerprofile.html',context)
+def chat_seller(request, product_id):
+    sender=request.user
+    product=Product.objects.get(id=product_id)
+    seller=Seller.objects.get(id=product.seller_id_id)
+    receiver=seller.login_id
+    print(sender.id)
+    print(receiver.id)
+    messages = Chat.objects.filter(Q(sender=sender, receiver=receiver) | Q(sender=receiver, receiver=sender)).order_by('timestamp')
+    return render(request, 'Customer/chat.html', {'sender': sender, 'receiver': receiver, 'messages': messages})
+
+
+@csrf_exempt
+def send_message(request, sender_id, receiver_id):
+    if request.method == 'POST':
+        sender = LoginUser.objects.get(id=sender_id)
+        receiver = LoginUser.objects.get(id=receiver_id)
+        print(sender)
+        print(receiver)
+        message = request.POST.get('message', '')
+        print(message)
+        if message.strip() != '':
+            # Create the new message
+            new_message = Chat.objects.create(sender=sender, receiver=receiver, message=message)
+            # Prepare the data to send back as JSON response
+            response_data = {
+                'status': 'ok',
+                'message': {
+                    'sender': sender.username,
+                    'message': message
+                }
+            }
+            return JsonResponse(response_data)
+    # Return an error if the request method is not POST or the message is empty
+    return JsonResponse({'status': 'error'})
 
 def edit_customer(request):
     log_id=LoginUser.objects.get(id=request.user.id)
@@ -812,9 +853,12 @@ def edit_customer(request):
     else:
         return render(request,'Customer/editprofile.html',{'customer':customer})
 def purchase(request):
-    product=Product.objects.all()
+    available_products = Product.objects.exclude(
+        id__in=Productbooking.objects.filter(status='approved').values('product_id')
+    )
+
     context={
-        'product':product
+        'product':available_products
     }
     return render(request,'Customer/purchase.html',context)
 def product_search(request):
@@ -897,10 +941,7 @@ def delete_order(request,id):
     return redirect(my_orders)
 
 
-def chatlist_seller(request):
-    return render(request,'Customer/chatlistseller.html')
-def chat_seller(request):
-    return render(request,'Customer/chat.html')
+
  
 
 

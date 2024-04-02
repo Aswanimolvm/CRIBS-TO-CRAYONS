@@ -58,8 +58,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                      
-                      <a href="{% url 'customerprofile'%}" class="nav-item nav-link">PROFILE</a>
+                        
+                        <a href="{% url 'customerprofile'%}" class="nav-item nav-link">PROFILE</a>
                         <a href="{% url 'purchase'%}" class="nav-item nav-link">SHOP HERE</a>
                         <a href="{% url 'myorders'%}" class="nav-item nav-link active">ORDERS</a>
                         <a href="{% url 'cart'%}" class="nav-item nav-link active">CART</a>
@@ -83,7 +83,7 @@
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
                     
-                    <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
+                    <a href="{% url 'logout'%}" class="nav-item nav-link active" >LOGOUT</a>
                 </div>
               </div>
             </nav>
@@ -92,10 +92,10 @@
             <div class="container py-5">
           
               <div class="row">
-         
+<!--           
                 <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
           
-                  <h5 class="font-weight-bold mb-3 text-center text-lg-start">Messages</h5>
+                  <h5 class="font-weight-bold mb-3 text-center text-lg-start">Member</h5>
           
                   <div class="card">
                     <div class="card-body">
@@ -213,28 +213,29 @@
                     </div>
                   </div>
           
-                </div> 
+                </div> -->
           
                 <div class="col-md-6 col-lg-7 col-xl-8">
           
-                  <!-- <ul class="list-unstyled">
+                  <ul class="list-unstyled">
+                    {% for i in message %}
                     <li class="d-flex justify-content-between mb-4">
                       <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
                         class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
                       <div class="card">
                         <div class="card-header d-flex justify-content-between p-3">
-                          <p class="fw-bold mb-0">Brad Pitt</p>
-                          <p class="text-muted small mb-0"><i class="far fa-clock"></i> 12 mins ago</p>
+                          <p class="fw-bold mb-0">{{ i.sender }}</p>
+                          <p class="text-muted small mb-0"><i class="far fa-clock"></i>{{ i.timestamp }}</p>
                         </div>
                         <div class="card-body">
                           <p class="mb-0">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.
+                            {{ i.message }}
                           </p>
                         </div>
                       </div>
                     </li>
-                    <li class="d-flex justify-content-between mb-4">
+                    {% endfor %}
+                    <!-- <li class="d-flex justify-content-between mb-4">
                       <div class="card w-100">
                         <div class="card-header d-flex justify-content-between p-3">
                           <p class="fw-bold mb-0">Lara Croft</p>
@@ -249,8 +250,8 @@
                       </div>
                       <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
                         class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
-                    </li>
-                    <li class="d-flex justify-content-between mb-4">
+                    </li> -->
+                    <!-- <li class="d-flex justify-content-between mb-4">
                       <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
                         class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
                       <div class="card">
@@ -263,17 +264,18 @@
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua.
                           </p>
-                        </div>
+                        </div> -->
                       </div>
                     </li>
                     <li class="bg-white mb-3">
-                      <div class="form-outline">
-                        <textarea class="form-control" id="textAreaExample2" rows="4"></textarea>
-                        <label class="form-label" for="textAreaExample2">Message</label>
-                      </div>
+                      <form id="messageForm">
+                        {% csrf_token %}
+                        <input type="text" id="messageInput" autocomplete="off">
+                        <button type="submit">Send</button>
+                    </form>
                     </li>
-                    <button type="button" class="btn btn-info btn-rounded float-end">Send</button>
-                  </ul> -->
+                    <!-- <button type="button" class="btn btn-info btn-rounded float-end">Send</button> -->
+                  </ul>
           
                 </div>
           
@@ -281,6 +283,35 @@
           
             </div>
           </section>
+          <script>
+            document.getElementById('messageForm').onsubmit = function(event) {
+                event.preventDefault();
+                var messageInput = document.getElementById('messageInput');
+                var message = messageInput.value.trim();
+                if (message !== '') {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/send_message/{{ sender.id }}/{{ receiver.id }}/');
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            var response = JSON.parse(xhr.responseText);
+                            if (response.status === 'ok') {
+                                messageInput.value = '';
+                                // Add the new message to the messages section
+                                var messagesDiv = document.getElementById('messages');
+                                var p = document.createElement('p');
+                                p.textContent = response.message.sender + ': ' + response.message.message;
+                                messagesDiv.appendChild(p);
+                            } else {
+                                // Handle error response if needed
+                                console.error('Error sending message:', response);
+                            }
+                        }
+                    };
+                    xhr.send('message=' + encodeURIComponent(message));
+                }
+            };
+        </script>
 
 <!-- Bootstrap JS (Optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

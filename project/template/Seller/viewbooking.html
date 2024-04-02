@@ -84,7 +84,6 @@
                           </div>
                           
                           <!-- <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link active">BOOKINGS</a> -->
-                          <!-- <a href="{% url 'chat'%}" class="nav-item nav-link active ">MESSAGES</a> -->
                           <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
                         </div>
                       <!-- </div> -->
@@ -139,10 +138,8 @@
                 {% else %}
                 <td>{{ i.status }}</td>
                 <td>
-                  {% if i.status == "approved" %}
-                  <a href="{% url 'editdoctordetails' id=i.id %}" class="btn btn-primary">Message</a>
+                  <a href="{% url 'chat' id=i.id %}" class="btn btn-primary">Message</a>
                  
-                  {% endif %}
                  </td>
                 {% endif %}
 

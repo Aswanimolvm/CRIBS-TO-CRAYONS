@@ -38,7 +38,7 @@ urlpatterns = [
     path('sellerviewproduct',views.seller_viewproducts,name="sellerviewproduct"),
     path('sellerviewbooking',views.seller_viewbookings,name="sellerviewbooking"),
     path('bookingstatus/<int:id>',views.booking_status,name="bookingstatus"),
-    path('chat',views.chat,name="chat"),
+    path('chat/<int:id>',views.chat,name="chat"),
     path('deleteproduct/<int:id>',views.delete_product,name="deleteproduct"),
     
 
@@ -57,9 +57,10 @@ urlpatterns = [
     path('addtocart/<int:id>',views.add_to_cart,name="addtocart"),
     path('cartdelete/<int:id>',views.cart_delete,name="cartdelete"),
     path('cartbooking',views.cart_booking,name="cartbooking"),
-    path('chatlistseller',views.chatlist_seller,name="chatlistseller"),
-    path('chatseller',views.chat_seller,name="chatseller"),
+    path('send_message/<int:sender_id>/<int:receiver_id>/',views.send_message,name="send_message"),
+    path('chatseller/<int:product_id>',views.chat_seller,name="chatseller"),
     path('deleteorder/<int:id>',views.delete_order,name="deleteorder"),
+   
 
     #hospital#
     path('hospitalprofile',views.hospital_profile,name="hospitalprofile"),
