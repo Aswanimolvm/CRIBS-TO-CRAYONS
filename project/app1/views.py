@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Max 
 
 # Create your views here.
 def home(request):
@@ -669,6 +670,16 @@ def pview_videos(request):
     }
     return render(request,'Parent/pviewvideos.html',context)
 
+def chat_nutritionist(request):
+    sender=request.user
+    parent=Parent.objects.get(login_id=sender)
+    hospital=parent.hospital_id
+    nutritionist=Nutritionist.objects.get(hospital_id=hospital)
+    receiver=nutritionist.login_id
+    messages = Chat.objects.filter(Q(sender=sender, receiver=receiver) | Q(sender=receiver, receiver=sender)).order_by('timestamp')
+    return render(request, 'Parent/chat.html', {'sender': sender, 'receiver': receiver, 'messages': messages})
+
+
 
 
 
@@ -809,7 +820,7 @@ def chat_seller(request, product_id):
     print(sender.id)
     print(receiver.id)
     messages = Chat.objects.filter(Q(sender=sender, receiver=receiver) | Q(sender=receiver, receiver=sender)).order_by('timestamp')
-    return render(request, 'Customer/chat.html', {'sender': sender, 'receiver': receiver, 'messages': messages})
+    return render(request, 'Parent/chat.html', {'sender': sender, 'receiver': receiver, 'messages': messages})
 
 
 @csrf_exempt
@@ -1041,5 +1052,31 @@ def nsearch_parent(request):
             'parent':parents
             }
         return render(request,'Nutritionist/parentlist2.html',context)
-def parent_msg(request):
-    return render(request,'Nutritionist/parentmsg.html')
+def parent_msg(request,id):
+    sender=request.user
+    parent=Parent.objects.get(login_id=id)
+    receiver=parent.login_id
+    print(receiver)
+    messages = Chat.objects.filter(Q(sender=sender, receiver=receiver) | Q(sender=receiver, receiver=sender)).order_by('timestamp')
+    return render(request, 'Nutritionist/chat.html', {'sender': sender, 'receiver': receiver, 'messages': messages})
+def chat_list(request):
+    # Retrieve conversations where the current user is the receiver
+    conversations = Chat.objects.filter(receiver=request.user)
+
+    # Group conversations by sender and get the latest message timestamp for each sender
+    grouped_conversations = conversations.values('sender').annotate(
+        latest_message_time=Max('timestamp')
+    ).order_by('-latest_message_time')
+
+    # Retrieve complete chat objects based on the latest message timestamp
+    sorted_conversations = []
+    for conversation in grouped_conversations:
+        sender_id = conversation['sender']
+        latest_message_time = conversation['latest_message_time']
+        latest_message = Chat.objects.filter(sender_id=sender_id, receiver=request.user, timestamp=latest_message_time).first()
+        sorted_conversations.append(latest_message)
+
+    return render(request, 'Nutritionist/parentmsg.html', {'conversations': sorted_conversations})
+# def msg_list(request):
+#     return render(request,'Nutritionist/parentmsg.html')
+   

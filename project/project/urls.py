@@ -98,7 +98,8 @@ urlpatterns = [
     path('nviewbaby/<int:id>',views.nview_baby,name="nviewbaby"),
     path('nbabyvaccine/<int:id>',views.nbaby_vaccine,name="nbabyvaccine"),
     path('nsearchparent',views.nsearch_parent,name="nsearchparent"),
-    path('parentmsg',views.parent_msg,name="parentmsg"),
+    path('parentmsg/<int:id>',views.parent_msg,name="parentmsg"),
+    path('chatlist',views.chat_list,name="chatlist"),
 
     #parent#
     path('parentprofile',views.parent_profile,name="parentprofile"),
@@ -112,6 +113,7 @@ urlpatterns = [
     path('cancelbooking/<int:id>',views.cancel_booking,name="cancelbooking"),
     path('vaccinationchart/<int:id>',views.vaccination_chart,name="vaccinationchart"),
     path('pviewvideos',views.pview_videos,name="pviewvideos"),
+    path('chatnutritionist',views.chat_nutritionist,name="chatnutritionist"),
     
 
     

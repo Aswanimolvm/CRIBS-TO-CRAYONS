@@ -60,7 +60,6 @@
                     <div class="navbar-nav ms-auto">
                         <a href="{% url 'nprofile'%}" class="nav-item nav-link active">PROFILE</a>
                         <a href="{% url 'viewparentlist'%}" class="nav-item nav-link">PARENT LIST</a>
-                        <a href="{% url 'parentmsg'%}" class="nav-item nav-link">MESSAGES</a>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -85,17 +84,26 @@
             </nav>
         </div>
         <!-- Navbar End -->
-        <div class="profile-container">
-        <div class="list-group">
+        <br>
+        <br>
+        <br>
+        <br>
+        
+        <div class="profile-container" style="width: 60%; margin:auto;">
+        <div class="list-group" style="background-color: rgb(215, 227, 234); text-align: center;">
             <a href="#" class="list-group-item list-group-item-action active"  aria-current="true">
               MESSAGES
             </a>
-            <a href="#" class="list-group-item list-group-item-action">parent1</a>
-            <a href="#" class="list-group-item list-group-item-action">parent2</a>
+            {% for conversation in conversations %}
+            <a href="{% url 'parentmsg' id=conversation.sender.id %}"> {{ conversation.sender.username }}</a>
+            <!-- <a href="#" class="list-group-item list-group-item-action">parent2</a>
             <a href="#" class="list-group-item list-group-item-action">parent3</a>
-            <a class="list-group-item list-group-item-action disabled">parent4</a>
+            <a class="list-group-item list-group-item-action disabled">parent4</a> -->
+            {% endfor %}
           </div>
         </div>
+        <br>
+        <br>
         <!-- Header Start -->
         <!-- <div class="container-fluid header bg-white p-0">
             <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
@@ -121,7 +129,27 @@
         </div> -->
         <!-- Header End -->
 
-
+        <script>
+            // Get all the <p> elements
+            var paragraphs = document.getElementsByTagName('a');
+        
+            // Create an empty object to store unique values
+            var uniqueValues = {};
+        
+            // Loop through all <p> elements
+            for (var i = 0; i < paragraphs.length; i++) {
+                var content = paragraphs[i].textContent;
+        
+                // If the content is not already in the uniqueValues object, display it
+                if (!uniqueValues[content]) {
+                    uniqueValues[content] = true;
+                    paragraphs[i].style.display = 'block'; // Or any desired display property
+                } else {
+                    paragraphs[i].style.display = 'none'; // Hide duplicate <p> elements
+                }
+            }
+        </script>
+    
         <!-- Search Start -->
         <!-- <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
             <div class="container">

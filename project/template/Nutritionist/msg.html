@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat List</title>
+</head>
+<body>
+    <h1>Chat List</h1>
+    <ul>
+        {% for conversation in conversations %}
+            <a href="{% url 'parentmsg' id=conversation.sender.id %}"> {{ conversation.sender.username }}</a>
+        {% endfor %}
+        
+    </ul>
+    <script>
+        // Get all the <p> elements
+        var paragraphs = document.getElementsByTagName('a');
+    
+        // Create an empty object to store unique values
+        var uniqueValues = {};
+    
+        // Loop through all <p> elements
+        for (var i = 0; i < paragraphs.length; i++) {
+            var content = paragraphs[i].textContent;
+    
+            // If the content is not already in the uniqueValues object, display it
+            if (!uniqueValues[content]) {
+                uniqueValues[content] = true;
+                paragraphs[i].style.display = 'block'; // Or any desired display property
+            } else {
+                paragraphs[i].style.display = 'none'; // Hide duplicate <p> elements
+            }
+        }
+    </script>
+</body>
+</html>
