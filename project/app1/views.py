@@ -99,7 +99,7 @@ def loginpage(request):
             if data.user_type=="seller" and data.status=="APPROVE":
                 return redirect(seller_profile)
             elif data.user_type=="customer" and data.status=="APPROVE":
-                return redirect(customer_profile)
+                return redirect(purchase)
             elif data.user_type=="hospital" and data.status=="APPROVE":
                 return redirect(hospital_profile)
             elif data.user_type=="parent":
@@ -793,6 +793,11 @@ def booking_status(request,id):
             booking.status=status
             booking.save()
             return redirect(seller_viewbookings)
+def confirm(request,id):
+    booking=Productbooking.objects.get(id=id)
+    booking.status="booked"
+    booking.save()
+    return redirect(seller_viewbookings)
 
 def chat(request,id):
     seller = LoginUser.objects.get(id=request.user.id)
@@ -865,7 +870,7 @@ def edit_customer(request):
         return render(request,'Customer/editprofile.html',{'customer':customer})
 def purchase(request):
     available_products = Product.objects.exclude(
-        id__in=Productbooking.objects.filter(status='approved').values('product_id')
+        id__in=Productbooking.objects.filter(status='booked').values('product_id')
     )
 
     context={
@@ -886,10 +891,13 @@ def add_to_cart(request,id):
     product=Product.objects.get(id=id)
     log_id=LoginUser.objects.get(id=request.user.id)
     customer=Customer.objects.get(login_id=log_id)
-    cart=Cart.objects.create(product_id=product,customer_id=customer)
-    cart.save()
-    
-    return redirect(cart_view)
+    cart_exists = Cart.objects.filter(product_id=product, customer_id=customer).exists()
+    if cart_exists:
+        return redirect(cart_view)
+    else:
+        cart=Cart.objects.create(product_id=product,customer_id=customer)
+        cart.save()
+        return redirect(cart_view)
 def cart_view(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     customer=Customer.objects.get(login_id=log_id)
@@ -944,6 +952,12 @@ def confirm_payment(request,id):
     booking.status="booked"
     booking.save()
     return redirect(my_orders)
+def cash_on_delivery(request,id):
+    booking=Productbooking.objects.get(id=id)
+    booking.status="cash on delivery"
+    booking.save()
+    return redirect(my_orders)
+
 def view_orders(request):
     return render(request,'Customer/viewmyorder.html')
 def delete_order(request,id):

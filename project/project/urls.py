@@ -38,6 +38,7 @@ urlpatterns = [
     path('sellerviewproduct',views.seller_viewproducts,name="sellerviewproduct"),
     path('sellerviewbooking',views.seller_viewbookings,name="sellerviewbooking"),
     path('bookingstatus/<int:id>',views.booking_status,name="bookingstatus"),
+    path('confirmpayment/<int:id>',views.confirm,name="confirmpayment"),
     path('chat/<int:id>',views.chat,name="chat"),
     path('deleteproduct/<int:id>',views.delete_product,name="deleteproduct"),
     
@@ -52,7 +53,7 @@ urlpatterns = [
     path('productbooking/<int:id>',views.product_booking,name="productbooking"),
     path('myorders',views.my_orders,name="myorders"),
     path('payment/<int:id>',views.payment,name="payment"),
-    path('confirmpayment/<int:id>',views.confirm_payment,name="confirmpayment"),
+    path('cashondelivery/<int:id>',views.cash_on_delivery,name="cashondelivery"),
     path('vieworders',views.view_orders,name="vieworders"),
     path('addtocart/<int:id>',views.add_to_cart,name="addtocart"),
     path('cartdelete/<int:id>',views.cart_delete,name="cartdelete"),

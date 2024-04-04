@@ -128,12 +128,12 @@
           <td>{{ forloop.counter }}</td>
          <td>{{ i.product_id.product_name }}</td>
          <td><!-- Button trigger modal -->
-          <button type="button" class="btn " data-toggle="modal" data-target="#exampleModalCenter">
+          <button type="button" class="btn " data-toggle="modal" data-target="#exampleModalCenter{{ i.id }}">
             <i class="fa-regular fa-image"></i>
           </button>
           
           <!-- Modal -->
-          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal fade" id="exampleModalCenter{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -164,12 +164,12 @@
          <td>{{ i.product_id.price }}</td>
          <td>{{ i.product_id.location }}</td>
          <td><!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter1">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter1{{ i.id }}">
             Details
           </button>
           
           <!-- Modal -->
-          <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal fade" id="exampleModalCenter1{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -194,7 +194,7 @@
          
          
           <!-- <td>
-            <a href="{% url 'chatseller' %}" class="btn btn-primary">MESSAGE</a>
+           
            
 
            </td> -->
@@ -203,20 +203,27 @@
            
 
            </td> -->
-           <!-- <td>
-           <a href="{% url 'deleteorder' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Cancel</a>
+          <td>
+           <a href="{% url 'cartdelete' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Cancel</a>
             
           </td>
-          <td>{{ i.status }}</td> -->
+          <td>{{ i.status }}</td> 
          
         </tr>
         {% endfor %}
         
       </tbody>
     </table>
+    {% if cart %}
     <div class="cc">
     <a href="{% url 'cartbooking' %}" class="btn btn-primary">BOOK NOW</a>
   </div>
+  {% else %}
+  <div style="color: red; text-align: center;">
+    <p>No items in cart</p>
+  </div>
+  
+  {% endif %}
   </div>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
