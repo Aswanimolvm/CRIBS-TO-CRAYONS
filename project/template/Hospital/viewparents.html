@@ -170,7 +170,10 @@
           
         </tr>
       </thead>
+     
       <tbody>
+      
+        {% if parent %}
         {% for i in parent %}
         <tr>
           <td>{{ forloop.counter0|add:parent.start_index }}</td>
@@ -191,8 +194,16 @@
         </tr>
         {% endfor %}
         
-      </tbody>
-    </table>
+      
+      {% else %}
+     
+    </tbody>
+   
+  </table>
+  <div style="color: red; text-align: center;">
+    <p>No parents added</p>
+  </div>
+  {% endif %}
     <!-- Pagination links -->
   <div class="pagination mt-3 d-flex justify-content-end pe-5 mb-4  fw-bold text-white text-end ">
     <span class="step-links  ">

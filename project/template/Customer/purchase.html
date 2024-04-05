@@ -353,7 +353,28 @@
                 background-repeat: no-repeat;
                 background-size: 100%;
             }
-
+              .nn{
+                display: flex;
+                flex-wrap: wrap;
+              }
+              .qq{
+                display: flex;
+                flex-wrap: wrap;
+                align-items: end;
+              }
+              .mm{
+                margin-left: 10px;
+                
+              }
+              .ff{
+                margin-left: 30px;
+              }
+              .vv{
+                color: blue;
+              }
+              .xx{
+                padding-top: 10px;
+              }
             /* .cc{
         flex-wrap: wrap;
         justify-content: space-evenly; */
@@ -458,13 +479,26 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    <div class="qq">
+                        <div>
                     <h5 class="card-title">{{ i.product_name }}</h5>
+                </div>
+                <div class="ff">
                     <h6 class="card-title"><i class="fa-solid fa-indian-rupee-sign"></i>{{ i.price }}</h6>
-                    <h6 class="card-title"><i class="fa-solid fa-location-dot"></i>{{ i.location }}</h6>
-                    <button onclick="handledetails()"><i class="fa-solid fa-circle-info"></i></button>
+                </div>
+            </div>
+                    <div class="nn">
+                        <div>
+                    <h6 class="card-title"><i class="fa-solid fa-location-dot"></i>  {{ i.location }}</h6>
+                </div>
+                <div class="mm">
+                    <button onclick="handledetails()" style="border: none;"><i class="fa-solid fa-circle-info vv"></i></button>
+               
                     <h6 class="card-title" id="details" style="display: none">{{ i.product_details }}</h6>
+                </div>
+            </div>
                     <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                    <div class="d-flex gap-2">
+                    <div class="d-flex gap-2 xx">
 
                         <a href="{% url 'addtocart' id=i.id %}" class="btn btn-primary">Add to Cart</a>
                         <a href="{% url 'productbooking' id=i.id %}" class="btn btn-primary">Buy Now</a>

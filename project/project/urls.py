@@ -115,6 +115,8 @@ urlpatterns = [
     path('vaccinationchart/<int:id>',views.vaccination_chart,name="vaccinationchart"),
     path('pviewvideos',views.pview_videos,name="pviewvideos"),
     path('chatnutritionist',views.chat_nutritionist,name="chatnutritionist"),
+    path('msg',views.msg,name="msg"),
+    path('list',views.list,name="list"),
     
 
     

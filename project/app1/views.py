@@ -11,6 +11,7 @@ from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Max 
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -125,7 +126,7 @@ def loggout(request):
 
 #hospital#
 
-
+@login_required(login_url=login)
 def hospital_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -522,7 +523,7 @@ def delete_videos(request,id):
 
 
 #parent#
-
+@login_required(login_url=login)
 def parent_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
@@ -603,7 +604,7 @@ def edit_parent(request):
         parent.save()
         # log_id.username=parent_name
         # log_id.save()
-        return HttpResponse("updated!!")
+        return redirect(parent_profile)
     else:
         return render(request,'Parent/editparent.html',{'parent':parent})
 def doctor_list(request):
@@ -1091,6 +1092,24 @@ def chat_list(request):
         sorted_conversations.append(latest_message)
 
     return render(request, 'Nutritionist/parentmsg.html', {'conversations': sorted_conversations})
-# def msg_list(request):
-#     return render(request,'Nutritionist/parentmsg.html')
+def msg(request):
+    return render(request,'Customer/chatlistseller.html')
+def list(request):
+     # Retrieve conversations where the current user is the receiver
+    conversations = Chat.objects.filter(receiver=request.user)
+
+    # Group conversations by sender and get the latest message timestamp for each sender
+    grouped_conversations = conversations.values('sender').annotate(
+        latest_message_time=Max('timestamp')
+    ).order_by('-latest_message_time')
+
+    # Retrieve complete chat objects based on the latest message timestamp
+    sorted_conversations = []
+    for conversation in grouped_conversations:
+        sender_id = conversation['sender']
+        latest_message_time = conversation['latest_message_time']
+        latest_message = Chat.objects.filter(sender_id=sender_id, receiver=request.user, timestamp=latest_message_time).first()
+        sorted_conversations.append(latest_message)
+
+    return render(request,'Nutritionist/list.html',{'conversations': sorted_conversations})
    
