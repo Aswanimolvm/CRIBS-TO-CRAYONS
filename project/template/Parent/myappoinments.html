@@ -84,9 +84,10 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    </div>
-                    <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a>
+                   
+                    <a href="{% url 'login'%}" class="nav-item nav-link" >LOGOUT</a>
                 </div>
+            </div>
             </nav>
         </div>
   <!-- Bootstrap CSS -->
@@ -98,6 +99,8 @@
 
 <div class="container">
     <h2>MY APPOINMENTS</h2>
+    <br>
+    <br>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -105,8 +108,10 @@
           <th>Name</th>
           <th>Qualification</th>
           <th>Department</th>
-          <th>Booking date</th>
+          <th>consulting_days</th>
+          <th>consulting_time</th>
           <th>Booking Time</th>
+          <th></th>
           <th></th>
           <th></th>
           
@@ -119,6 +124,8 @@
          <td>{{ i.doctor_id.Doctor_name }}</td>
          <td>{{ i.doctor_id.qualification }}</td>
          <td>{{ i.doctor_id.department }}</td>
+         <td>{{ i.doctor_id.consulting_days }}</td>
+         <td>{{ i.doctor_id.consulting_time }}</td>
          <td>{{ i.booking_date }}</td>
          
          

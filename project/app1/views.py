@@ -126,7 +126,7 @@ def loggout(request):
 
 #hospital#
 
-@login_required(login_url=login)
+@login_required()
 def hospital_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -399,17 +399,31 @@ def add_doctor_details(request):
         department=request.POST['department']
         qualification=request.POST['qualification']
         consulting_days=request.POST['consulting_days']
+        consulting_time=request.POST['consulting_time']
         doctor_data=Doctor.objects.create(hospital_id=hospital,
-                                          slots=slots,
+                                          slots=slots,main_slot=slots,
                                           Doctor_name=doctor_name,
                                           department=department,
                                           qualification=qualification,
-                                          consulting_days=consulting_days
+                                          consulting_days=consulting_days,
+                                          consulting_time=consulting_time,
                                           )
         doctor_data.save()
-        return render(request,'Hospital/adddoctordetails.html',{'message':"successfully added!"})
+        return redirect(view_doctor)
     else:
         return render(request,'Hospital/adddoctordetails.html')
+def regenerate_doctor_slots(request):
+    # Retrieve all doctors
+    doctors = Doctor.objects.all()
+
+    # Loop through each doctor and reset the slots
+    for doctor in doctors:
+        # Resetting the slots (assuming main_slot is the original slot count)
+        doctor.slots = doctor.main_slot
+        doctor.save()
+
+    # Return a success message
+    return JsonResponse({'status': 'success'})
 def view_doctor(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -656,7 +670,10 @@ def my_appoinments(request):
 
 def cancel_booking(request,id):
     booking=Booking.objects.get(id=id)
+    doctor=Doctor.objects.get(id=booking.doctor_id.id)
     booking.delete()
+    doctor.slots += 1
+    doctor.save()
     return redirect(my_appoinments)
 
     
