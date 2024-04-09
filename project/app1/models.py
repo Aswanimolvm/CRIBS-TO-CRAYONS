@@ -74,6 +74,7 @@ class Booking(models.Model):
     doctor_id=models.ForeignKey(Doctor,on_delete=models.CASCADE)
     parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE)
     booking_date=models.DateTimeField(auto_now=True)
+    consulting_date=models.DateField()
    
 
 class Vaccination(models.Model):

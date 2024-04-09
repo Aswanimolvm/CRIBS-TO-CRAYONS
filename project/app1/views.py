@@ -11,6 +11,8 @@ from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Max 
+from django.utils import timezone
+from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -412,18 +414,6 @@ def add_doctor_details(request):
         return redirect(view_doctor)
     else:
         return render(request,'Hospital/adddoctordetails.html')
-def regenerate_doctor_slots(request):
-    # Retrieve all doctors
-    doctors = Doctor.objects.all()
-
-    # Loop through each doctor and reset the slots
-    for doctor in doctors:
-        # Resetting the slots (assuming main_slot is the original slot count)
-        doctor.slots = doctor.main_slot
-        doctor.save()
-
-    # Return a success message
-    return JsonResponse({'status': 'success'})
 def view_doctor(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -646,23 +636,50 @@ def parentsearch_doctor(request):
 
         }
         return render(request,'Parent/doctorslist.html',context)
-def doctor_booking(request,id):
-    doctor=Doctor.objects.get(id=id)
-    log_id=LoginUser.objects.get(id=request.user.id)
-    parent=Parent.objects.get(login_id=log_id)
+def doctor_booking(request, id):
+    doctor = Doctor.objects.get(id=id)
+    log_id = LoginUser.objects.get(id=request.user.id)
+    parent = Parent.objects.get(login_id=log_id)
+    hospital= parent.hospital_id
+    doctorr=Doctor.objects.filter(hospital_id=hospital)
     
-
-    booking=Booking.objects.create(parent_id=parent,doctor_id=doctor)
-    
-
-    booking.save()
-    doctor.slots = doctor.slots-1
-    doctor.save()
-    return redirect(my_appoinments)
+    if request.method == 'POST':
+        consulting_date_str = request.POST['consulting_date']
+        consulting_date = datetime.strptime(consulting_date_str, '%Y-%m-%d').date()
+        
+        # Get the current date
+        current_date = datetime.now().date()
+        
+        # Calculate the date one week from now
+        one_week_from_now = current_date + timedelta(days=7)
+        
+        # Check if the selected date is within one week from the current date
+        if consulting_date > one_week_from_now:
+            return render(request,'Parent/doctorslist.html',{'message':"You can only book appointments within one week from the current date",'doctor':doctorr})
+        
+        # Count the number of bookings for the given consulting_date
+        booking_count = Booking.objects.filter(doctor_id=doctor, consulting_date=consulting_date).count()
+        
+        # Get the number of main slots available
+        main_slots = doctor.main_slot
+        
+        if booking_count < main_slots:
+            booking = Booking.objects.create(
+                parent_id=parent,
+                doctor_id=doctor,
+                consulting_date=consulting_date
+            )
+            booking.save()
+            return redirect(my_appoinments)
+        else:
+            # Handle the case where the number of bookings exceeds the main slots for the current date
+            return render(request,'Parent/doctorslist.html',{'message':"Booking not available for this day",'doctor':doctorr})
+        
 def my_appoinments(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
     booking=Booking.objects.filter(parent_id=parent)
+    print(booking)
     context={
         'booking':booking
     }
@@ -672,8 +689,7 @@ def cancel_booking(request,id):
     booking=Booking.objects.get(id=id)
     doctor=Doctor.objects.get(id=booking.doctor_id.id)
     booking.delete()
-    doctor.slots += 1
-    doctor.save()
+    
     return redirect(my_appoinments)
 
     

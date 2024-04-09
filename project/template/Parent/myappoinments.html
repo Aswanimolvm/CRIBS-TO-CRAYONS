@@ -106,11 +106,12 @@
         <tr>
             <th>No.</th>
           <th>Name</th>
-          <th>Qualification</th>
+          <!-- <th>Qualification</th> -->
           <th>Department</th>
-          <th>consulting_days</th>
+          <!-- <th>consulting_days</th> -->
           <th>consulting_time</th>
           <th>Booking Time</th>
+          <th>Consulting date</th>
           <th></th>
           <th></th>
           <th></th>
@@ -122,18 +123,14 @@
         <tr>
           <td>{{ forloop.counter }}</td>
          <td>{{ i.doctor_id.Doctor_name }}</td>
-         <td>{{ i.doctor_id.qualification }}</td>
+         <!-- <td>{{ i.doctor_id.qualification }}</td> -->
          <td>{{ i.doctor_id.department }}</td>
-         <td>{{ i.doctor_id.consulting_days }}</td>
+         <!-- <td>{{ i.doctor_id.consulting_days }}</td> -->
          <td>{{ i.doctor_id.consulting_time }}</td>
          <td>{{ i.booking_date }}</td>
-         
-         
-         
+         <td>{{ i.consulting_date }}</td>
           <td>
             <a href="{% url 'cancelbooking' id=i.id %}" class="btn btn-primary">Cancel</a>
-           
-
            </td>
            <!-- <td>
            <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Delete</a>

@@ -227,54 +227,7 @@
     </span>
   </div>
   </div>
-  <script>
-    // Function to call the Django view to regenerate doctor slots
-    function regenerateDoctorSlots() {
-        fetch('/regenerate_doctor_slots/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken') // Ensure CSRF token is sent
-            },
-            body: JSON.stringify({}) // Empty body as we don't need to send any data
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log('Doctor slots regenerated successfully');
-            } else {
-                console.error('Failed to regenerate doctor slots');
-            }
-        })
-        .catch(error => {
-            console.error('Error occurred while regenerating doctor slots:', error);
-        });
-    }
-
-    // Function to get CSRF token from cookies
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Get the csrf token
-                if (cookie.startsWith(name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    // Function to schedule regeneration of doctor slots after 24 hours
-    function scheduleRegeneration() {
-        setInterval(regenerateDoctorSlots, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
-    }
-
-    // Call the function to start the regeneration schedule
-    scheduleRegeneration();
-</script>
+  
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
