@@ -14,6 +14,7 @@ from django.db.models import Max
 from django.utils import timezone
 from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
+from django.db.models import Case, When, Value, IntegerField
 
 # Create your views here.
 def home(request):
@@ -23,41 +24,47 @@ def about(request):
 def seller_register(request):
     if request.method=='POST':
         seller_name=request.POST['seller_name']
-        address=request.POST['address']
+        street=request.POST['street']
+        district=request.POST['district']
+        pincode=request.POST['pincode']
         phone_number=request.POST['phone']
         email=request.POST['email']
         username = request.POST['username']
         password=request.POST['password']    
         password2=request.POST['confirmPassword']
-        if LoginUser.objects.filter(username=username).exists():
+        if LoginUser.objects.filter(username=username, user_type='seller').exists():
             return render(request,'Home/sreg.html',{'message':"username already exists!!"}) 
         if password != password2:
             return render(request,'Home/sreg.html',{'message':"password doesn't match"})   
-        login_data=LoginUser.objects.create_user(username=username,password=password,user_type='seller')
-        login_data.save()
-        log_id=LoginUser.objects.get(id=login_data.id)
-        seller_data=Seller.objects.create(login_id=log_id,seller_name=seller_name,Address=address,Email=email,phone=phone_number)
-        seller_data.save()
-        return redirect(loginpage)      
+        try:
+            # Create the user
+            login_data = LoginUser.objects.create_user(username=username, password=password, user_type='seller')
+            # Create the seller data
+            seller_data = Seller.objects.create(login_id=login_data, seller_name=seller_name, street=street,district=district,pincode=pincode, Email=email, phone=phone_number)
+            return redirect(loginpage)
+        except Exception:
+            return render(request, 'Home/sreg.html', {'message': "An error occurred while processing your request."})      
     else:
         return render(request,'Home/sreg.html')
 def customer_register(request):
     if request.method=='POST':
         customer_name=request.POST['Customer_name']
-        address=request.POST['Address']
+        street=request.POST['street']
+        district=request.POST['district']
+        pincode=request.POST['pincode']
         email=request.POST['Email']
         phone_number=request.POST['phone']
         username = request.POST['username']
         password=request.POST['password']
         password1=request.POST['confirmPassword']
-        if LoginUser.objects.filter(username=username).exists():
+        if LoginUser.objects.filter(username=username,user_type='customer').exists():
             return render(request,'Home/creg.html',{'message':"username already exists!!"})
         if password != password1:
             return render(request,'Home/creg.html',{'message':"password doesn't match"})
         login_data=LoginUser.objects.create_user(username=username,password=password,user_type='customer')
         login_data.save()
         log_id=LoginUser.objects.get(id=login_data.id)
-        customer_data=Customer.objects.create(login_id=log_id,Customer_name=customer_name,Address=address,Email=email,phone=phone_number)
+        customer_data=Customer.objects.create(login_id=log_id,Customer_name=customer_name,street=street,district=district,pincode=pincode,Email=email,phone=phone_number)
         customer_data.save()
         return redirect(loginpage)
     else:
@@ -67,21 +74,23 @@ def customer_register(request):
 def hospital_register(request):
     if request.method=='POST':
         hospital_name=request.POST['hospital_name']
-        address=request.POST['Address']
+        street=request.POST['street']
+        district=request.POST['district']
+        pincode=request.POST['pincode']
         email=request.POST['Email']
         phone_number=request.POST['phone']
         licence_proof=request.FILES['licence_proof']
         username = request.POST['username']
         password=request.POST['password']
         password2=request.POST['confirmPassword']
-        if LoginUser.objects.filter(username=username).exists():
+        if LoginUser.objects.filter(username=username,user_type="hospital").exists():
             return render(request,'Home/hreg.html',{'message':"username already exists!!"})
         if password != password2:
             return render(request,'Home/hreg.html',{'message':"password doesn't match"})
         login_data=LoginUser.objects.create_user(username=username,password=password,user_type="hospital")
         login_data.save()
         log_id=LoginUser.objects.get(id=login_data.id)
-        hospital_data=Hospital.objects.create(login_id=log_id,hospital_name=hospital_name,Address=address,Email=email,phone=phone_number,licence_proof=licence_proof)
+        hospital_data=Hospital.objects.create(login_id=log_id,hospital_name=hospital_name,street=street,district=district,pincode=pincode,Email=email,phone=phone_number,licence_proof=licence_proof)
         hospital_data.save()
         return redirect(loginpage)
     else:
@@ -95,13 +104,13 @@ def loginpage(request):
         admin_user = authenticate(request, username=username, password=password)
         if admin_user is not None and admin_user.is_staff:
             login(request, admin_user)
-            return redirect(reverse('admin:index'))
+            return redirect(admin_home)
         data=authenticate(username=username,password=password)
         if data is not None:
             login(request,data)
-            if data.user_type=="seller" and data.status=="APPROVE":
+            if data.user_type=="seller":
                 return redirect(seller_profile)
-            elif data.user_type=="customer" and data.status=="APPROVE":
+            elif data.user_type=="customer":
                 return redirect(purchase)
             elif data.user_type=="hospital" and data.status=="APPROVE":
                 return redirect(hospital_profile)
@@ -143,11 +152,15 @@ def edit_hospital(request):
     hospital=Hospital.objects.get(login_id=log_id)
     if request.method=='POST':
         hospital_name=request.POST['hospital_name']
-        address=request.POST['Address']
+        street=request.POST['street']
+        district=request.POST['district']
+        pincode=request.POST['pincode']
         email=request.POST['Email']
         phone_number=request.POST['phone']
         hospital.hospital_name = hospital_name
-        hospital.Address=address
+        hospital.street=street
+        hospital.district=district
+        hospital.pincode=pincode
         hospital.Email=email
         hospital.phone=phone_number
         hospital.save()
@@ -161,7 +174,9 @@ def add_parent(request):
     hospital_id=Hospital.objects.get(login_id=log_id)
     if request.method=='POST':
         parent_name=request.POST['parent_name']
-        address=request.POST['Address']
+        street=request.POST['street']
+        district=request.POST['district']
+        pincode=request.POST['pincode']
         email=request.POST['Email']
         phone_number=request.POST['phone']
         blood_group=request.POST['blood_group']
@@ -180,7 +195,9 @@ def add_parent(request):
                                         login_id=logg_id,
                                         hospital_id=hospital_id,
                                         parent_name=parent_name,
-                                        Address=address,
+                                        street=street,
+                                        district=district,
+                                        pincode=pincode,
                                         Email=email,
                                         phone=phone_number,
                                         blood_group=blood_group
@@ -596,12 +613,16 @@ def edit_parent(request):
     
     if request.method=='POST':
         parent_name=request.POST['parent_name']
-        address=request.POST['Address']
+        street=request.POST['street']
+        district=request.POST['district']
+        pincode=request.POST['pincode']
         email=request.POST['Email']
         phone_number=request.POST['phone']
         blood_group=request.POST['blood_group']
         parent.parent_name=parent_name
-        parent.Address=address
+        parent.street=street
+        parent.district=district
+        parent.pincode=pincode
         parent.Email=email
         parent.blood_group=blood_group
         parent.phone=phone_number
@@ -733,11 +754,15 @@ def edit_seller(request):
     seller=Seller.objects.get(login_id=log_id)
     if request.method=='POST':
         seller_name=request.POST['seller_name']
-        address=request.POST['address']
+        street=request.POST['street']
+        district=request.POST['district']
+        pincode=request.POST['pincode']
         phone_number=request.POST['phone']
         email=request.POST['email']
         seller.seller_name=seller_name
-        seller.Address=address
+        seller.street=street
+        seller.district=district
+        seller.pincode=pincode
         seller.phone=phone_number
         seller.Email=email
         seller.save()
@@ -808,8 +833,17 @@ def delete_product(request,id):
 def seller_viewbookings(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     seller=Seller.objects.get(login_id=log_id)
-    product=Productbooking.objects.filter(product_id__seller_id=seller)
-    print(product)
+    sorting_conditions = Case(
+        When(status='booked', then=Value(1)),
+        When(status='approved', then=Value(2)),
+        When(status='rejected', then=Value(3)),
+        default=Value(0),  # Assign a high value for any other status
+        output_field=IntegerField(),
+    )
+
+    # Fetch bookings for products associated with the seller and order them using custom sorting conditions
+    product = Productbooking.objects.filter(product_id__seller_id=seller).order_by(sorting_conditions)
+
     context={
         'product':product
     }
@@ -829,7 +863,7 @@ def booking_status(request,id):
             return redirect(seller_viewbookings)
 def confirm(request,id):
     booking=Productbooking.objects.get(id=id)
-    booking.status="booked"
+    booking.status="paid"
     booking.save()
     return redirect(seller_viewbookings)
 
@@ -859,7 +893,7 @@ def chat_seller(request, product_id):
     print(sender.id)
     print(receiver.id)
     messages = Chat.objects.filter(Q(sender=sender, receiver=receiver) | Q(sender=receiver, receiver=sender)).order_by('timestamp')
-    return render(request, 'Parent/chat.html', {'sender': sender, 'receiver': receiver, 'messages': messages})
+    return render(request, 'Customer/chat.html', {'sender': sender, 'receiver': receiver, 'messages': messages})
 
 
 @csrf_exempt
@@ -891,11 +925,15 @@ def edit_customer(request):
     customer=Customer.objects.get(login_id=log_id)
     if request.method=='POST':
         customer_name=request.POST['Customer_name']
-        address=request.POST['Address']
+        street=request.POST['street']
+        district=request.POST['district']
+        pincode=request.POST['pincode']
         email=request.POST['Email']
         phone_number=request.POST['phone']
         customer.Customer_name=customer_name
-        customer.Address=address
+        customer.street=street
+        customer.district=district
+        customer.pincode=pincode
         customer.Email=email
         customer.phone=phone_number
         customer.save()
@@ -904,7 +942,7 @@ def edit_customer(request):
         return render(request,'Customer/editprofile.html',{'customer':customer})
 def purchase(request):
     available_products = Product.objects.exclude(
-        id__in=Productbooking.objects.filter(status='booked').values('product_id')
+        id__in=Productbooking.objects.filter(status='paid').values('product_id')
     )
 
     context={
@@ -952,7 +990,7 @@ def cart_booking(request):
     for i in cart:
      cartbooking=Productbooking.objects.create(product_id=i.product_id,
                                                 customer_id=i.customer_id,
-                                                status='PENDING')
+                                                status='pending')
      cartbooking.save()
     cart.delete()
 
@@ -970,7 +1008,17 @@ def product_booking(request,id):
 def my_orders(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     customer=Customer.objects.get(login_id=log_id)
-    product=Productbooking.objects.filter(customer_id=customer)
+    sorting_conditions = Case(
+        When(status='booked', then=Value(1)),
+        When(status='approved', then=Value(2)),
+        When(status='rejected', then=Value(3)),
+        default=Value(0),  # Assign a high value for any other status
+        output_field=IntegerField(),
+    )
+
+    # Fetch bookings for products associated with the seller and order them using custom sorting conditions
+    # product = Productbooking.objects.filter(product_id__seller_id=seller).order_by(sorting_conditions)
+    product=Productbooking.objects.filter(customer_id=customer).order_by(sorting_conditions)
     context={
         'product':product
     }
@@ -983,7 +1031,7 @@ def payment(request,id):
     return render(request,'Customer/payment.html',context)
 def confirm_payment(request,id):
     booking=Productbooking.objects.get(id=id)
-    booking.status="booked"
+    booking.status="paid"
     booking.save()
     return redirect(my_orders)
 def cash_on_delivery(request,id):
@@ -998,6 +1046,41 @@ def delete_order(request,id):
     product=Productbooking.objects.get(id=id)
     product.delete()
     return redirect(my_orders)
+
+
+
+
+#  ADMIN   #
+
+def admin_home(request):
+    return render(request,'admin/adminhome.html')
+def admin_customer(request):
+    return render(request,'admin/customerview.html')
+
+def hospital_view(request):
+    data_hospital=LoginUser.objects.filter(user_type="hospital")
+    Hospital.objects.all()
+    print(data_hospital)
+    context={
+        'hospital':data_hospital
+    }
+    return render(request,'admin/hospitalview.html',context)
+def status(request,id):
+    hospital=Hospital.objects.get(id=id)
+    if request.method=='POST':
+        status=request.POST["status"]
+        if status=="approved":
+            hospital.status=status
+            hospital.save()
+            Productbooking.objects.filter(product_id=hospital.product_id).exclude(status='approved').delete()
+            return redirect(admin_hospital)
+        elif status=="rejected":
+            hospital.status=status
+            hospital.save()
+            return redirect(admin_hospital)
+def admin_seller(request):
+    return render(request,'admin/sellerview.html')
+
 
 
 

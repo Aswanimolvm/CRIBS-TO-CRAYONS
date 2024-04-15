@@ -260,7 +260,7 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-sm-8">
+                      <!-- <div class="col-sm-8">
                         <div class="form-group"> <label><span class="hidden-xs">
                               <h6>Expiration Date</h6>
                             </span></label>
@@ -268,7 +268,7 @@
                               required> <input type="number" placeholder="YY" name="" class="form-control" required>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="col-sm-4">
                         <div class="form-group mb-4"> <label data-toggle="tooltip"
                             title="Three digit CV code on the back of your card">
@@ -276,7 +276,7 @@
                           </label> <input type="text" required class="form-control"> </div>
                       </div>
                     </div>
-                    <a href="{% url 'confirmpayment' id=booking.id %}" class="btn btn-primary">PROCEED PAYMENT</a>
+                    <a href="{% url 'confirmpaymentcustomer' id=booking.id %}" class="btn btn-primary">PROCEED PAYMENT</a>
                   </form>
                   <div style="padding-top: 20px;">
                   <a href="{% url 'cashondelivery' id=booking.id %}" class="btn btn-primary">CASH ON DELIVERY</a>

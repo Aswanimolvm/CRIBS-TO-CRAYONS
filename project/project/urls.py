@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    
     #home#
     path('',views.home,name="home"),
     path('sellerreg',views.seller_register,name="sellerreg"),
@@ -53,6 +53,7 @@ urlpatterns = [
     path('productbooking/<int:id>',views.product_booking,name="productbooking"),
     path('myorders',views.my_orders,name="myorders"),
     path('payment/<int:id>',views.payment,name="payment"),
+    path('confirmpaymentcustomer/<int:id>',views.confirm_payment,name="confirmpaymentcustomer"),
     path('cashondelivery/<int:id>',views.cash_on_delivery,name="cashondelivery"),
     path('vieworders',views.view_orders,name="vieworders"),
     path('addtocart/<int:id>',views.add_to_cart,name="addtocart"),
@@ -119,6 +120,14 @@ urlpatterns = [
     path('list',views.list,name="list"),
     
 
+    # admin #
+
+
+    path('adminhome',views.admin_home,name="adminhome"),
+    path('admincustomer',views.admin_customer,name="admincustomer"),
+    path('adminhospital',views.hospital_view,name="adminhospital"),
+    path('adminseller',views.admin_seller,name="adminseller"),
+    path('status/<int:id>',views.status,name="status"),
     
    
     

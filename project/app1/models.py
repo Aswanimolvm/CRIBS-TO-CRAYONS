@@ -5,14 +5,16 @@ class LoginUser(AbstractUser):
 
     statuschoices=(('APPROVE','APPROVE'),
                    ('REJECT','REJECT'),
-                   ('PENDING','PENDING'))
+                   )
     status=models.CharField(choices=statuschoices,max_length=20,default='PENDING',null=True,blank=True)
     user_type=models.CharField(max_length=50)
 
 class Customer(models.Model):
     login_id=models.ForeignKey(LoginUser,on_delete=models.CASCADE)
     Customer_name=models.CharField(max_length=20)
-    Address=models.CharField(max_length=50)
+    street=models.CharField(max_length=50)
+    district=models.CharField(max_length=50)
+    pincode=models.IntegerField()
     Email=models.EmailField()
     phone=models.IntegerField()
 
@@ -22,7 +24,9 @@ class Customer(models.Model):
 class Seller(models.Model):
     login_id=models.ForeignKey(LoginUser,on_delete=models.CASCADE)
     seller_name=models.CharField(max_length=20)
-    Address=models.CharField(max_length=50)
+    street=models.CharField(max_length=50)
+    district=models.CharField(max_length=50)
+    pincode=models.IntegerField()    
     Email=models.EmailField()
     phone=models.IntegerField()
 
@@ -32,7 +36,9 @@ class Seller(models.Model):
 class Hospital(models.Model):
     login_id=models.ForeignKey(LoginUser,on_delete=models.CASCADE)
     hospital_name=models.CharField(max_length=20)
-    Address=models.CharField(max_length=50)
+    street=models.CharField(max_length=50)
+    district=models.CharField(max_length=50)
+    pincode=models.IntegerField()
     Email=models.EmailField()
     phone=models.IntegerField()
     licence_proof=models.FileField(upload_to='licence')
@@ -44,7 +50,9 @@ class Parent(models.Model):
     login_id=models.ForeignKey(LoginUser,on_delete=models.CASCADE)
     hospital_id=models.ForeignKey(Hospital,on_delete=models.CASCADE)
     parent_name=models.CharField(max_length=20)
-    Address=models.CharField(max_length=50)
+    street=models.CharField(max_length=50)
+    district=models.CharField(max_length=50)
+    pincode=models.IntegerField()
     Email=models.EmailField()
     phone=models.IntegerField()
     blood_group=models.CharField(max_length=10)

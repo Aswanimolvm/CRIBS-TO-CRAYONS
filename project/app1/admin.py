@@ -6,19 +6,19 @@ from .models import Seller,Customer,Hospital,LoginUser, Parent,Booking,Productbo
 class seller(admin.ModelAdmin):
     list_display = ('seller_name', 'Email','phone')
     # list_filter = ('status')
-    readonly_fields = ('seller_name','Email','Address','phone','login_id')
+    readonly_fields = ('seller_name','Email','street','district','pincode','phone','login_id')
     search_fields = ('seller_name',)
 class customer(admin.ModelAdmin):
     list_display = ('Customer_name','Email','phone')
-    readonly_fields = ('Customer_name','Email','Address','phone','login_id')
+    readonly_fields = ('Customer_name','Email','street','district','pincode','phone','login_id')
     search_fields = ('Customer_name',)
 class hospital(admin.ModelAdmin):
     list_display = ('hospital_name','Email','phone')
-    readonly_fields = ('hospital_name','Email','Address','phone','licence_proof','login_id')
+    readonly_fields = ('hospital_name','Email','street','district','pincode','phone','licence_proof','login_id')
     search_fields = ('hospital_name',)
 class parent(admin.ModelAdmin):
     list_display = ('parent_name','Email','phone')
-    readonly_fields = ('parent_name','Email','Address','phone','blood_group','hospital_id','login_id')
+    readonly_fields = ('parent_name','Email','street','district','pincode','phone','blood_group','hospital_id','login_id')
     search_fields = ('parent_name',)
 class nutritionist(admin.ModelAdmin):
     list_display = ('Nutritionist_name','hospital_id')

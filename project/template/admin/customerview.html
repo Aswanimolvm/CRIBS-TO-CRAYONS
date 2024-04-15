@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+<head>
+    
+    <meta charset="utf-8">
+    <title>CRIBS TO CRAYONS</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'js/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'js/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-xxl bg-white p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Navbar Start -->
+        <div class="container-fluid nav-bar bg-transparent">
+            <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
+                <a href="" class="navbar-brand d-flex align-items-center text-center">
+                    <div class="icon p-2 me-2">
+                        <img class="img-fluid" src="{% static 'img/logo.gif' %}" alt="Icon" style="width: 30px; height: 30px;">
+                    </div>
+                    <h1 class="m-0 " >CRIBS TO CRAYONS</h1>
+                </a> 
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                      <!-- <a href="{% url 'hospitalprofile'%}" class="nav-item nav-link active" >HOME</a> -->
+                        <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
+                        <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
+                        <!-- <a href="{% url 'login'%}" class="btn  px-3 d-none d-lg-flex" >LOGOUT</a> -->
+                        <!-- <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">ADD</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="{% url 'addparent'%}" class="dropdown-item">PARENT</a>
+                            
+                                <a href="{% url 'adddoctordetails' %}" class="dropdown-item">DOCTOR DETAILS</a>
+                                <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a> -->
+                                <!-- <a href="{% url 'adddoctordetails' %}" class="dropdown-item">DOCTOR DETAILS</a> -->
+                            <!-- </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEW</a>
+                          <div class="dropdown-menu rounded-0 m-0"> -->
+                              <!-- <a href="{% url 'viewparents'%}" class="nav-item nav-link active">CUSTOMERS </a> -->
+                              <a href="{% url 'adminseller' %}" class="nav-item nav-link active">SELLERS </a>
+                              <a href="{% url 'adminhospital' %}" class="nav-item nav-link active">HOSPITALS</a>
+                              
+  
+                              
+                          <!-- </div>
+                      </div>
+                      <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIDEOS</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'addvideos'%}" class="dropdown-item">UPLOAD</a>
+                            <a href="{% url 'viewvideos' %}" class="dropdown-item">VIEW</a> -->
+                            <!-- <a href="{% url 'addnutritionist' %}" class="dropdown-item"></a> -->
+                            
+  
+                            
+                        <!-- </div>
+                    </div>
+                      <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VACCINATION</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'addvaccination'%}" class="dropdown-item">ADD VACCINATION LIST</a>
+                            <a href="{% url 'mainviewvaccine' %}" class="dropdown-item">VIEW VACCINATION</a> -->
+                            <!-- <a href="{% url 'addnutritionist' %}" class="dropdown-item">NUTRITIONIST</a>
+                            
+  
+                            
+                        </div>
+                    </div>
+                      <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIDEOS</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'addvideos'%}" class="dropdown-item">UPLOAD VIDEOS</a>
+                            <a href="{% url 'viewvideos' %}" class="dropdown-item">VIEW VIDEOS</a>
+                            </div>
+                            </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
+                                <a href="404.html" class="dropdown-item"></a>
+                            </div>
+                        </div> -->
+                        <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+                        <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
+
+                    </div>
+                  </div>
+                </div>
+            </nav>
+        </div>
+  <!-- Bootstrap CSS -->
+  
+<br>
+<br>
+<br>
+<br>
+ <!-- Search Start -->
+ <!-- <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+    <div class="container">
+        <div class="row g-2">
+            <div class="col-md-6">
+
+            </div>
+           
+           <form method="get" action="{% url 'searchparent' %}">
+            <div class=" col-md-6 d-flex ">
+                <input type="text" class="form-control border-0 py-4" placeholder="Search parent" name="search">
+                <div>
+                <button class="btn btn-dark border-0 w-100 py-3" style="height: 85%;" ><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
+        </form> 
+    </div>
+    </div>
+</div> -->
+<!-- Search End -->
+
+<div class="container">
+    <h2>CUSTOMERS</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Name</th>
+          <th>Street</th>
+          <th>District</th>
+          <th>Pincode</th>
+          <th>Phone</th>
+          <th>Email</th>
+          
+          
+        </tr>
+      </thead>
+     
+      <tbody>
+      
+        {% if customer %}
+        {% for i in customer %}
+        <tr>
+          <td>{{ forloop.counter0|add:customer.start_index }}</td>
+         <td>{{ i.Customer_name }}</td>
+         <td>{{ i.street }}</td>
+         <td>{{ i.district }}</td>
+         <td>{{ i.pincode }}</td>
+         <td>{{ i.phone }}</td>
+         <td>{{ i.Email }}</td>
+         
+         
+          <!-- <td>
+            <a href="{% url 'addbaby' id=i.id %}" class="btn btn-primary">Add baby</a>
+            {% if i.baby_status == "True" %}
+           <a href="{% url 'viewbabyh' id=i.id %}" <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);"><i class="fa-regular fa-eye"></i></button>
+            {% else %}
+            {% endif %}
+          </td> -->
+          <!-- <td> <a href="{% url 'deleteparent' id=i.id %}" class="btn btn-primary"><i class="fa-solid fa-trash-can"></i></a></td>
+          
+        </tr> -->
+        {% endfor %}
+        
+      
+      {% else %}
+     
+    </tbody>
+   
+  </table>
+  <div style="color: red; text-align: center;">
+    <p>No customers</p>
+  </div>
+  {% endif %}
+    <!-- Pagination links -->
+  <div class="pagination mt-3 d-flex justify-content-end pe-5 mb-4  fw-bold text-white text-end ">
+    <span class="step-links  ">
+      {% if customer.has_previous %}
+      <a class="btn btn-dark" href="?page=1">&laquo; first</a>
+      <a class="btn btn-dark" href="?page={{ customer.previous_page_number }}">previous</a>
+      {% endif %}
+      {% if customer.has_next %}
+
+      <!-- <a href="?page={{ hist.paginator.num_pages }}" class="text-decoration-none text-white btn btn-dark ">last &raquo;</a> -->
+      {% endif %}
+      <span class="current text-dark">
+        Page {{ customer.number }} of {{ customer.paginator.num_pages }}.
+      </span>
+
+      {% if customer.has_next %}WV
+
+      <a href="?page={{ customer.next_page_number }}" class="text-decoration-none text-white btn btn-dark ">next</a>
+      {% endif %}
+    </span>
+  </div>
+  </div>
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/wow.min.js'%}"></script>
+<script src="{% static 'js/easing.min.js'%}"></script>
+<script src="{% static 'js/waypoints.min.js'%}"></script>
+<script src="{% static 'js/owl.carousel.min.js'%}"></script>
+
+<!-- Template Javascript -->
+<script src="{% static 'js/main.js'%}"></script>
+</body>
+</html>

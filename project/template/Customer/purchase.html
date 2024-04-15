@@ -492,9 +492,8 @@
                     <h6 class="card-title"><i class="fa-solid fa-location-dot"></i>  {{ i.location }}</h6>
                 </div>
                 <div class="mm">
-                    <button onclick="handledetails()" style="border: none;"><i class="fa-solid fa-circle-info vv"></i></button>
-               
-                    <h6 class="card-title" id="details" style="display: none">{{ i.product_details }}</h6>
+                    <button onclick="handledetails(this)" style="border: none;">Show Details</button>
+                    <h6 class="card-title details" style="display: none">{{ i.product_details }}</h6>
                 </div>
             </div>
                     <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
@@ -506,19 +505,18 @@
                 </div>
                 <!-- </div> -->
             </div>
+            {% endfor %}
             <script>
-                function handledetails() {
-                    let x = document.getElementById('details');
-                    if (x.style.display === "none") {
-                        x.style.display = "block";
+                function handledetails(btn) {
+                    let details = btn.parentElement.querySelector('.details');
+                    if (details.style.display === "none") {
+                        details.style.display = "block";
                     } else {
-                        x.style.display = "none";
+                        details.style.display = "none";
                     }
                 }
-
-
             </script>
-            {% endfor %}
+           
 
         </div>
         <!-- <div class="card" style="width: 18rem;">
