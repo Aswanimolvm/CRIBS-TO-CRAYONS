@@ -127,7 +127,7 @@ urlpatterns = [
     path('admincustomer',views.admin_customer,name="admincustomer"),
     path('adminhospital',views.hospital_view,name="adminhospital"),
     path('adminseller',views.admin_seller,name="adminseller"),
-    path('status/<int:id>',views.status,name="status"),
+    path('status/<int:id>',views.admin_approval,name="status"),
     
    
     

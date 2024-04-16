@@ -112,7 +112,7 @@ def loginpage(request):
                 return redirect(seller_profile)
             elif data.user_type=="customer":
                 return redirect(purchase)
-            elif data.user_type=="hospital" and data.status=="APPROVE":
+            elif data.user_type=="hospital" and data.status=="approved":
                 return redirect(hospital_profile)
             elif data.user_type=="parent":
                 return redirect(parent_profile)
@@ -1055,31 +1055,39 @@ def delete_order(request,id):
 def admin_home(request):
     return render(request,'admin/adminhome.html')
 def admin_customer(request):
-    return render(request,'admin/customerview.html')
+    customer_data=Customer.objects.all()
+    context={
+        'customer':customer_data
+    }
+    return render(request,'admin/customerview.html',context)
 
 def hospital_view(request):
-    data_hospital=LoginUser.objects.filter(user_type="hospital")
-    Hospital.objects.all()
-    print(data_hospital)
+    hospital_data=Hospital.objects.all()
+   
     context={
-        'hospital':data_hospital
+        'hospital':hospital_data
     }
     return render(request,'admin/hospitalview.html',context)
-def status(request,id):
-    hospital=Hospital.objects.get(id=id)
+def admin_approval(request,id):
+    hospital=LoginUser.objects.get(id=id)
+    print(hospital)
     if request.method=='POST':
         status=request.POST["status"]
         if status=="approved":
             hospital.status=status
             hospital.save()
-            Productbooking.objects.filter(product_id=hospital.product_id).exclude(status='approved').delete()
-            return redirect(admin_hospital)
+            return redirect(hospital_view)
         elif status=="rejected":
             hospital.status=status
             hospital.save()
-            return redirect(admin_hospital)
+            return redirect(hospital_view)
+
 def admin_seller(request):
-    return render(request,'admin/sellerview.html')
+    seller_data=Seller.objects.all()
+    context={
+        'seller':seller_data
+    }
+    return render(request,'admin/sellerview.html',context)
 
 
 

@@ -156,7 +156,12 @@
     </div>
 </div> -->
 <!-- Search End -->
-
+<style>
+  .fa-solid{
+    color: black;
+  }
+  
+</style>
 <div class="container">
     <h2>HOSPITALS</h2>
     <table class="table table-striped">
@@ -164,14 +169,16 @@
         <tr>
           <th>No.</th>
           <th>Name</th>
-          <th>Street</th>
-          <th>District</th>
-          <th>Pincode</th>
+          <th>Address</th>
+          <!-- <th>District</th>
+          <th>Pincode</th> -->
           <th>Phone</th>
           <th>Email</th>
-          <th>License Proof</th>
+          <th>LicenseProof</th>
           <th>Approve/Reject</th>
           
+          
+          <th>Status</th>
           
         </tr>
       </thead>
@@ -183,17 +190,21 @@
         <tr>
           <td>{{ forloop.counter}}</td>
          <td>{{ i.hospital_name }}</td>
-         <td>{{ i.street }}</td>
-         <td>{{ i.district }}</td>
-         <td>{{ i.pincode }}</td>
+         <td>{{ i.street }}
+          {{ i.district }}
+          {{ i.pincode }}
+         </td>
+         <!-- <td></td>
+         <td></td> -->
          <td>{{ i.phone }}</td>
          <td>{{ i.Email }}</td>
-         <td>{{ i.licence_proof }}</td>
-         
-         
-         
          <td>
-            <form method="post" action="{% url 'status' id=i.id %}">
+          <div class="vv">
+         <a href="{{ i.licence_proof.url }}"> <i class="fa-solid fa-file-pdf"></i></a>
+        </div>
+        </td>
+         <td>
+            <form method="post" action="{% url 'status' id=i.login_id.id %}">
                 {% csrf_token %}
                 {% if i.login_id.status == "PENDING" %}
                 <input type="hidden" name="status" >
@@ -204,6 +215,7 @@
                   <i class="fa fa-times"></i> 
                 </button>
                 {% endif %}
+                </form></td>
                 <td>{{i.login_id.status}}</td>
         {% endfor %}
         
