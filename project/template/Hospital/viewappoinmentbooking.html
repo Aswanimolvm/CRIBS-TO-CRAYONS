@@ -133,6 +133,26 @@
 <br>
 <br>
 <br>
+<!-- Search Start -->
+<div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+    <div class="container">
+        <div class="row g-2">
+            <div class="col-md-6">
+
+            </div>
+           
+           <form method="get" action="{% url 'hospitalsearchappt' id=doctor.id %}">
+            <div class=" col-md-6 d-flex ">
+                <input type="date" class="form-control border-0 py-4" placeholder="Search parent" name="search">
+                <div>
+                <button class="btn btn-dark border-0 w-100 py-3" style="height: 85%;" ><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
+        </form> 
+    </div>
+    </div>
+</div>
+<!-- Search End -->
 
 <div class="container">
     <h2>APPOINMENTS</h2>
@@ -140,8 +160,9 @@
       <thead>
         <tr>
             <th>No.</th>
-          <th>Patient name</th>
-          <th>Appt Date</th>
+          <th>Parent name</th>
+          <th>Appoinment Date</th>
+          <th>Booking Time</th>
           <!-- <th>Doctor name</th>
           <th>Remaining Slots</th> -->
           
@@ -156,7 +177,7 @@
           <td>{{ forloop.counter }}</td>
          <td>{{ i.parent_id.parent_name }}</td>
          <td>{{ i.booking_date }}</td>
-         <!-- <td>{{ i.doctor_id.Doctor_name }}</td> -->
+         <td>{{ i.date}}</td>
          <!-- <td>{{ i.doctor_id.slots }}</td> -->
          
          

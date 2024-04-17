@@ -82,6 +82,7 @@ urlpatterns = [
     path('deletedoctor/<int:id>',views.delete_doctor,name="deletedoctor"),
     path('deleteparent/<int:id>',views.delete_parent,name="deleteparent"),
     path('viewappoinment/<int:id>',views.view_appoinment,name="viewappoinment"),
+    path('hospitalsearchappt/<int:id>',views.hospital_search_appt,name="hospitalsearchappt"),
     path('addvideos',views.add_videos,name="addvideos"),
     path('viewvideos',views.view_videos,name="viewvideos"),
     path('parentviewvideos',views.pview_videos,name="parentviewvideos"),
@@ -122,10 +123,11 @@ urlpatterns = [
 
     # admin #
 
-
+    path('admin/',admin.site.urls),
     path('adminhome',views.admin_home,name="adminhome"),
     path('admincustomer',views.admin_customer,name="admincustomer"),
     path('adminhospital',views.hospital_view,name="adminhospital"),
+    path('hospitalsearch',views.hospital_search,name="hospitalsearch"),
     path('adminseller',views.admin_seller,name="adminseller"),
     path('status/<int:id>',views.admin_approval,name="status"),
     

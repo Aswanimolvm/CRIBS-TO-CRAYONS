@@ -73,17 +73,34 @@ class Doctor(models.Model):
     qualification=models.CharField(max_length=50)
     department=models.CharField(max_length=20)
     consulting_days=models.CharField(max_length=30)
-    consulting_time=models.CharField(max_length=20)
+    consulting_time=models.TimeField()
     slots=models.IntegerField()
-    main_slot=models.IntegerField()
     availability_status=models.CharField(max_length=10,default="AVAILABLE")
 
 class Booking(models.Model):
     doctor_id=models.ForeignKey(Doctor,on_delete=models.CASCADE)
     parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE)
-    booking_date=models.DateTimeField(auto_now=True)
-    consulting_date=models.DateField()
-   
+    date=models.DateTimeField(auto_now=True)
+    booking_date = models.DateField()
+    token_number = models.IntegerField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+
+    @classmethod
+    def get_next_token(cls, doctor_id,parent_id, booking_date):
+        # Get the highest token number for the given doctor and booking date
+        last_token = cls.objects.filter(doctor_id=doctor_id, booking_date=booking_date).order_by('-token_number').first()
+
+        if last_token:
+            # If tokens exist for the given doctor and booking date, increment the last token number
+            next_token_number = last_token.token_number + 1
+        else:
+            # If no tokens exist for the given doctor and booking date, start from 1
+            next_token_number = 1
+
+
+        return next_token_number
 
 class Vaccination(models.Model):
      hospital_id=models.ForeignKey(Hospital,on_delete=models.CASCADE)

@@ -137,14 +137,14 @@
 <br>
 <br>
  <!-- Search Start -->
- <!-- <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+ <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
     <div class="container">
         <div class="row g-2">
             <div class="col-md-6">
 
             </div>
            
-           <form method="get" action="{% url 'searchparent' %}">
+           <form method="get" action="{% url 'hospitalsearch' %}">
             <div class=" col-md-6 d-flex ">
                 <input type="text" class="form-control border-0 py-4" placeholder="Search parent" name="search">
                 <div>
@@ -154,7 +154,7 @@
         </form> 
     </div>
     </div>
-</div> -->
+</div>
 <!-- Search End -->
 <style>
   .fa-solid{
@@ -200,7 +200,7 @@
          <td>{{ i.Email }}</td>
          <td>
           <div class="vv">
-         <a href="{{ i.licence_proof.url }}"> <i class="fa-solid fa-file-pdf"></i></a>
+         <a href="{{ i.licence_proof.url }}" target="_blank"> <i class="fa-solid fa-file-pdf"></i></a>
         </div>
         </td>
          <td>

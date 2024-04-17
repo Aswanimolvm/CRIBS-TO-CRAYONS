@@ -169,6 +169,7 @@
                         <td>{{ i.department }}</td>
                         <td>{{ i.consulting_days }}</td>
                         <td>{{ i.consulting_time }}</td>
+                        
                         <td><button>
                             <form action="{% url 'doctorbooking' id=i.id %}" method="POST">
                                 {% csrf_token %}
@@ -200,18 +201,33 @@
             </table>
         </div>
         <script>
-            // Function to disable dates more than one week from the current date
             function disableFutureDates() {
-                var today = new Date();
-                var maxDate = new Date();
-                maxDate.setDate(today.getDate() + 7); // Set max date to one week from now
-        
-                var dateString = maxDate.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
-        
-                // Set max attribute of the date input to the calculated maxDate
-                document.getElementById('consulting_date').setAttribute('max', dateString);
+                // Get all date inputs in the document
+                var dateInputs = document.querySelectorAll('input[type="date"]');
+
+                // Loop through each date input
+                dateInputs.forEach(function(input) {
+                    var today = new Date();
+                    var maxDate = new Date(today);
+
+                    // Calculate the end of the current week
+                    maxDate.setDate(maxDate.getDate() + (6 - maxDate.getDay()));
+
+                    // Disable selecting Saturday and Sunday
+                    var day = today.getDay();
+                    if (day === 0 || day === 6) { // Sunday or Saturday
+                        today.setDate(today.getDate() + (1 + (day === 6 ? 1 : 0)));
+                    }
+
+                    // Format date as YYYY-MM-DD
+                    var dateString = today.toISOString().split('T')[0];
+
+                    // Set attributes for the date input
+                    input.setAttribute('min', dateString);
+                    input.setAttribute('max', maxDate.toISOString().split('T')[0]);
+                });
             }
-        
+
             // Call the function when the page loads
             window.onload = function() {
                 disableFutureDates();

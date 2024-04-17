@@ -420,7 +420,7 @@ def add_doctor_details(request):
         consulting_days=request.POST['consulting_days']
         consulting_time=request.POST['consulting_time']
         doctor_data=Doctor.objects.create(hospital_id=hospital,
-                                          slots=slots,main_slot=slots,
+                                          slots=slots,
                                           Doctor_name=doctor_name,
                                           department=department,
                                           qualification=qualification,
@@ -496,9 +496,25 @@ def view_appoinment(request,id):
     hospital=Hospital.objects.get(login_id=log_id)
     booking=Booking.objects.filter(doctor_id__hospital_id=hospital,doctor_id=doctor)
     context={
-        'booking':booking
+        'booking':booking,
+        'doctor' :doctor
     }
     return render(request,'Hospital/viewappoinmentbooking.html',context)
+def hospital_search_appt(request,id):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    hospital=Hospital.objects.get(login_id=log_id)
+    doctor=Doctor.objects.get(id=id)
+    booking=Booking.objects.filter(doctor_id=doctor)
+    if request.method=='GET':
+        booking_date=request.GET['search']
+        booking=Booking.objects.filter(booking_date__icontains=booking_date,
+                                doctor_id__hospital_id=hospital,)
+        context={
+            'booking':booking,
+            'doctor':doctor
+
+        }
+        return render(request,'Hospital/viewappoinmentbooking.html',context)
 def add_videos(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -657,53 +673,62 @@ def parentsearch_doctor(request):
 
         }
         return render(request,'Parent/doctorslist.html',context)
-def doctor_booking(request, id):
-    doctor = Doctor.objects.get(id=id)
-    log_id = LoginUser.objects.get(id=request.user.id)
-    parent = Parent.objects.get(login_id=log_id)
-    hospital= parent.hospital_id
-    doctorr=Doctor.objects.filter(hospital_id=hospital)
     
-    if request.method == 'POST':
-        consulting_date_str = request.POST['consulting_date']
-        consulting_date = datetime.strptime(consulting_date_str, '%Y-%m-%d').date()
+
+
+def doctor_booking(request,id):
+    doctor=Doctor.objects.get(id=id)
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+
+    if request.method == "POST": 
+        date = request.POST['consulting_date']
+
+        # Check if the user has already booked the doctor for the selected day
+        existing_booking = Booking.objects.filter(doctor_id=doctor, parent_id=parent, booking_date=date).exists()
+        if existing_booking:
+            return HttpResponse("You have already booked this doctor for the selected day.")
+
+        today_bookings_count = Booking.objects.filter(doctor_id=doctor, booking_date=date).count()
+        print(today_bookings_count)
+        if today_bookings_count >= doctor.slots:
+            return HttpResponse("No available slots for today.")
         
-        # Get the current date
-        current_date = datetime.now().date()
-        
-        # Calculate the date one week from now
-        one_week_from_now = current_date + timedelta(days=7)
-        
-        # Check if the selected date is within one week from the current date
-        if consulting_date > one_week_from_now:
-            return render(request,'Parent/doctorslist.html',{'message':"You can only book appointments within one week from the current date",'doctor':doctorr})
-        
-        # Count the number of bookings for the given consulting_date
-        booking_count = Booking.objects.filter(doctor_id=doctor, consulting_date=consulting_date).count()
-        
-        # Get the number of main slots available
-        main_slots = doctor.main_slot
-        
-        if booking_count < main_slots:
-            booking = Booking.objects.create(
-                parent_id=parent,
-                doctor_id=doctor,
-                consulting_date=consulting_date
-            )
-            booking.save()
-            return redirect(my_appoinments)
-        else:
-            # Handle the case where the number of bookings exceeds the main slots for the current date
-            return render(request,'Parent/doctorslist.html',{'message':"Booking not available for this day",'doctor':doctorr})
-        
+
+        # Generate token for the booking
+        booking_date = datetime.now().date()
+        token_number = Booking.get_next_token(doctor_id=doctor,parent_id=parent, booking_date=date)
+        print(booking_date)
+        print(token_number)
+
+        # Calculate start and end times for the booking
+        consulting_time = doctor.consulting_time
+        start_time = datetime.combine(datetime.now().date(), consulting_time) + timedelta(minutes=30 * (token_number - 1))
+        end_time = start_time + timedelta(minutes=30 * (token_number - 1))
+        end_time_plus_30min = start_time + timedelta(minutes=30 * token_number)
+        booking = Booking.objects.create(
+            doctor_id=doctor,
+            parent_id=parent,
+            booking_date=date,
+            token_number=token_number,
+            start_time=start_time.time(),
+            end_time=end_time_plus_30min.time()
+        )
+
+        # Update doctor's available slots
+        doctor.slots -= 1
+        doctor.save()
+        return redirect(my_appoinments)
+
+
 def my_appoinments(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
-    booking=Booking.objects.filter(parent_id=parent)
-    print(booking)
+    bookings=Booking.objects.filter(parent_id=parent)
     context={
-        'booking':booking
+        'booking':bookings
     }
+     
     return render(request,'Parent/myappoinments.html',context)
 
 def cancel_booking(request,id):
@@ -1068,6 +1093,15 @@ def hospital_view(request):
         'hospital':hospital_data
     }
     return render(request,'admin/hospitalview.html',context)
+def hospital_search(request):
+    if request.method=='GET':
+        search=request.GET['search']
+        hospital=Hospital.objects.filter(
+            Q(hospital_name__icontains=search))
+        context={
+            'hospital':hospital
+        }
+        return render(request,'admin/hospitalview.html',context)
 def admin_approval(request,id):
     hospital=LoginUser.objects.get(id=id)
     print(hospital)
