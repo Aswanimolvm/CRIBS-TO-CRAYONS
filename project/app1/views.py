@@ -33,7 +33,13 @@ def seller_register(request):
         password=request.POST['password']    
         password2=request.POST['confirmPassword']
         if LoginUser.objects.filter(username=username, user_type='seller').exists():
-            return render(request,'Home/sreg.html',{'message':"username already exists!!"}) 
+            return render(request,'Home/sreg.html',{'message':"username already exists!!"})
+        if Seller.objects.filter(Email=email).exists():
+            return render(request, 'Home/sreg.html', {'message': "Email is already registered!"})
+
+        # Check if phone number already exists
+        if Seller.objects.filter(phone=phone_number).exists():
+            return render(request, 'Home/sreg.html', {'message': "Phone number is already registered!"}) 
         if password != password2:
             return render(request,'Home/sreg.html',{'message':"password doesn't match"})   
         try:
@@ -59,6 +65,12 @@ def customer_register(request):
         password1=request.POST['confirmPassword']
         if LoginUser.objects.filter(username=username,user_type='customer').exists():
             return render(request,'Home/creg.html',{'message':"username already exists!!"})
+        if Customer.objects.filter(Email=email).exists():
+            return render(request, 'Home/creg.html', {'message': "Email is already registered!"})
+
+        # Check if phone number already exists
+        if Customer.objects.filter(phone=phone_number).exists():
+            return render(request, 'Home/creg.html', {'message': "Phone number is already registered!"})
         if password != password1:
             return render(request,'Home/creg.html',{'message':"password doesn't match"})
         login_data=LoginUser.objects.create_user(username=username,password=password,user_type='customer')
@@ -85,6 +97,12 @@ def hospital_register(request):
         password2=request.POST['confirmPassword']
         if LoginUser.objects.filter(username=username,user_type="hospital").exists():
             return render(request,'Home/hreg.html',{'message':"username already exists!!"})
+        if Hospital.objects.filter(Email=email).exists():
+            return render(request, 'Home/hreg.html', {'message': "Email is already registered!"})
+
+        # Check if phone number already exists
+        if Hospital.objects.filter(phone=phone_number).exists():
+            return render(request, 'Home/hreg.html', {'message': "Phone number is already registered!"})
         if password != password2:
             return render(request,'Home/hreg.html',{'message':"password doesn't match"})
         login_data=LoginUser.objects.create_user(username=username,password=password,user_type="hospital")
@@ -122,7 +140,6 @@ def loginpage(request):
                 return render(request,'Home/login.html',{'message':"please wait for the approval"})
         else:
             return render(request,'Home/login.html',{'message':"invalid credential"})
-
     else:
         return render(request,'Home/login.html')
 def loggout(request):  
@@ -137,7 +154,7 @@ def loggout(request):
 
 #hospital#
 
-@login_required()
+@login_required(login_url='login/')
 def hospital_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -147,6 +164,7 @@ def hospital_profile(request):
     return render(request,'Hospital/hospitalprofile.html',context)
 
 
+@login_required(login_url='login/')
 def edit_hospital(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -169,6 +187,8 @@ def edit_hospital(request):
         return redirect(hospital_profile)
     else:
         return render(request,'Hospital/edithprofile.html',{'hospital':hospital})
+    
+@login_required(login_url='login/')   
 def add_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital_id=Hospital.objects.get(login_id=log_id)
@@ -185,6 +205,12 @@ def add_parent(request):
         password2=request.POST['confirmPassword']
         if LoginUser.objects.filter(username=username).exists():
             return render(request,'Hospital/addparent.html',{'message':"username already exists!!"})
+        if Parent.objects.filter(Email=email).exists():
+            return render(request, 'Hospital/addparent.html', {'message': "Email is already registered!"})
+
+        # Check if phone number already exists
+        if Parent.objects.filter(phone=phone_number).exists():
+            return render(request, 'Hospital/addparent.html', {'message': "Phone number is already registered!"})
         if password != password2:
             return render(request,'Hospital/addparent.html',{'message':"password doesn't match"})
         
@@ -206,6 +232,8 @@ def add_parent(request):
         return redirect(view_parent)
     else:
         return render(request,'Hospital/addparent.html')
+    
+@login_required(login_url='login/')    
 def search_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -218,6 +246,8 @@ def search_parent(request):
             'parent':parents
             }
         return render(request,'Hospital/viewparents2.html',context)
+    
+@login_required(login_url='login/')
 def view_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital_id=Hospital.objects.get(login_id=log_id)
@@ -240,12 +270,16 @@ def view_parent(request):
         'parent': parents
     }
     return render(request,'Hospital/viewparents.html',context)
+
+@login_required(login_url='login/')
 def delete_parent(request,id):
     parent=Parent.objects.get(id=id)
     parent.delete()
     parents=LoginUser.objects.get(id=parent.login_id.id)
     parents.delete()
     return redirect(view_parent)
+
+@login_required(login_url='login/')
 def add_baby(request,id):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -288,6 +322,8 @@ def add_baby(request,id):
             'vaccines':vaccine
         }
         return render(request,'Hospital/addbaby.html',context)
+    
+@login_required(login_url='login/')
 def view_baby(request,id):
     parent=Parent.objects.get(id=id)
     baby=Baby_details.objects.filter(parent_id=parent)
@@ -297,6 +333,8 @@ def view_baby(request,id):
     }
 
     return render(request,'Hospital/viewbabydetails.html',context)
+
+@login_required(login_url='login/')
 def add_vaccination(requesst):
     log_id=LoginUser.objects.get(id=requesst.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -312,6 +350,8 @@ def add_vaccination(requesst):
        
         return redirect(mainview_vaccine)
     return render(requesst,'Hospital/addvaccination.html')
+
+@login_required(login_url='login/')
 def mainview_vaccine(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -322,6 +362,8 @@ def mainview_vaccine(request):
     return render(request,'Hospital/viewmainvaccine.html',context) 
 # def generate_vaccine(request):
 #     return render(request,'Hospital/generatevaccine.html') 
+
+@login_required(login_url='login/')
 def viewbaby_vaccine(request,id):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -347,7 +389,9 @@ def viewbaby_vaccine(request,id):
         'b_id':b_id
 
     }
-    return render(request,'Hospital/babyvaccineview.html',context) 
+    return render(request,'Hospital/babyvaccineview.html',context)
+
+@login_required(login_url='login/') 
 def send_notification_to_parent(baby, vaccine, notification_date):
     subject = f"Upcoming Vaccination Reminder for {baby.baby_name}"
     message = f"Dear parent,\n\nThis is a reminder that your child {baby.baby_name} has a vaccination appointment coming up on {vaccine.vaccination_date}. Please ensure that your child is prepared.\n\nSincerely,\nHospital"
@@ -356,6 +400,7 @@ def send_notification_to_parent(baby, vaccine, notification_date):
 
     send_mail(subject, message, sender, [recipient]) 
 
+@login_required(login_url='login/')
 def date_vtaken(request,id):
     baby=Baby_details.objects.get(id=id)
     if request.method=='POST':
@@ -367,10 +412,14 @@ def date_vtaken(request,id):
                                           baby_id=baby)
         vdate.save()
         return redirect(viewbaby_vaccine,id=baby.id)
-   
+
+@login_required(login_url='login/')   
 def add_nutritionist(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital_id=Hospital.objects.get(login_id=log_id)
+    if Nutritionist.objects.filter(hospital_id=hospital_id).exists():
+        return render(request, 'Hospital/addnutritionist.html', {'message': "A nutritionist is already added to this hospital."})
+
     if request.method=='POST':
         nutritionist_name=request.POST['Nutritionist_name']
         consulting_days=request.POST['consulting_days']
@@ -395,6 +444,8 @@ def add_nutritionist(request):
         return redirect(view_nutritionist)
     else:
          return render(request,'Hospital/addnutritionist.html')
+    
+@login_required(login_url='login/')
 def view_nutritionist(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -404,11 +455,14 @@ def view_nutritionist(request):
         'nutritionist':nutritionist
     }
     return render(request,'Hospital/viewnutritionist.html',context)
+
+@login_required(login_url='login/')
 def delete_nutritionist(request,id):
     nutritionist=Nutritionist.objects.get(id=id)
     nutritionist.delete()
     return redirect(view_nutritionist)
 
+@login_required(login_url='login/')
 def add_doctor_details(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -431,6 +485,8 @@ def add_doctor_details(request):
         return redirect(view_doctor)
     else:
         return render(request,'Hospital/adddoctordetails.html')
+    
+@login_required(login_url='login/')
 def view_doctor(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -453,6 +509,8 @@ def view_doctor(request):
         'doctor':doctors
     }
     return render(request,'Hospital/viewdoctordetails.html',context)
+
+@login_required(login_url='login/')
 def search_doctor(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -465,6 +523,8 @@ def search_doctor(request):
         'doctor':doctors
         }
         return render(request,'Hospital/viewdoctordetails2.html',context)
+    
+@login_required(login_url='login/')
 def edit_doctor(request,id):
     # log_id=LoginUser.objects.get(id=request.user.id)
     # hospital=Hospital.objects.get(login_id=log_id)
@@ -484,12 +544,14 @@ def edit_doctor(request,id):
         return redirect(view_doctor)
     else:
         return render(request,'Hospital/editdoctor.html',{'doctor':doctor})
+    
+@login_required(login_url='login/')
 def delete_doctor(request,id):
     doctor=Doctor.objects.get(id=id)
     doctor.delete()
     return redirect(view_doctor)
 
-
+@login_required(login_url='login/')
 def view_appoinment(request,id):
     doctor=Doctor.objects.get(id=id)
     log_id=LoginUser.objects.get(id=request.user.id)
@@ -500,6 +562,8 @@ def view_appoinment(request,id):
         'doctor' :doctor
     }
     return render(request,'Hospital/viewappoinmentbooking.html',context)
+
+@login_required(login_url='login/')
 def hospital_search_appt(request,id):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -515,6 +579,8 @@ def hospital_search_appt(request,id):
 
         }
         return render(request,'Hospital/viewappoinmentbooking.html',context)
+    
+@login_required(login_url='login/')
 def add_videos(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -531,6 +597,8 @@ def add_videos(request):
 
         return redirect(view_videos)
     return render(request,'Hospital/addvideos.html')
+
+@login_required(login_url='login/')
 def view_videos(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
@@ -540,6 +608,8 @@ def view_videos(request):
         'video':videos
     }
     return render(request,'Hospital/viewvideos.html',context)
+
+@login_required(login_url='login/')
 def edit_videos(request,id):
     video=Video.objects.get(id=id)
     if request.method=='POST':
@@ -551,6 +621,8 @@ def edit_videos(request,id):
         return redirect(view_videos)
     
     return render(request,'Hospital/editvideos.html',{'video':video})
+
+@login_required(login_url='login/')
 def delete_videos(request,id):
     video=Video.objects.get(id=id)
     video.delete()
@@ -560,7 +632,10 @@ def delete_videos(request,id):
 
 
 #parent#
-@login_required(login_url=login)
+
+
+
+@login_required(login_url='login/')
 def parent_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
@@ -569,6 +644,8 @@ def parent_profile(request):
     }
     return render(request,'Parent/parentprofile.html',context)
 
+
+@login_required(login_url='login/')
 def baby_details(request):
      log_id=LoginUser.objects.get(id=request.user.id)
      parent=Parent.objects.get(login_id=log_id)
@@ -579,6 +656,8 @@ def baby_details(request):
      }
 
      return render(request,'Parent/babydetails.html',context)
+
+@login_required(login_url='login/')
 def edit_baby(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
@@ -597,9 +676,11 @@ def edit_baby(request):
         baby.weight=weight
         baby.blood_group=blood_group
         baby.save()
-        return HttpResponse("updated!!")
+        return redirect(baby_details)
     else:
         return render(request,'Parent/editbabydetails.html',{'baby':baby})
+    
+@login_required(login_url='login/')
 def vaccination_chart(request,id):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
@@ -623,6 +704,8 @@ def vaccination_chart(request,id):
     }
 
     return render(request,'Parent/vaccinationchart.html',context)
+
+@login_required(login_url='login/')
 def edit_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
@@ -648,6 +731,8 @@ def edit_parent(request):
         return redirect(parent_profile)
     else:
         return render(request,'Parent/editparent.html',{'parent':parent})
+    
+@login_required(login_url='login/')
 def doctor_list(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
@@ -659,6 +744,8 @@ def doctor_list(request):
     }
     
     return render(request,'Parent/doctorslist.html',context)
+
+@login_required(login_url='login/')
 def parentsearch_doctor(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
@@ -675,7 +762,7 @@ def parentsearch_doctor(request):
         return render(request,'Parent/doctorslist.html',context)
     
 
-
+@login_required(login_url='login/')
 def doctor_booking(request,id):
     doctor=Doctor.objects.get(id=id)
     log_id=LoginUser.objects.get(id=request.user.id)
@@ -687,12 +774,27 @@ def doctor_booking(request,id):
         # Check if the user has already booked the doctor for the selected day
         existing_booking = Booking.objects.filter(doctor_id=doctor, parent_id=parent, booking_date=date).exists()
         if existing_booking:
-            return HttpResponse("You have already booked this doctor for the selected day.")
+            hospital= parent.hospital_id
+            doctor=Doctor.objects.filter(hospital_id=hospital)
+            print(doctor)
+            context={
+            'doctor':doctor,
+            'message':"You have already booked this doctor for the selected day."
+            }
+            return render(request,'Parent/doctorslist.html',context)
 
         today_bookings_count = Booking.objects.filter(doctor_id=doctor, booking_date=date).count()
         print(today_bookings_count)
         if today_bookings_count >= doctor.slots:
-            return HttpResponse("No available slots for today.")
+            hospital= parent.hospital_id
+            doctor=Doctor.objects.filter(hospital_id=hospital)
+            print(doctor)
+            context={
+            'doctor':doctor,
+            'message':"No available slots for today."
+            }
+            return render(request,'Parent/doctorslist.html',context)
+
         
 
         # Generate token for the booking
@@ -716,11 +818,12 @@ def doctor_booking(request,id):
         )
 
         # Update doctor's available slots
-        doctor.slots -= 1
-        doctor.save()
+        # doctor.slots -= 1
+        # doctor.save()
         return redirect(my_appoinments)
 
 
+@login_required(login_url='login/')
 def my_appoinments(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
@@ -731,6 +834,8 @@ def my_appoinments(request):
      
     return render(request,'Parent/myappoinments.html',context)
 
+
+@login_required(login_url='login/')
 def cancel_booking(request,id):
     booking=Booking.objects.get(id=id)
     doctor=Doctor.objects.get(id=booking.doctor_id.id)
@@ -740,6 +845,8 @@ def cancel_booking(request,id):
 
     
     return render(request,'Parent/doctorbooking.html')
+
+@login_required(login_url='login/')
 def pview_videos(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     parent=Parent.objects.get(login_id=log_id)
@@ -750,6 +857,7 @@ def pview_videos(request):
     }
     return render(request,'Parent/pviewvideos.html',context)
 
+@login_required(login_url='login/')
 def chat_nutritionist(request):
     sender=request.user
     parent=Parent.objects.get(login_id=sender)
@@ -767,6 +875,8 @@ def chat_nutritionist(request):
 
 #seller#
 
+
+@login_required(login_url='login/')
 def seller_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     seller=Seller.objects.get(login_id=log_id)
@@ -774,6 +884,8 @@ def seller_profile(request):
         'seller':seller
     }
     return render(request,'Seller/sellerprofile.html',context)
+
+@login_required(login_url='login/')
 def edit_seller(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     seller=Seller.objects.get(login_id=log_id)
@@ -796,6 +908,8 @@ def edit_seller(request):
         return redirect(seller_profile)
     else:
         return render(request,'Seller/editsellerprofile.html',{'seller':seller})
+    
+@login_required(login_url='login/')
 def add_product(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     seller_id=Seller.objects.get(login_id=log_id)
@@ -818,6 +932,8 @@ def add_product(request):
         product_data.save()
         return redirect(seller_viewproducts)
     return render(request,'Seller/addproducts.html')
+
+@login_required(login_url='login/')
 def edit_product(request,id):
     # log_id=LoginUser.objects.get(id=request.user.id)
     # seller=Seller.objects.get(login_id=log_id)
@@ -841,6 +957,8 @@ def edit_product(request,id):
         return redirect(seller_viewproducts)
     else:
         return render(request,'Seller/editproduct.html',{'product':product})
+    
+@login_required(login_url='login/')
 def seller_viewproducts(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     seller=Seller.objects.get(login_id=log_id)
@@ -851,10 +969,14 @@ def seller_viewproducts(request):
     }
     
     return render(request,'Seller/sellerviewproduct.html',context)
+
+@login_required(login_url='login/')
 def delete_product(request,id):
     product=Product.objects.get(id=id)
     product.delete()
     return redirect(seller_viewproducts)
+
+@login_required(login_url='login/')
 def seller_viewbookings(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     seller=Seller.objects.get(login_id=log_id)
@@ -868,11 +990,13 @@ def seller_viewbookings(request):
 
     # Fetch bookings for products associated with the seller and order them using custom sorting conditions
     product = Productbooking.objects.filter(product_id__seller_id=seller).order_by(sorting_conditions)
-
+    print(product)
     context={
         'product':product
     }
     return render(request,'Seller/viewbooking.html',context)
+
+@login_required(login_url='login/')
 def booking_status(request,id):
     booking=Productbooking.objects.get(id=id)
     if request.method=='POST':
@@ -886,12 +1010,16 @@ def booking_status(request,id):
             booking.status=status
             booking.save()
             return redirect(seller_viewbookings)
+        
+@login_required(login_url='login/')
 def confirm(request,id):
     booking=Productbooking.objects.get(id=id)
     booking.status="paid"
     booking.save()
     return redirect(seller_viewbookings)
 
+
+@login_required(login_url='login/')
 def chat(request,id):
     seller = LoginUser.objects.get(id=request.user.id)
     productbooking = Productbooking.objects.get(id=id)
@@ -903,6 +1031,8 @@ def chat(request,id):
 
 #customer#
 
+
+@login_required(login_url='login/')
 def customer_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     customer=Customer.objects.get(login_id=log_id)
@@ -910,6 +1040,8 @@ def customer_profile(request):
         'customer':customer
     }
     return render(request,'Customer/customerprofile.html',context)
+
+@login_required(login_url='login/')
 def chat_seller(request, product_id):
     sender=request.user
     product=Product.objects.get(id=product_id)
@@ -945,6 +1077,7 @@ def send_message(request, sender_id, receiver_id):
     # Return an error if the request method is not POST or the message is empty
     return JsonResponse({'status': 'error'})
 
+@login_required(login_url='login/')
 def edit_customer(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     customer=Customer.objects.get(login_id=log_id)
@@ -965,15 +1098,19 @@ def edit_customer(request):
         return redirect(customer_profile)
     else:
         return render(request,'Customer/editprofile.html',{'customer':customer})
+    
+@login_required(login_url='login/')
 def purchase(request):
     available_products = Product.objects.exclude(
-        id__in=Productbooking.objects.filter(status='paid').values('product_id')
+        id__in=Productbooking.objects.filter(status__in=['paid', 'booked']).values('product_id')
     )
 
     context={
         'product':available_products
     }
     return render(request,'Customer/purchase.html',context)
+
+@login_required(login_url='login/')
 def product_search(request):
     if request.method=='GET':
         search=request.GET['search']
@@ -984,6 +1121,8 @@ def product_search(request):
             'product':products
         }
         return render(request,'Customer/purchase.html',context)
+    
+@login_required(login_url='login/')
 def add_to_cart(request,id):
     product=Product.objects.get(id=id)
     log_id=LoginUser.objects.get(id=request.user.id)
@@ -995,6 +1134,8 @@ def add_to_cart(request,id):
         cart=Cart.objects.create(product_id=product,customer_id=customer)
         cart.save()
         return redirect(cart_view)
+    
+@login_required(login_url='login/')
 def cart_view(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     customer=Customer.objects.get(login_id=log_id)
@@ -1004,32 +1145,48 @@ def cart_view(request):
         'cart':cart
     }
     return render(request,'Customer/cart.html',context)
+
+@login_required(login_url='login/')
 def cart_delete(request,id):
     cart=Cart.objects.get(id=id)
     cart.delete()
     return redirect(cart_view)
+
+@login_required(login_url='login/')
 def cart_booking(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     customer=Customer.objects.get(login_id=log_id)
     cart=Cart.objects.filter(customer_id=customer)
+    
     for i in cart:
+     if Productbooking.objects.filter(product_id=i.product_id).exists():
+        return redirect(my_orders)
      cartbooking=Productbooking.objects.create(product_id=i.product_id,
                                                 customer_id=i.customer_id,
                                                 status='pending')
+     
      cartbooking.save()
     cart.delete()
 
     return redirect(my_orders)
+
+@login_required(login_url='login/')
 def view_product(request):
     return render(request,'Customer/viewproduct.html')
+
+@login_required(login_url='login/')
 def product_booking(request,id):
     product=Product.objects.get(id=id)
     log_id=LoginUser.objects.get(id=request.user.id)
     customer=Customer.objects.get(login_id=log_id)
+    if Productbooking.objects.filter(product_id=product).exists():
+        return redirect(my_orders)
     booking=Productbooking.objects.create(product_id=product,customer_id=customer)
     booking.save()
     return redirect(my_orders)
 
+
+@login_required(login_url='login/')
 def my_orders(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     customer=Customer.objects.get(login_id=log_id)
@@ -1048,28 +1205,38 @@ def my_orders(request):
         'product':product
     }
     return render(request,'Customer/myorders.html',context)
+
+@login_required(login_url='login/')
 def payment(request,id):
     booking=Productbooking.objects.get(id=id)
     context={
         'booking':booking
     }
     return render(request,'Customer/payment.html',context)
+
+@login_required(login_url='login/')
 def confirm_payment(request,id):
     booking=Productbooking.objects.get(id=id)
     booking.status="paid"
     booking.save()
     return redirect(my_orders)
+
+@login_required(login_url='login/')
 def cash_on_delivery(request,id):
     booking=Productbooking.objects.get(id=id)
     booking.status="cash on delivery"
     booking.save()
     return redirect(my_orders)
 
+@login_required(login_url='login/')
 def view_orders(request):
     return render(request,'Customer/viewmyorder.html')
+
+@login_required(login_url='login/')
 def delete_order(request,id):
     product=Productbooking.objects.get(id=id)
-    product.delete()
+    product.status="cancelled"
+    product.save()
     return redirect(my_orders)
 
 
@@ -1077,8 +1244,12 @@ def delete_order(request,id):
 
 #  ADMIN   #
 
+
+@login_required(login_url='login/')
 def admin_home(request):
     return render(request,'admin/adminhome.html')
+
+@login_required(login_url='login/')
 def admin_customer(request):
     customer_data=Customer.objects.all()
     context={
@@ -1086,13 +1257,32 @@ def admin_customer(request):
     }
     return render(request,'admin/customerview.html',context)
 
+
+@login_required(login_url='login/')
 def hospital_view(request):
     hospital_data=Hospital.objects.all()
+    items_per_page = 5
+
+        # Use Paginator to paginate the products
+    paginator = Paginator(hospital_data, items_per_page)
+    page = request.GET.get('page', 1)
+
+    try:
+        hospital_data = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver the first page
+        hospital_data = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver the last page of results
+        hospital_data = paginator.page(paginator.num_pages)
    
     context={
         'hospital':hospital_data
     }
     return render(request,'admin/hospitalview.html',context)
+
+
+@login_required(login_url='login/')
 def hospital_search(request):
     if request.method=='GET':
         search=request.GET['search']
@@ -1102,6 +1292,8 @@ def hospital_search(request):
             'hospital':hospital
         }
         return render(request,'admin/hospitalview.html',context)
+    
+@login_required(login_url='login/')
 def admin_approval(request,id):
     hospital=LoginUser.objects.get(id=id)
     print(hospital)
@@ -1116,6 +1308,8 @@ def admin_approval(request,id):
             hospital.save()
             return redirect(hospital_view)
 
+
+@login_required(login_url='login/')
 def admin_seller(request):
     seller_data=Seller.objects.all()
     context={
@@ -1133,6 +1327,8 @@ def admin_seller(request):
 
 #nutritionist#
 
+
+@login_required(login_url='login/')
 def n_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     nutritionist=Nutritionist.objects.get(login_id=log_id)
@@ -1140,6 +1336,8 @@ def n_profile(request):
         'nutritionist':nutritionist
     }
     return render(request,'Nutritionist/nprofile.html',context)
+
+@login_required(login_url='login/')
 def edit_nutritionist(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     nutritionist=Nutritionist.objects.get(login_id=log_id)
@@ -1154,7 +1352,8 @@ def edit_nutritionist(request):
         return redirect(n_profile)
     else:
         return render(request,'Nutritionist/neditprofile.html',{'nutritionist':nutritionist})
-    
+
+@login_required(login_url='login/')   
 def nview_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     nutritionist=Nutritionist.objects.get(login_id=log_id)
@@ -1177,6 +1376,8 @@ def nview_parent(request):
         'parent': parents
     }
     return render(request,'Nutritionist/viewparentlist.html',context)
+
+@login_required(login_url='login/')
 def nview_baby(request,id):
     log_id=LoginUser.objects.get(id=request.user.id)
     nutritionist=Nutritionist.objects.get(login_id=log_id)
@@ -1187,6 +1388,8 @@ def nview_baby(request,id):
         'baby':baby
     }
     return render(request,'Nutritionist/viewbaby.html',context)
+
+@login_required(login_url='login/')
 def nbaby_vaccine(request,id):
     log_id=LoginUser.objects.get(id=request.user.id)
     nutritionist=Nutritionist.objects.get(login_id=log_id)
@@ -1211,6 +1414,8 @@ def nbaby_vaccine(request,id):
 
     }
     return render(request,'Nutritionist/babyvaccine.html',context)
+
+@login_required(login_url='login/')
 def nsearch_parent(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     nutritionist=Nutritionist.objects.get(login_id=log_id)
@@ -1225,6 +1430,8 @@ def nsearch_parent(request):
             'parent':parents
             }
         return render(request,'Nutritionist/parentlist2.html',context)
+    
+@login_required(login_url='login/')
 def parent_msg(request,id):
     sender=request.user
     parent=Parent.objects.get(login_id=id)
@@ -1232,6 +1439,8 @@ def parent_msg(request,id):
     print(receiver)
     messages = Chat.objects.filter(Q(sender=sender, receiver=receiver) | Q(sender=receiver, receiver=sender)).order_by('timestamp')
     return render(request, 'Nutritionist/chat.html', {'sender': sender, 'receiver': receiver, 'messages': messages})
+
+@login_required(login_url='login/')
 def chat_list(request):
     # Retrieve conversations where the current user is the receiver
     conversations = Chat.objects.filter(receiver=request.user)
@@ -1250,8 +1459,12 @@ def chat_list(request):
         sorted_conversations.append(latest_message)
 
     return render(request, 'Nutritionist/parentmsg.html', {'conversations': sorted_conversations})
+
+@login_required(login_url='login/')
 def msg(request):
     return render(request,'Customer/chatlistseller.html')
+
+@login_required(login_url='login/')
 def list(request):
      # Retrieve conversations where the current user is the receiver
     conversations = Chat.objects.filter(receiver=request.user)

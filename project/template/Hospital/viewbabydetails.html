@@ -158,6 +158,15 @@
       font-size: 18px;
       margin-bottom: 5px;
     }
+    .inputnew{
+      background-color: #007bff;
+      border: none;
+      color: white;
+    }
+    .widthfit{
+      width: fit-content;
+      text-align: center;
+    }
   </style>
 
 {% for i in baby %}
@@ -165,10 +174,20 @@
 
   <div class="profile-header text-center">
     <img src="{% static 'img/b4.jpeg' %}" alt="Profile Picture" class="profile-picture">
+    
     <h1 class="profile-name">{{ i.baby_name }}</h1>
     <div class="profile-details">
-      <p>{{ i.father_name }}</p>
-      <p>{{ i.birth_date }}</p>
+      <div class="m-auto widthfit">
+
+        <label class="text-center ps-4  " for="">Father Name</label>
+        <input class="inputnew text-center "  value='{{ i.father_name }}'>
+      </div>
+      <div class="m-auto widthfit">
+
+        <label class="text-center ps-4  " for="">Date Of Birth</label>
+        <input class="inputnew text-center "  value='{{ i.birth_date }}'>
+      </div>
+      <p></p>
       <p>{{ i.gender }}</p>
       <p>{{ i.blood_group }}</p>
       <p>{{ i.weight }}</p>

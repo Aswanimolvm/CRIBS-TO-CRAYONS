@@ -34,7 +34,8 @@
 </head>
 
 <body>
-    <div class="container-xxl bg-white p-0">
+    <div class="container-xxl bg-white p-0"style="background-image:url(../../static/img/bg3.jpg) ;background-repeat: no-repeat; background-size: 100%;">
+      <div style="background-color: rgba(103, 115, 135, 0.73);">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -171,12 +172,16 @@ h4{
   </h3><br>  
 <p> --><br>
   <br>
-  <div class="container">
+  <div class="container"style=" padding-top: 20px;">
     <div class="row justify-content-center">
       <div class="col-md-6 registration-container">
-        <div class="card">
-          <div class="card-header" style="background-color: rgb(141, 141, 237);">
-            <h2 class="text-center">Register here!</h2>
+        <div class="card"style="
+        background: none;
+        opacity: 68;
+        box-shadow: 0px 0px 20px 2px;
+    ">
+          <div class="card-header" style="background-color: rgb(10, 10, 12);">
+            <h2 class="text-center" style="color: white;">Register here!</h2>
           </div>
           <div class="card-body">
             <form action="{% url 'customerreg'%}" method="POST">
@@ -188,15 +193,15 @@ h4{
               {% endif %}
               <div class="form-group">
                 <label for="username"style="color: black;">Name</label>
-                <input type="text" class="form-control"  id="username" name="Customer_name" required>
+                <input type="text" class="form-control" style="background: none;color: white;" id="username" name="Customer_name" required>
                 <!-- pattern="[a-z A-Z]+" -->
               </div><div class="form-group">
                 <label for="street" style="color: black;">Street Name</label>
-                <input type="text" class="form-control" id="street" name="street" required>
+                <input type="text" class="form-control"style="background: none;color: white;" id="street" name="street" required>
             </div>
             <div class="form-group">
-              <label for="gender">District</label>
-              <select class="form-control" id="district" name="district" required>
+              <label for="gender" style="color: black;">District</label>
+              <select class="form-control"style="background: none;color: white;" id="district" name="district" required>
                 <option value="">Select district</option>
                 <option value="Thiruvanandapuram">Thiruvanandapuram</option>
                 <option value="Kollam">Kollam</option>
@@ -216,7 +221,7 @@ h4{
             </div>
             <div class="form-group">
                 <label for="pincode" style="color: black;">Pincode</label>
-                <input type="text" class="form-control" id="pincode" name="pincode" required pattern="[0-9]{6}" minlength="6" maxlength="6" required>
+                <input type="text" class="form-control" style="background: none;color: white;"id="pincode" name="pincode" required pattern="[0-9]{6}" minlength="6" maxlength="6" required>
             </div>
             <!-- Add more fields for city, state, etc. if needed -->
             <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
@@ -224,23 +229,23 @@ h4{
         
           <div class="form-group">
             <label for="username"style="color: black;">Phone number</label>
-            <input type="text" class="form-control" id="username" name="phone" required pattern="[0-9]{10}" minlength="10" maxlength="10" class="form-control">
+            <input type="text" class="form-control"style="background: none;color: white;" id="username" name="phone" required pattern="[0-9]{10}" minlength="10" maxlength="10" class="form-control">
           </div>
           <div class="form-group">
             <label for="email"style="color: black;">Email</label>
-            <input type="email" class="form-control" id="email" name="Email" required>
+            <input type="email" class="form-control"style="background: none;color: white;" id="email" name="Email" required>
           </div>
               <div class="form-group">
                 <label for="username"style="color: black;">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <input type="text" class="form-control"style="background: none;color: white;" id="username" name="username" required>
               </div>
               <div class="form-group">
                 <label for="password"style="color: black;">Password</label>
-                <input type="password" class="form-control" id="password" name="password"  required>
+                <input type="password" class="form-control" style="background: none;color: white;"id="password" name="password"  required>
               <!-- </div>pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}" minlength="8" title="Password must contain atleast one number ,an Uppercase letter and aleast 8 characters. " -->
               <div class="form-group">
                 <label for="confirmPassword"style="color: black;">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                <input type="password" class="form-control" style="background: none;color: white;"id="confirmPassword" name="confirmPassword" required>
               </div>
               
               <div class="d-flex mt-4">
@@ -252,6 +257,7 @@ h4{
       </div>
     </div>
   </div>
+</div>
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -201,38 +201,27 @@
             </table>
         </div>
         <script>
-            function disableFutureDates() {
-                // Get all date inputs in the document
-                var dateInputs = document.querySelectorAll('input[type="date"]');
-
-                // Loop through each date input
-                dateInputs.forEach(function(input) {
-                    var today = new Date();
-                    var maxDate = new Date(today);
-
-                    // Calculate the end of the current week
-                    maxDate.setDate(maxDate.getDate() + (6 - maxDate.getDay()));
-
-                    // Disable selecting Saturday and Sunday
-                    var day = today.getDay();
-                    if (day === 0 || day === 6) { // Sunday or Saturday
-                        today.setDate(today.getDate() + (1 + (day === 6 ? 1 : 0)));
-                    }
-
-                    // Format date as YYYY-MM-DD
-                    var dateString = today.toISOString().split('T')[0];
-
-                    // Set attributes for the date input
-                    input.setAttribute('min', dateString);
-                    input.setAttribute('max', maxDate.toISOString().split('T')[0]);
-                });
+            // JavaScript to calculate tomorrow's date and restrict Sundays
+            const today = new Date();
+            today.setDate(today.getDate() + 1); // Set to tomorrow's date
+            
+            function isSunday(date) {
+              return date.getDay() === 0; // Check if it's a Sunday (0-indexed)
             }
-
-            // Call the function when the page loads
-            window.onload = function() {
-                disableFutureDates();
-            };
-        </script>
+            
+            let nextAvailableDate = today;
+            while (isSunday(nextAvailableDate)) {
+              nextAvailableDate.setDate(nextAvailableDate.getDate() + 1); // Skip Sundays
+            }
+            
+            // Set minimum date (tomorrow, excluding Sundays)
+            document.getElementById('consulting_date').min = nextAvailableDate.toISOString().split('T')[0];
+            
+            // Optional: Set maximum date for 7 days from tomorrow
+            const maxDate = new Date(nextAvailableDate);
+            maxDate.setDate(maxDate.getDate() + 6); // Add 6 days
+            document.getElementById('consulting_date').max = maxDate.toISOString().split('T')[0];
+            </script>
         <!-- Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

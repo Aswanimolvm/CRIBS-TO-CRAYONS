@@ -132,14 +132,7 @@
          
          <td>{{ i.token_number }}</td>
          <td>{{ i.date}}</td>
-          <td>
-            <a href="{% url 'cancelbooking' id=i.id %}" class="btn btn-primary">Cancel</a>
-           </td>
-           <!-- <td>
-           <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Delete</a>
-            
-          </td> -->
-          <td></td>
+         <td>{{ i.start_time}}</td>
           <td></td>
         </tr>
         {% endfor %}
@@ -147,34 +140,7 @@
       </tbody>
     </table>
   </div>
-  <script>
-    // Function to calculate consulting time with token
-    function calculateConsultingTime(avgSlot, token) {
-        // Define the start time
-        var startTime = new Date("2024-04-17T10:00:00"); // Assuming today is April 17, 2024, and the consulting starts at 10:00 AM
 
-        // Calculate the end time based on the average slot
-        var endTime = new Date(startTime.getTime() + avgSlot * 60000); // Convert minutes to milliseconds
-
-        // Format the consulting time
-        var consultingTime = startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' to ' + endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-        // Combine consulting time with token
-        var consultingTimeWithToken = consultingTime + " (Token: " + token + ")";
-
-        return consultingTimeWithToken;
-    }
-
-    // Example usage: Call the function with a slot of 20 minutes and token number 123
-    var consultingTimeAndToken = calculateConsultingTime(20, 123);
-
-    // Display the consulting time with token in the HTML page
-    document.addEventListener("DOMContentLoaded", function() {
-        var consultingTimeWithTokenElement = document.createElement("div");
-        consultingTimeWithTokenElement.innerText = consultingTimeAndToken;
-        document.body.appendChild(consultingTimeWithTokenElement);
-    });
-</script>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

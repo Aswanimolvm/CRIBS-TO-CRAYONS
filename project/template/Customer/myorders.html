@@ -134,18 +134,21 @@
             <!-- <td>
             <a href="{% url 'editdoctordetails' id=i.id %}" class="btn btn-primary">Confirm</a>
            
-
            </td> -->
             <td>
-              <a href="{% url 'deleteorder' id=i.id %}" class="btn btn-danger"
+              {% if i.status == "paid" or i.status == "cancelled"  or i.status == "rejected" %}
+              
+                {% else %}
+                <a href="{% url 'deleteorder' id=i.id %}" class="btn btn-danger"
                 style="background-color: rgb(95, 95, 138);">Cancel</a>
-
+                {% endif %}
             </td>
             <td>{{ i.status }}</td>
             <td>
               {% if i.status == "approved" %}
               <a href="{% url 'payment' id=i.id %}" class="btn btn-primary">PAYMENT</a>
 
+              
               {% endif %}
 
             </td>

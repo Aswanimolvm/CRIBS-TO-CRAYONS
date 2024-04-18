@@ -146,9 +146,9 @@
            
            <form method="get" action="{% url 'hospitalsearch' %}">
             <div class=" col-md-6 d-flex ">
-                <input type="text" class="form-control border-0 py-4" placeholder="Search parent" name="search">
+                <input type="text" class="form-control border-0 py-4" placeholder="Search Hospital" name="search">
                 <div>
-                <button class="btn btn-dark border-0 w-100 py-3" style="height: 85%;" ><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button class="btn btn-secondary  border-0 w-100 py-3" style="height: 85%;" ><i class="fa-solid fa-magnifying-glass" ></i></button>
             </div>
         </div>
         </form> 
@@ -221,15 +221,14 @@
         
       
       {% else %}
-     
+      <div style="color: red; text-align: center;">
+        <p>No hospital</p>
+      </div>
+      {% endif %} 
     </tbody>
    
   </table>
-  <div style="color: red; text-align: center;">
-    <p>No hospital</p>
-  </div>
-  {% endif %}
-    <!-- Pagination links -->
+
   <div class="pagination mt-3 d-flex justify-content-end pe-5 mb-4  fw-bold text-white text-end ">
     <span class="step-links  ">
       {% if hospital.has_previous %}
@@ -250,6 +249,11 @@
       {% endif %}
     </span>
   </div>
+
+
+  
+    <!-- Pagination links -->
+  
   </div>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

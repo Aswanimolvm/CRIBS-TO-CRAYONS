@@ -34,7 +34,8 @@
 </head>
 
 <body>
-    <div class="container-xxl bg-white p-0">
+    <div class="container-xxl bg-white p-0"style="background-image:url(../../static/img/bg3.jpg) ;background-repeat: no-repeat; background-size: 100%;">
+      <div style="background-color: rgba(103, 115, 135, 0.73);">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -170,12 +171,17 @@ h4{
     <!-- Excited to see you join our platform! Your offerings bring smiles and ease to families everywhere.Let's make parenthood and playtime a breeze together. Happy selling! -->
   </h3><br>  
 <p>
-  <div class="container">
+  <div class="container" style=" padding-top: 20px;">
     <div class="row justify-content-center">
       <div class="col-md-6 registration-container">
-        <div class="card">
-          <div class="card-header" style="background-color: rgb(141, 141, 237);">
-            <h2 class="text-center">Register here!</h2>
+        <div class="card" style="
+        background: none;
+        opacity: 68;
+       
+        box-shadow: 0px 0px 20px 2px;
+    ">
+          <div class="card-header" style="background-color: rgb(9, 9, 13);">
+            <h2 class="text-center"style="">Register here!</h2>
           </div>
           <div class="card-body">
             <form action="{% url 'hospitalreg'%}" method="POST" enctype="multipart/form-data">
@@ -254,6 +260,7 @@ h4{
       </div>
     </div>
   </div>
+</div>
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
