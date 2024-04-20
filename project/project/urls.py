@@ -41,6 +41,7 @@ urlpatterns = [
     path('confirmpayment/<int:id>',views.confirm,name="confirmpayment"),
     path('chat/<int:id>',views.chat,name="chat"),
     path('deleteproduct/<int:id>',views.delete_product,name="deleteproduct"),
+    path('chatt/<int:id>',views.chatt,name="chatt"),
     
 
     #customer#
@@ -119,6 +120,19 @@ urlpatterns = [
     path('chatnutritionist',views.chat_nutritionist,name="chatnutritionist"),
     path('msg',views.msg,name="msg"),
     path('list',views.list,name="list"),
+    path('purchaseee',views.purchaseee,name="purchaseee"),
+    path('product__search',views.product__search,name="product__search"),
+    path('add__tocart/<int:id>',views.add__tocart,name="add__tocart"),
+    path('cart___view',views.cart___view,name="cart___view"),
+    path('cart__delete/<int:id>',views.cart__delete,name="cart__delete"),
+    path('cart__booking',views.cart__booking,name="cart__booking"),
+    path('product__booking/<int:id>',views.product__booking,name="product__booking"),
+    path('my__orders',views.my__orders,name="my__orders"),
+    path('delete__order/<int:id>',views.delete__order,name="delete__order"),
+    path('paymentt/<int:id>',views.paymentt,name="paymentt"),
+    path('confirm__payment/<int:id>',views.confirm__payment,name="confirm__payment"),
+    path('cash__on__delivery/<int:id>',views.cash__on__delivery,name="cash__on__delivery"),
+    path('chat__seller/<int:product_id>',views.chat__seller,name="chat__seller"),
     
 
     # admin #

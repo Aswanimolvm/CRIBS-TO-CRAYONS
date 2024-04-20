@@ -34,8 +34,8 @@
 </head>
 
 <body>
-    <div class="container-xxl bg-white p-0"style="background-image:url(../../static/img/bg3.jpg) ;background-repeat: no-repeat; background-size: 100%;">
-      <div style="background-color: rgba(103, 115, 135, 0.73);">
+    <div class="container-xxl bg-white p-0"style="background-image:url(../../static/img/hb.webp) ;background-repeat: no-repeat; background-size: 100%;">
+      <div style="background-color: rgba(107, 119, 139, 0.73);">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -181,7 +181,7 @@ h4{
         box-shadow: 0px 0px 20px 2px;
     ">
           <div class="card-header" style="background-color: rgb(9, 9, 13);">
-            <h2 class="text-center"style="">Register here!</h2>
+            <h2 class="text-center"style="color: white;">Register here!</h2>
           </div>
           <div class="card-body">
             <form action="{% url 'hospitalreg'%}" method="POST" enctype="multipart/form-data">
@@ -193,62 +193,62 @@ h4{
               {% endif %}
               <div class="form-group">
                 <label for="username"style="color: black;">Hospital Name</label>
-                <input type="text" class="form-control" id="username" name="hospital_name" required>
+                <input type="text" class="form-control"style="background: none;color: white;" id="username" name="hospital_name"pattern="[a-z A-Z]+" required>
               </div><div class="form-group">
                 <label for="street" style="color: black;">Street Name</label>
-                <input type="text" class="form-control" id="street" name="street" required>
+                <input type="text" class="form-control" style="background: none;color: white;"id="street" name="street" required>
             </div>
             <div class="form-group">
-              <label for="gender">District</label>
-              <select class="form-control" id="district" name="district" required>
+              <label for="gender" style="color: black;">District</label>
+              <select class="form-control" style="background: none;color: white;"id="district" name="district" required>
                 <option value="">Select district</option>
-                <option value="Thiruvanandapuram">Thiruvanandapuram</option>
-                <option value="Kollam">Kollam</option>
-                <option value="Pathanamthitta">Pathanamthitta</option>
-                <option value="Trissur">Trissur</option>
-                <option value="Idukki">Idukki</option>
-                <option value="Malappuram">Malappuram</option>
-                <option value="Alappuzha">Alappuzha</option>
-                <option value="Kozhikode">Kozhikode</option>
-                <option value="Eranakulam">Eranakulam</option>
-                <option value="Kannur">Kannur</option>
-                <option value="Wayanad">Wayanad</option>
-                <option value="Kasargode">Kasargode</option>
-                <option value="Kottayam">Kottayam</option>
-                <option value="Paalakkaad">Paalakkaad</option>
+                <option value="Thiruvanandapuram" style="color: black;">Thiruvanandapuram</option>
+                <option value="Kollam"style="color: black;">Kollam</option>
+                <option value="Pathanamthitta"style="color: black;">Pathanamthitta</option>
+                <option value="Trissur"style="color: black;">Trissur</option>
+                <option value="Idukki"style="color: black;">Idukki</option>
+                <option value="Malappuram"style="color: black;">Malappuram</option>
+                <option value="Alappuzha"style="color: black;">Alappuzha</option>
+                <option value="Kozhikode"style="color: black;">Kozhikode</option>
+                <option value="Eranakulam"style="color: black;">Eranakulam</option>
+                <option value="Kannur"style="color: black;">Kannur</option>
+                <option value="Wayanad"style="color: black;">Wayanad</option>
+                <option value="Kasargode"style="color: black;">Kasargode</option>
+                <option value="Kottayam"style="color: black;">Kottayam</option>
+                <option value="Paalakkaad"style="color: black;">Paalakkaad</option>
               </select>
             </div>
             <div class="form-group">
                 <label for="pincode" style="color: black;">Pincode</label>
-                <input type="text" class="form-control" id="pincode" name="pincode" required pattern="[0-9]{6}" minlength="6" maxlength="6" required>
+                <input type="text" class="form-control" style="background: none;color: white;"id="pincode" name="pincode" required pattern="[0-9]{6}" minlength="6" maxlength="6" required>
             </div>
               <div class="form-group">
                 <label for="username"style="color: black;">Phone number</label>
-                <input type="text" class="form-control" id="username" name="phone" required pattern="[0-9]{10}" minlength="10" maxlength="10" class="form-control">
+                <input type="text" class="form-control" style="background: none;color: white;"id="username" name="phone" required pattern="[0-9]{10}" minlength="10" maxlength="10" class="form-control">
               </div>
               <div class="form-group">
                 <label for="email"style="color: black;">Email</label>
-                <input type="email" class="form-control" id="email" name="Email" required>
+                <input type="email" class="form-control" style="background: none;color: white;"id="email" name="Email" required>
               </div>
               <!-- <div class="form-group">
                 <label for="username"style="color: black;">Licence proof</label>
                 <input type="file" class="form-control" id="username" name="Licence proof" required>
               </div> -->
               <div class="form-group">
-                <label for="document">Licence proof</label>
-                <input type="file" accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="form-control" id="document" name="licence_proof" required>
+                <label for="document" style="color: black;">Licence proof</label>
+                <input type="file" accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="form-control" style="background: none;color: white;"id="document" name="licence_proof" required>
             </div>
               <div class="form-group">
                 <label for="username"style="color: black;">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <input type="text" class="form-control" style="background: none;color: white;"id="username" name="username" required>
               </div>
               <div class="form-group">
                 <label for="password"style="color: black;">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="password" class="form-control"style="background: none;color: white;" id="password" name="password"minlength="8" maxlength="8" required>
               </div>
               <div class="form-group">
                 <label for="confirmPassword"style="color: black;">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                <input type="password" class="form-control"style="background: none;color: white;" id="confirmPassword" name="confirmPassword" minlength="8" maxlength="8"required>
               </div>
               
               <div class="d-flex mt-4">

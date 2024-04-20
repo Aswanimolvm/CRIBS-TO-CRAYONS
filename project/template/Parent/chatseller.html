@@ -59,36 +59,42 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="{% url 'sellerprofile'%}" class="nav-item nav-link active">HOME</a>
-                        <!-- <a href="{% url 'about'%}" class="nav-item nav-link">ABOUT</a> -->
-                        <div class="nav-item dropdown">
-                           <!-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
-                           <div class="nav-item dropdown" style="color: #0400ff;"> -->
-                                   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">PRODUCT</a>
-                                  <div class="dropdown-menu rounded-0 m-0" >
-                                      
-                                      <a href="{% url 'addproduct'%}" class="dropdown-item" style="color: #1500ff;">ADD PRODUCT</a>
-                                      <a href="{% url 'sellerviewproduct'%}" class="dropdown-item" style="color: #1500ff;"> VIEW PRODUCTS</a> 
-                                      <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a>  -->
-                                  <!-- </div>
-                              </div> -->
-                              <!-- <div class="nav-item dropdown">
-                                  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
-                                  <div class="dropdown-menu rounded-0 m-0">
-                                      <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
-                                      <a href="404.html" class="dropdown-item"></a>
-                                  </div>
-                              </div> -->
-                              <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                            </div>  
+                      <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEW</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'parentprofile'%}" class="dropdown-item">PROFILE</a>
+                            <a href="{% url 'babydetails'%}" class="dropdown-item">BABY</a>
+                      <!-- <div class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
+                          <div class="dropdown-menu rounded-0 m-0">
+                              <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
+                              <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
+                              <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
+                              <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
                           </div>
-                          
-                          <a href="{% url 'sellerviewbooking'%}" class="nav-item nav-link active">BOOKINGS</a>
-                          <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
-                        </div>
-                      <!-- </div> -->
-            </nav>
-        </div>
+                      </div>
+                        <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
+                        <!-- <a href="{% url 'parentprofile'%}" class="nav-item nav-link">PROFILE</a> -->
+                        <a href="{% url 'doctorlist' %}"class="nav-item nav-link">DOCTOR DETAILS</a>
+                        <!-- <a href="{% url 'babydetails' %}" class="nav-item nav-link">BABY DETAILS</a> -->
+                        <a href="{% url 'pviewvideos' %}" class="nav-item nav-link">VIDEOS</a>
+                        <a href="{% url 'myappoinments' %}" class="nav-item nav-link">APPOINMENTS</a>
+                        <a href="#" class="nav-item nav-link">MESSAGES</a>
+                       
+                        <!-- <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
+                                <a href="404.html" class="dropdown-item"></a>
+                            </div>
+                        </div> -->
+                        <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+                    
+                    <a href="{% url 'login'%}" class="nav-item nav-link" >LOGOUT</a>
+                </div>
+              </div>
+              </nav>
+          </div>
   <!-- Bootstrap CSS -->
   
 <br>
@@ -98,7 +104,7 @@
 
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat between {{ sender.username }} and {{ receiver.username }}</title>
+    <title> {{ receiver.username }} </title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -181,13 +187,14 @@
     </style>
 
 
+<body>
     <div class="chat-container">
         <div class="chat-header">
-            <h1>{{ receiver.username }}</h1>
+            <h1>{{ receiver.username }} </h1>
         </div>
         <div class="chat-messages" id="messages">
             {% for message in messages %}
-                <div class="message {% if message.sender == sender.username %}sender{% else %}receiver{% endif %}">
+                <div class="message {% if message.sender == sender.username %}sender{% endif %}">
                     <div class="message-content">{{ message.sender }}: {{ message.message }} <span style="float: right; font-size: 9px;" >{{ message.timestamp }}</span></div>
                 </div>
             {% endfor %}
@@ -198,6 +205,7 @@
             <button type="submit" class="send-button">Send</button>
         </form>
     </div>
+
 
     <script>
         document.getElementById('messageForm').onsubmit = function(event) {

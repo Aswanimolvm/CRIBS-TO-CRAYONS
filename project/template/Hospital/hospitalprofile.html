@@ -166,9 +166,10 @@
     <img src="{% static 'img/h1.jpeg' %}" alt="Profile Picture" class="profile-picture">
     <h1 class="profile-name">{{ hospital.hospital_name }}</h1>
     <div class="profile-details">
-      <p>{{ hospital.Address }}</p>
       <p>{{ hospital.Email }}</p>
       <p>{{ hospital.phone }}</p>
+      <p>{{ hospital.street }},{{ hospital.district }},{{ hospital.pincode }}</p>
+
     </div>
   </div>
 

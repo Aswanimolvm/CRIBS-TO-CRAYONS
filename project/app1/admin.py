@@ -18,7 +18,7 @@ class hospital(admin.ModelAdmin):
     search_fields = ('hospital_name',)
 class parent(admin.ModelAdmin):
     list_display = ('parent_name','Email','phone')
-    readonly_fields = ('parent_name','Email','street','district','pincode','phone','blood_group','hospital_id','login_id')
+    readonly_fields = ('parent_name','Email','street','district','pincode','phone','hospital_id','login_id')
     search_fields = ('parent_name',)
 class nutritionist(admin.ModelAdmin):
     list_display = ('Nutritionist_name','hospital_id')

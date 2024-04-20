@@ -138,8 +138,12 @@
                 {% endif %}
                 <td>{{ i.status }}</td>
                 <td>
+                  {% if i.customer_id  %}
                   <a href="{% url 'chat' id=i.id %}" class="btn btn-primary">Message</a>
-                 
+                {% elif i.parent_id %}
+                  <a href="{% url 'chatt' id=i.id %}" class="btn btn-primary">msg</a>
+
+                 {% endif %}
                  </td>
                 
             {% if i.status == "cash on delivery" %}

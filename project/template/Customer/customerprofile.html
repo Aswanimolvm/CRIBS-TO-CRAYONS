@@ -126,9 +126,10 @@
     <img src="{% static 'img/person.jpeg'%}" alt="Profile Picture" class="profile-picture">
     <h1 class="profile-name">{{ customer.Customer_name }}</h1>
     <div class="profile-details">
-      <p>{{ customer.Address }}</p>
       <p>{{ customer.Email }}</p>
       <p>{{ customer.phone }}</p>
+      <p>{{ customer.street }},{{ customer.district }},{{ customer.pincode }}</p>
+
       <!-- <p>Joined: January 1, 2022</p> -->
     </div>
   </div>

@@ -83,7 +83,11 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    
+                        <a href="{% url 'purchaseee'%}" class="nav-item nav-link" >PURCHASE</a>
+                        <a href="{% url 'cart___view'%}" class="nav-item nav-link" >CART</a>
+                        <a href="{% url 'my__orders'%}" class="nav-item nav-link" >MY ORDERS</a>
+
+
                     <a href="{% url 'login'%}" class="nav-item nav-link" >LOGOUT</a>
                   </div>
                 </div>
@@ -129,10 +133,11 @@
     <img src="{% static 'img/person.jpeg'%}" alt="Profile Picture" class="profile-picture">
     <h1 class="profile-name">{{ parent.parent_name }}</h1>
     <div class="profile-details">
-      <p>{{ parent.Address }}</p>
       <p>{{ parent.Email }}</p>
       <p>{{ parent.phone }}</p>
-      <p>{{ parent.blood_group}}</p>
+      <p>{{ parent.street }},{{ parent.district }},{{ parent.pincode }}</p>
+
+      <!-- <p>{{ parent.blood_group}}</p> -->
     </div>
   </div>
 

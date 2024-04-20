@@ -124,6 +124,7 @@ def loginpage(request):
             login(request, admin_user)
             return redirect(admin_home)
         data=authenticate(username=username,password=password)
+        print(data)
         if data is not None:
             login(request,data)
             if data.user_type=="seller":
@@ -173,14 +174,14 @@ def edit_hospital(request):
         street=request.POST['street']
         district=request.POST['district']
         pincode=request.POST['pincode']
-        email=request.POST['Email']
-        phone_number=request.POST['phone']
+        # email=request.POST['Email']
+        # phone_number=request.POST['phone']
         hospital.hospital_name = hospital_name
         hospital.street=street
         hospital.district=district
         hospital.pincode=pincode
-        hospital.Email=email
-        hospital.phone=phone_number
+        # hospital.Email=email
+        # hospital.phone=phone_number
         hospital.save()
         # log_id.username=hospital_name
         # log_id.save()
@@ -199,7 +200,7 @@ def add_parent(request):
         pincode=request.POST['pincode']
         email=request.POST['Email']
         phone_number=request.POST['phone']
-        blood_group=request.POST['blood_group']
+        # blood_group=request.POST['blood_group']
         username = request.POST['username']
         password=request.POST['password']
         password2=request.POST['confirmPassword']
@@ -226,7 +227,6 @@ def add_parent(request):
                                         pincode=pincode,
                                         Email=email,
                                         phone=phone_number,
-                                        blood_group=blood_group
                                         )
         parent_data.save()
         return redirect(view_parent)
@@ -369,6 +369,7 @@ def viewbaby_vaccine(request,id):
     hospital=Hospital.objects.get(login_id=log_id)
     vaccine=Vaccination.objects.filter(hospital_id=hospital)
     b_id=Baby_details.objects.get(id=id)
+    print(b_id)
     babyvaccine=Baby_vaccine.objects.filter(baby_id=b_id)
     taken_vaccine_ids = babyvaccine.values_list('vaccination_id', flat=True)
     not_taken_vaccines = vaccine.exclude(id__in=taken_vaccine_ids)
@@ -383,15 +384,15 @@ def viewbaby_vaccine(request,id):
     not_taken_vaccines = sorted(not_taken_vaccines, key=lambda x: x.vaccination_date)
     
     context={
-        'vaccines':vaccine,
-        'baby':babyvaccine,
-        'not_taken_vaccines':not_taken_vaccines,
-        'b_id':b_id
-
+            'vaccines':vaccine,
+            'baby':babyvaccine,
+            'not_taken_vaccines':not_taken_vaccines,
+            'b_id':b_id
+        
     }
     return render(request,'Hospital/babyvaccineview.html',context)
 
-@login_required(login_url='login/') 
+ 
 def send_notification_to_parent(baby, vaccine, notification_date):
     subject = f"Upcoming Vaccination Reminder for {baby.baby_name}"
     message = f"Dear parent,\n\nThis is a reminder that your child {baby.baby_name} has a vaccination appointment coming up on {vaccine.vaccination_date}. Please ensure that your child is prepared.\n\nSincerely,\nHospital"
@@ -413,7 +414,7 @@ def date_vtaken(request,id):
         vdate.save()
         return redirect(viewbaby_vaccine,id=baby.id)
 
-@login_required(login_url='login/')   
+  
 def add_nutritionist(request):
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital_id=Hospital.objects.get(login_id=log_id)
@@ -631,7 +632,7 @@ def delete_videos(request,id):
 
 
 
-#parent#
+#########################################        parent        ###############################################################3#
 
 
 
@@ -715,16 +716,15 @@ def edit_parent(request):
         street=request.POST['street']
         district=request.POST['district']
         pincode=request.POST['pincode']
-        email=request.POST['Email']
-        phone_number=request.POST['phone']
-        blood_group=request.POST['blood_group']
+        # email=request.POST['Email']
+        # phone_number=request.POST['phone']
+        # blood_group=request.POST['blood_group']
         parent.parent_name=parent_name
         parent.street=street
         parent.district=district
         parent.pincode=pincode
-        parent.Email=email
-        parent.blood_group=blood_group
-        parent.phone=phone_number
+        # parent.Email=email
+        # parent.phone=phone_number
         parent.save()
         # log_id.username=parent_name
         # log_id.save()
@@ -867,13 +867,172 @@ def chat_nutritionist(request):
     messages = Chat.objects.filter(Q(sender=sender, receiver=receiver) | Q(sender=receiver, receiver=sender)).order_by('timestamp')
     return render(request, 'Parent/chat.html', {'sender': sender, 'receiver': receiver, 'messages': messages})
 
+@login_required(login_url='login/')
+def purchaseee(request):
+    available_products = Product.objects.exclude(
+        id__in=Productbooking.objects.filter(status__in=['paid', 'booked']).values('product_id')
+    )
+    print(available_products)
+    context={
+        'product':available_products
+    }
+    return render(request,'Parent/purchase.html',context)
+
+@login_required(login_url='login/')
+def product__search(request):
+    if request.method=='GET':
+        search=request.GET['search']
+        products=Product.objects.filter(
+            Q(product_name__icontains=search) |
+            Q(location__icontains=search))
+        context={
+            'product':products
+        }
+        return render(request,'Parent/purchase.html',context)
+    
+
+@login_required(login_url='login/')
+def add__tocart(request,id):
+    product=Product.objects.get(id=id)
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    cart_exists = Cart.objects.filter(product_id=product, parent_id=parent).exists()
+    if cart_exists:
+        return redirect(cart___view)
+    else:
+        cart=Cart.objects.create(product_id=product,parent_id=parent)
+        cart.save()
+        return redirect(cart___view)
+    
+@login_required(login_url='login/')
+def cart___view(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    cart=Cart.objects.filter(parent_id=parent)
+    print(cart)
+    context={
+        'cart':cart
+    }
+    return render(request,'Parent/cart.html',context)
+
+
+@login_required(login_url='login/')
+def cart__delete(request,id):
+    cart=Cart.objects.get(id=id)
+    cart.delete()
+    return redirect(cart___view)
+
+@login_required(login_url='login/')
+def cart__booking(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    cart=Cart.objects.filter(parent_id=parent)
+    
+    for i in cart:
+     if Productbooking.objects.filter(product_id=i.product_id).exists():
+        return redirect(my__orders)
+     cartbooking=Productbooking.objects.create(product_id=i.product_id,
+                                                parent_id=i.parent_id,
+                                                status='pending')
+     
+     cartbooking.save()
+    cart.delete()
+
+    return redirect(my__orders)
+
+# @login_required(login_url='login/')
+# def view_product(request):
+#     return render(request,'Customer/viewproduct.html')
+
+@login_required(login_url='login/')
+def product__booking(request,id):
+    product=Product.objects.get(id=id)
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    canceled_booking = Productbooking.objects.filter(product_id=product, status='cancelled').first()
+    if canceled_booking:
+        # If a canceled booking exists, update its status to 'pending' and assign the current parent
+        canceled_booking.status = 'pending'
+        canceled_booking.parent_id = parent
+        canceled_booking.save()
+        return redirect(my__orders)
+    else:
+        # If no canceled booking exists, create a new booking
+        booking = Productbooking.objects.create(product_id=product, parent_id=parent)
+        booking.save()
+        return redirect(my__orders)
+
+
+@login_required(login_url='login/')
+def my__orders(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    sorting_conditions = Case(
+        When(status='booked', then=Value(1)),
+        When(status='approved', then=Value(2)),
+        When(status='rejected', then=Value(3)),
+        default=Value(0),  # Assign a high value for any other status
+        output_field=IntegerField(),
+    )
+
+    # Fetch bookings for products associated with the seller and order them using custom sorting conditions
+    # product = Productbooking.objects.filter(product_id__seller_id=seller).order_by(sorting_conditions)
+    product=Productbooking.objects.filter(parent_id=parent).order_by(sorting_conditions)
+    context={
+        'product':product
+    }
+    return render(request,'Parent/myorders.html',context)
+
+
+@login_required(login_url='login/')
+def delete__order(request,id):
+    product=Productbooking.objects.get(id=id)
+    product.status="cancelled"
+    product.save()
+    return redirect(my__orders)
+
+
+@login_required(login_url='login/')
+def paymentt(request,id):
+    booking=Productbooking.objects.get(id=id)
+    context={
+        'booking':booking
+    }
+    return render(request,'Parent/payment.html',context)
+
+@login_required(login_url='login/')
+def confirm__payment(request,id):
+    booking=Productbooking.objects.get(id=id)
+    booking.status="paid"
+    booking.save()
+    return redirect(my__orders)
+
+@login_required(login_url='login/')
+def cash__on__delivery(request,id):
+    booking=Productbooking.objects.get(id=id)
+    booking.status="cash on delivery"
+    booking.save()
+    return redirect(my__orders)
+
+
+@login_required(login_url='login/')
+def chat__seller(request, product_id):
+    sender=request.user
+    product=Product.objects.get(id=product_id)
+    seller=Seller.objects.get(id=product.seller_id_id)
+    receiver=seller.login_id
+    print(sender.id)
+    print(receiver.id)
+    messages = Chat.objects.filter(Q(sender=sender, receiver=receiver) | Q(sender=receiver, receiver=sender)).order_by('timestamp')
+    return render(request, 'Parent/chatseller.html', {'sender': sender, 'receiver': receiver, 'messages': messages})
 
 
 
 
 
 
-#seller#
+
+############################################        seller          ##############################################################
 
 
 @login_required(login_url='login/')
@@ -894,14 +1053,14 @@ def edit_seller(request):
         street=request.POST['street']
         district=request.POST['district']
         pincode=request.POST['pincode']
-        phone_number=request.POST['phone']
-        email=request.POST['email']
+        # phone_number=request.POST['phone']
+        # email=request.POST['email']
         seller.seller_name=seller_name
         seller.street=street
         seller.district=district
         seller.pincode=pincode
-        seller.phone=phone_number
-        seller.Email=email
+        # seller.phone=phone_number
+        # seller.Email=email
         seller.save()
         # log_id.username=seller_name
         # log_id.save()
@@ -1029,7 +1188,17 @@ def chat(request,id):
     return render(request, 'Seller/chat.html', {'sender': seller, 'receiver': customer, 'messages': messages})
 
 
-#customer#
+@login_required(login_url='login/')
+def chatt(request,id):
+    seller = LoginUser.objects.get(id=request.user.id)
+    productbooking = Productbooking.objects.get(id=id)
+    parent_id = Parent.objects.get(id=productbooking.parent_id.id)
+    parent = parent_id.login_id
+    messages = Chat.objects.filter(Q(sender=seller.id, receiver=parent) | Q(sender=parent, receiver=seller.id)).order_by('timestamp')
+    return render(request, 'Seller/chat.html', {'sender': seller, 'receiver': parent, 'messages': messages})
+
+
+#########################################           customer             ############################################################
 
 
 @login_required(login_url='login/')
@@ -1086,14 +1255,14 @@ def edit_customer(request):
         street=request.POST['street']
         district=request.POST['district']
         pincode=request.POST['pincode']
-        email=request.POST['Email']
-        phone_number=request.POST['phone']
+        # email=request.POST['Email']
+        # phone_number=request.POST['phone']
         customer.Customer_name=customer_name
         customer.street=street
         customer.district=district
         customer.pincode=pincode
-        customer.Email=email
-        customer.phone=phone_number
+        # customer.Email=email
+        # customer.phone=phone_number
         customer.save()
         return redirect(customer_profile)
     else:
@@ -1242,7 +1411,7 @@ def delete_order(request,id):
 
 
 
-#  ADMIN   #
+#################################    ADMIN     ########################################
 
 
 @login_required(login_url='login/')

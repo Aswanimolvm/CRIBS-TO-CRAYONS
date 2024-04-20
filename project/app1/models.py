@@ -55,7 +55,6 @@ class Parent(models.Model):
     pincode=models.IntegerField()
     Email=models.EmailField()
     phone=models.IntegerField()
-    blood_group=models.CharField(max_length=10)
     baby_status=models.CharField(max_length=50,null=True, blank=True,)
     def __str__(self):
         return self.parent_name
@@ -149,14 +148,16 @@ class Video(models.Model):
      video=models.FileField(upload_to='videos')
     
 class Productbooking(models.Model):
-    customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE)
+    customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE,null=True, blank=True)
+    parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE,null=True, blank=True)
     date=models.DateField(auto_now=True)
     product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
     status=models.CharField(max_length=15,default="pending")
 
 class Cart(models.Model):
     product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
-    customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE)
+    customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE,null=True, blank=True)
+    parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE,null=True, blank=True)
     date=models.DateField(auto_now=True)
 
 

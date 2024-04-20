@@ -66,23 +66,28 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-
-                        <a href="{% url 'customerprofile'%}" class="nav-item nav-link">PROFILE</a>
-                        <!-- <a href="{% url 'purchase'%}" class="nav-item nav-link">SHOP HERE</a> -->
-                        <a href="{% url 'myorders'%}" class="nav-item nav-link active">ORDERS</a>
-                        <a href="{% url 'cart'%}" class="nav-item nav-link active">CART</a>
-
-
-
-                        <!-- <div class="nav-item dropdown">
-                            <a href="{% url 'purchase'%}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">SHOP HERE</a> -->
-                        <!-- <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
-                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
-                        <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                        <!-- </div>
-                        </div> -->
+                      <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEW</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'parentprofile'%}" class="dropdown-item">PROFILE</a>
+                            <a href="{% url 'babydetails'%}" class="dropdown-item">BABY</a>
+                      <!-- <div class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
+                          <div class="dropdown-menu rounded-0 m-0">
+                              <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
+                              <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
+                              <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
+                              <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
+                          </div>
+                      </div>
+                        <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
+                        <!-- <a href="{% url 'parentprofile'%}" class="nav-item nav-link">PROFILE</a> -->
+                        <a href="{% url 'doctorlist' %}"class="nav-item nav-link">DOCTOR DETAILS</a>
+                        <!-- <a href="{% url 'babydetails' %}" class="nav-item nav-link">BABY DETAILS</a> -->
+                        <a href="{% url 'pviewvideos' %}" class="nav-item nav-link">VIDEOS</a>
+                        <a href="{% url 'myappoinments' %}" class="nav-item nav-link">APPOINMENTS</a>
+                        <a href="#" class="nav-item nav-link">MESSAGES</a>
+                       
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -91,12 +96,12 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-
-                        <a href="{% url 'login'%}" class="nav-item nav-link active">LOGOUT</a>
-                    </div>
+                    
+                    <a href="{% url 'login'%}" class="nav-item nav-link" >LOGOUT</a>
                 </div>
-            </nav>
-        </div>
+              </div>
+              </nav>
+          </div>
         <!-- Navbar End -->
 
         <style>
@@ -423,7 +428,7 @@
 
                     </div>
 
-                    <form method="get" action="{% url 'productsearch'%}">
+                    <form method="get" action="{% url 'product__search'%}">
                         <div class=" col-md-6 d-flex ">
                             <input type="text" class="form-control border-0 py-3" placeholder="Search Product"
                                 name="search">
@@ -499,8 +504,8 @@
                     <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                     <div class="d-flex gap-2 xx">
 
-                        <a href="{% url 'addtocart' id=i.id %}" class="btn btn-primary">Add to Cart</a>
-                        <a href="{% url 'productbooking' id=i.id %}" class="btn btn-primary">Buy Now</a>
+                        <a href="{% url 'add__tocart' id=i.id %}" class="btn btn-primary">Add to Cart</a>
+                        <a href="{% url 'product__booking' id=i.id %}" class="btn btn-primary">Buy Now</a>
                     </div>
                 </div>
                 <!-- </div> -->
