@@ -63,7 +63,14 @@ urlpatterns = [
     path('send_message/<int:sender_id>/<int:receiver_id>/',views.send_message,name="send_message"),
     path('chatseller/<int:product_id>',views.chat_seller,name="chatseller"),
     path('deleteorder/<int:id>',views.delete_order,name="deleteorder"),
-   
+    path('add__product',views.add__product,name="add__product"),
+    path('edit__product/<int:id>',views.edit__product,name="edit__product"),
+    path('seller__viewproducts',views.seller__viewproducts,name="seller__viewproducts"),
+    path('delete__product/<int:id>',views.delete__product,name="delete__product"),
+    path('seller__viewbookings',views.seller__viewbookings,name="seller__viewbookings"),   
+    path('booking__status/<int:id>',views.booking__status,name="booking__status"),
+    path('confirmm/<int:id>',views.confirmm,name="confirmm"),
+
 
     #hospital#
     path('hospitalprofile',views.hospital_profile,name="hospitalprofile"),
@@ -116,6 +123,7 @@ urlpatterns = [
     path('myappoinments',views.my_appoinments,name="myappoinments"),
     path('cancelbooking/<int:id>',views.cancel_booking,name="cancelbooking"),
     path('vaccinationchart/<int:id>',views.vaccination_chart,name="vaccinationchart"),
+    path('add_vdocument/<int:id>',views.add_vdocument,name="add_vdocument"),
     path('pviewvideos',views.pview_videos,name="pviewvideos"),
     path('chatnutritionist',views.chat_nutritionist,name="chatnutritionist"),
     path('msg',views.msg,name="msg"),

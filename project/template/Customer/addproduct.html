@@ -58,28 +58,20 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                      <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEW</a>
-                        <div class="dropdown-menu rounded-0 m-0">
-                            <a href="{% url 'parentprofile'%}" class="dropdown-item">PROFILE</a>
-                            <a href="{% url 'babydetails'%}" class="dropdown-item">BABY</a>
-                      <!-- <div class="nav-item dropdown">
-                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
-                          <div class="dropdown-menu rounded-0 m-0">
-                              <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
-                              <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                              <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
-                              <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                          </div>
-                      </div>
-                        <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
-                        <!-- <a href="{% url 'parentprofile'%}" class="nav-item nav-link">PROFILE</a> -->
-                        <a href="{% url 'doctorlist' %}"class="nav-item nav-link">DOCTOR DETAILS</a>
-                        <!-- <a href="{% url 'babydetails' %}" class="nav-item nav-link">BABY DETAILS</a> -->
-                        <a href="{% url 'pviewvideos' %}" class="nav-item nav-link">VIDEOS</a>
-                        <a href="{% url 'myappoinments' %}" class="nav-item nav-link">APPOINMENTS</a>
-                        <a href="#" class="nav-item nav-link">MESSAGES</a>
-                       
+                        <a href="{% url 'purchase'%}" class="nav-item nav-link">SHOP HERE</a>
+                        <a href="{% url 'myorders'%}" class="nav-item nav-link active">ORDERS</a>
+                        <a href="{% url 'cart'%}" class="nav-item nav-link active">CART</a>
+
+                        
+                        <!-- <div class="nav-item dropdown">
+                            <a href="{% url 'purchase'%}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">SHOP HERE</a> -->
+                            <!-- <div class="dropdown-menu rounded-0 m-0">
+                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
+                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
+                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
+                                <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
+                            <!-- </div>
+                        </div> -->
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -89,11 +81,11 @@
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
                     
-                    <a href="{% url 'login'%}" class="nav-item nav-link" >LOGOUT</a>
+                    <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
                 </div>
               </div>
-              </nav>
-          </div>
+            </nav>
+        </div>
   <style>
     /* body {
       background-color: #f6f8fa;
@@ -186,27 +178,27 @@ h4{
       <div class="col-md-6 registration-container">
         <div class="card">
           <div class="card-header" style="background-color: rgb(141, 141, 237);">
-            <h2 class="text-center" >UPDATIONS</h2>
+            <h2 class="text-center" >ADD YOUR PRODUCT</h2>
           </div>
           <div class="card-body">
-            <form action="{% url 'add_vdocument'%}" method="POST" enctype="multipart/form-data">
+            <form action="{% url 'add__product'%}" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group">
-                <label for="username"style="color: black;">HOSPITAL NAME</label>
+                <label for="username"style="color: black;">Product Name</label>
                 <input type="text" class="form-control" id="username" name="product_name" required>
-              <!-- </div><div class="form-group">
+              </div><div class="form-group">
                 <label for="username"style="color: black;">Price</label>
                 <input type="text" class="form-control" id="username" name="price" required>
               </div>
               <div class="form-group">
                 <label for="username"style="color: black;">Location</label>
                 <input type="text" class="form-control" id="username" name="location" required>
-              </div> -->
+              </div>
               <div class="form-group">
-                <label for="username"style="color: black;">PROOF</label>
+                <label for="username"style="color: black;">Image1 </label>
                 <input type="file"accept="image/*" class="form-control" id="username" name="image1" required>
               </div>
-              <!-- <div class="form-group">
+              <div class="form-group">
                 <label for="username"style="color: black;">Image2</label>
                 <input type="file" accept="image/*" class="form-control" id="username" name="image2" required>
               </div>
@@ -217,7 +209,7 @@ h4{
               <div class="form-group">
                 <label for="email"style="color: black;">Product details</label>
                 <input type="text" class="form-control" id="email" name="product_details" required>
-              </div> -->
+              </div>
               <!-- <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>

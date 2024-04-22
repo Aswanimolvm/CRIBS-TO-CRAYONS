@@ -130,7 +130,8 @@ class Baby_vaccine(models.Model):
 
 
 class Product(models.Model):
-    seller_id=models.ForeignKey(Seller,on_delete=models.CASCADE)
+    seller_id=models.ForeignKey(Seller,on_delete=models.CASCADE,null=True, blank=True)
+    customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE,null=True, blank=True)
     product_name=models.CharField(max_length=30)
     price=models.IntegerField()
     product_details=models.CharField(max_length=100)
@@ -146,6 +147,12 @@ class Video(models.Model):
      discription=models.CharField(max_length=100,null=True, blank=True)
      upload_date=models.DateField(auto_now=True)
      video=models.FileField(upload_to='videos')
+
+class VaccineDocument(models.Model):
+    baby_id=models.ForeignKey(Baby_details,on_delete=models.CASCADE)
+    vaccination_id=models.ForeignKey(Vaccination,on_delete=models.CASCADE)
+    hospital_name=models.CharField(max_length=40)
+    document=models.FileField(upload_to='document')
     
 class Productbooking(models.Model):
     customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE,null=True, blank=True)
@@ -170,11 +177,6 @@ class Chat(models.Model):
     def __str__(self):
         return f"{self.sender} -> {self.receiver}: {self.message}"
 
-class Notification(models.Model):
-    hospital_id=models.ForeignKey(Hospital,on_delete=models.CASCADE)
-    Parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE)
-    content=models.CharField(max_length=100,null=True, blank=True)
-    date=models.DateField(auto_now=True)
 
 
 

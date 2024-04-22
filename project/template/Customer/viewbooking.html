@@ -59,28 +59,16 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEWS</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'parentprofile'%}" class="dropdown-item">PROFILE</a>
-                                <a href="{% url 'babydetails' %}" class="dropdown-item">BABY</a>
-                                <!-- <a href="{% url 'addnutritionist' %}" class="dropdown-item"></a> -->
-                                
-      
-                                
-                            </div>
-                        </div>
-                        <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
-                        <!-- <a href="{% url 'parentprofile'%}" class="nav-item nav-link">PROFILE</a> -->
-                        <a href="{% url 'doctorlist' %}"class="nav-item nav-link">DOCTOR DETAILS</a>
-                        <!-- <a href="{% url 'babydetails' %}" class="nav-item nav-link">BABY DETAILS</a> -->
-                        <a href="{% url 'pviewvideos' %}" class="nav-item nav-link">VIDEOS</a>
-                        <a href="{% url 'myappoinments' %}" class="nav-item nav-link">APPOINMENTS</a>
-                        <a href="#" class="nav-item nav-link">MESSAGES</a>
+                      
+                      <a href="{% url 'customerprofile'%}" class="nav-item nav-link">PROFILE</a>
+                        <a href="{% url 'purchase'%}" class="nav-item nav-link">SHOP HERE</a>
+                        <a href="{% url 'myorders'%}" class="nav-item nav-link active">ORDERS</a>
+                        <a href="{% url 'cart'%}" class="nav-item nav-link active">CART</a>
+  
   
                         <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
-                            <div class="dropdown-menu rounded-0 m-0">
+                            <a href="{% url 'purchase'%}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">SHOP HERE</a> -->
+                            <!-- <div class="dropdown-menu rounded-0 m-0">
                                 <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
                                 <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
                                 <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
@@ -96,11 +84,11 @@
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
                     
-                    <a href="{% url 'login'%}" class="nav-item nav-link" >LOGOUT</a>
+                    <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
                 </div>
               </div>
-            </nav>
-        </div>
+              </nav>
+          </div>
   <!-- Bootstrap CSS -->
   
 <br>
@@ -109,67 +97,74 @@
 <br>
 
 <div class="container">
-    <h2>VACCINATION CHART</h2>
+    <h2>BOOKINGS</h2>
     <table class="table table-striped">
       <thead>
         <tr>
-          <!-- <th>No.</th> -->
-          <th>Vacine Name</th>
-          <th>Dose</th>
-          <th>Age</th>
+          <th>No.</th>
+          <th>Customer Name</th>
+          <th>Phone number</th>
+          <th>Product name</th>
+          <th></th>
           <th>Status</th>
-          <th>Date</th>
-          ̌<th></th>
-          <!-- <th></th>
-          <th></th> -->
+          <th></th>
+         
           
         </tr>
       </thead>
       <tbody>
-        {% for i in baby %}
+        {% for i in product %}
         <tr>
-          <!-- <td>{{ forloop.counter }}</td> -->
-          <td>{{ i.vaccination_id.Vaccination_name }}</td>
-          <td>{{ i.vaccination_id.Dose }}</td>
-          <td>{{ i.vaccination_id.Age }}</td>
-          <td>Taken</td>
-          <td>{{ i.date }}</td>
+          <td>{{ forloop.counter }}</td>
+         <td>{{ i.customer_id.Customer_name }}</td>
+         <td>{{ i.customer_id.phone }}</td>
+         <td>{{ i.product_id.product_name }}</td>
+        
          
          
-          <!-- <td>
-            <a href="{% url 'addbaby' id=i.id %}" class="btn btn-primary">Edit</a>
-            {% if i.baby_status == "True" %}
-           <a href="{% url 'viewbabyh' id=i.id %}" <button type="button" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">View</button>
-            {% endif %}
+         
+          
+           <td>
+            <form method="post" action="{% url 'booking__status' id=i.id %}">
+                {% csrf_token %}
+                {% if i.status == "pending" %}
+                <input type="hidden" name="status" >
+                <button title="accept" style="border: none;background-color: white;color: rgb(40, 167, 23); font-size: 20px;" type="submit" name="status" value="approved" >
+                  <i class="fa fa-check"></i> 
+                </button>
+                <button title="reject" style="border: none;background-color: white;color: red; font-size: 20px;" type="submit" name="status" value="rejected" >
+                  <i class="fa fa-times"></i> 
+                </button>
+                {% endif %}
+                <td>{{ i.status }}</td>
+                <td>
+                  {% if i.customer_id  %}
+                  <a href="{% url 'chat' id=i.id %}" class="btn btn-primary">Message</a>
+                {% elif i.parent_id %}
+                  <a href="{% url 'chatt' id=i.id %}" class="btn btn-primary">msg</a>
+
+                 {% endif %}
+                 </td>
+                
+            {% if i.status == "cash on delivery" %}
+            <td>
+              <a href="{% url 'confirmm' id=i.id %}" class="btn btn-primary">Confirm</a>
+            
+            </td>
+               {% endif %} 
+              </form>           
+
+           </td>
+           <!-- <td>
+           <a href="{% url 'deletedoctor' id=i.id %}" class="btn btn-danger" style="background-color: rgb(95, 95, 138);">Reject</a>
+            
           </td>
-          <td> <a href="{% url 'deleteparent' id=i.id %}" class="btn btn-primary">Delete</a></td>
-          <td></td> -->
+          -->
         </tr>
         {% endfor %}
-        {% for vaccine in not_taken_vaccines %}
-          <tr>
-            <!-- <td>{{ forloop.counter }}</td> -->
-            <td>{{ vaccine.Vaccination_name }}</td>
-            <td>{{ vaccine.Dose }}</td>
-            <td>{{ vaccine.Age }}</td>
-            <td>Not Taken</td>
-            <td>
-              {% if vaccine.vaccination_date %}
-              {{ vaccine.vaccination_date }}
-              {% endif %}
-            </td>
-            <td>
-              <div class="text-center mt-3">
-                <a href="{% url 'updationrequest' %}" class="btn btn-primary">Updation Request</a>
-              </div>
-            </td>
-            </tr>
-            {% endfor %}
         
       </tbody>
     </table>
-
-  </div>
   </div>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

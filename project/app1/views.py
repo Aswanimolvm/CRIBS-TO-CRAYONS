@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking,Booking,Vaccination,Video,Baby_vaccine,Chat
+from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking,Booking,Vaccination,Video,Baby_vaccine,Chat,VaccineDocument
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
 from django.db.models import Q
@@ -351,6 +351,7 @@ def add_vaccination(requesst):
         return redirect(mainview_vaccine)
     return render(requesst,'Hospital/addvaccination.html')
 
+
 @login_required(login_url='login/')
 def mainview_vaccine(request):
     log_id=LoginUser.objects.get(id=request.user.id)
@@ -373,21 +374,24 @@ def viewbaby_vaccine(request,id):
     babyvaccine=Baby_vaccine.objects.filter(baby_id=b_id)
     taken_vaccine_ids = babyvaccine.values_list('vaccination_id', flat=True)
     not_taken_vaccines = vaccine.exclude(id__in=taken_vaccine_ids)
+    vaccine_document=VaccineDocument.objects.filter(baby_id=b_id)
+    print(vaccine_document)
     for vaccine in not_taken_vaccines:
         vaccine.age_in_months = vaccine.Age
         vaccine.vaccination_date = b_id.birth_date + timedelta(days=30 * vaccine.age_in_months)
 
         notification_date = vaccine.vaccination_date - timedelta(days=7)
 
-        if notification_date >= timezone.now().date():
-            send_notification_to_parent(b_id, vaccine, notification_date)
+        # if notification_date >= timezone.now().date():
+            # send_notification_to_parent(b_id, vaccine, notification_date)
     not_taken_vaccines = sorted(not_taken_vaccines, key=lambda x: x.vaccination_date)
     
     context={
             'vaccines':vaccine,
             'baby':babyvaccine,
             'not_taken_vaccines':not_taken_vaccines,
-            'b_id':b_id
+            'b_id':b_id,
+            'vaccine_document':vaccine_document
         
     }
     return render(request,'Hospital/babyvaccineview.html',context)
@@ -705,6 +709,19 @@ def vaccination_chart(request,id):
     }
 
     return render(request,'Parent/vaccinationchart.html',context)
+
+
+
+def add_vdocument(request,id):
+    b_id=Baby_details.objects.get(id=id)
+    if request.method=='POST':
+        hospital_name=request.POST['hospital_name']
+        document=request.POST['document']
+        vaccine_doc=VaccineDocument.objects.create(baby_id=b_id,hospital_name=hospital_name,document=document)
+        vaccine_doc.save()
+    else:
+        return render(request,'Parent/updationrequest.html')
+
 
 @login_required(login_url='login/')
 def edit_parent(request):
@@ -1267,6 +1284,123 @@ def edit_customer(request):
         return redirect(customer_profile)
     else:
         return render(request,'Customer/editprofile.html',{'customer':customer})
+    
+
+
+
+@login_required(login_url='login/')
+def add__product(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    customer_id=Customer.objects.get(login_id=log_id)
+    if request.method=='POST':
+        product_name=request.POST['product_name']
+        price=request.POST['price']
+        product_details=request.POST['product_details']
+        location=request.POST['location']
+        image1=request.FILES['image1']
+        image2=request.FILES['image2']
+        image3=request.FILES['image3']
+        product_data=Product.objects.create(customer_id=customer_id,
+                                            product_name=product_name,
+                                            price=price,
+                                            product_details=product_details,
+                                            location=location,
+                                            image1=image1,
+                                            image2=image2,
+                                            image3=image3)
+        product_data.save()
+        return redirect(seller__viewproducts)
+    else:
+        return render(request,'Customer/addproduct.html')
+
+@login_required(login_url='login/')
+def edit__product(request,id):
+    # log_id=LoginUser.objects.get(id=request.user.id)
+    # seller=Seller.objects.get(login_id=log_id)
+    product=Product.objects.get(id=id)
+    if request.method=='POST':
+        product_name=request.POST['product_name']
+        price=request.POST['price']
+        product_details=request.POST['product_details']
+        location=request.POST['location']
+        if 'image1' in request.FILES:
+            product.image1=request.FILES['image1']
+        if 'image2' in request.FILES:
+            product.image2=request.FILES['image2']
+        if 'image3' in request.FILES:
+            product.image3=request.FILES['image3']
+        product.product_name=product_name
+        product.price=price
+        product.product_details=product_details
+        product.location=location
+        product.save()
+        return redirect(seller__viewproducts)
+    else:
+        return render(request,'Customer/editproduct.html',{'product':product})
+    
+@login_required(login_url='login/')
+def seller__viewproducts(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    customer=Customer.objects.get(login_id=log_id)
+    product=Product.objects.filter(customer_id=customer)
+    print(product)
+    context={
+       'product':product
+    }
+    
+    return render(request,'Customer/sellerviewproduct.html',context)
+
+@login_required(login_url='login/')
+def delete__product(request,id):
+    product=Product.objects.get(id=id)
+    product.delete()
+    return redirect(seller__viewproducts)
+
+
+@login_required(login_url='login/')
+def seller__viewbookings(request):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    customer=Customer.objects.get(login_id=log_id)
+    sorting_conditions = Case(
+        When(status='booked', then=Value(1)),
+        When(status='approved', then=Value(2)),
+        When(status='rejected', then=Value(3)),
+        default=Value(0),  # Assign a high value for any other status
+        output_field=IntegerField(),
+    )
+
+    # Fetch bookings for products associated with the seller and order them using custom sorting conditions
+    product = Productbooking.objects.filter(product_id__customer_id=customer).order_by(sorting_conditions)
+    print(product)
+    context={
+        'product':product
+    }
+    return render(request,'Customer/viewbooking.html',context)
+
+@login_required(login_url='login/')
+def booking__status(request,id):
+    booking=Productbooking.objects.get(id=id)
+    if request.method=='POST':
+        status=request.POST["status"]
+        if status=="approved":
+            booking.status=status
+            booking.save()
+            Productbooking.objects.filter(product_id=booking.product_id).exclude(status='approved').delete()
+            return redirect(seller__viewbookings)
+        elif status=="rejected":
+            booking.status=status
+            booking.save()
+            return redirect(seller__viewbookings)
+        
+@login_required(login_url='login/')
+def confirmm(request,id):
+    booking=Productbooking.objects.get(id=id)
+    booking.status="paid"
+    booking.save()
+    return redirect(seller__viewbookings)
+
+
+
     
 @login_required(login_url='login/')
 def purchase(request):
