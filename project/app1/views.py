@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Seller,Customer,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking,Booking,Vaccination,Video,Baby_vaccine,Chat,VaccineDocument
+from .models import User,Hospital,LoginUser,Parent,Nutritionist,Baby_details,Product,Doctor,Cart,Productbooking,Booking,Vaccination,Video,Baby_vaccine,Chat,VaccineDocument
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponse
 from django.db.models import Q
@@ -21,40 +21,40 @@ def home(request):
     return render(request,'Home/home.html')
 def about(request):
     return render(request,'Home/about.html')
-def seller_register(request):
-    if request.method=='POST':
-        seller_name=request.POST['seller_name']
-        street=request.POST['street']
-        district=request.POST['district']
-        pincode=request.POST['pincode']
-        phone_number=request.POST['phone']
-        email=request.POST['email']
-        username = request.POST['username']
-        password=request.POST['password']    
-        password2=request.POST['confirmPassword']
-        if LoginUser.objects.filter(username=username, user_type='seller').exists():
-            return render(request,'Home/sreg.html',{'message':"username already exists!!"})
-        if Seller.objects.filter(Email=email).exists():
-            return render(request, 'Home/sreg.html', {'message': "Email is already registered!"})
+# def seller_register(request):
+#     if request.method=='POST':
+#         seller_name=request.POST['seller_name']
+#         street=request.POST['street']
+#         district=request.POST['district']
+#         pincode=request.POST['pincode']
+#         phone_number=request.POST['phone']
+#         email=request.POST['email']
+#         username = request.POST['username']
+#         password=request.POST['password']    
+#         password2=request.POST['confirmPassword']
+#         if LoginUser.objects.filter(username=username, user_type='seller').exists():
+#             return render(request,'Home/sreg.html',{'message':"username already exists!!"})
+#         if Seller.objects.filter(Email=email).exists():
+#             return render(request, 'Home/sreg.html', {'message': "Email is already registered!"})
 
-        # Check if phone number already exists
-        if Seller.objects.filter(phone=phone_number).exists():
-            return render(request, 'Home/sreg.html', {'message': "Phone number is already registered!"}) 
-        if password != password2:
-            return render(request,'Home/sreg.html',{'message':"password doesn't match"})   
-        try:
-            # Create the user
-            login_data = LoginUser.objects.create_user(username=username, password=password, user_type='seller')
-            # Create the seller data
-            seller_data = Seller.objects.create(login_id=login_data, seller_name=seller_name, street=street,district=district,pincode=pincode, Email=email, phone=phone_number)
-            return redirect(loginpage)
-        except Exception:
-            return render(request, 'Home/sreg.html', {'message': "An error occurred while processing your request."})      
-    else:
-        return render(request,'Home/sreg.html')
-def customer_register(request):
+#         # Check if phone number already exists
+#         if Seller.objects.filter(phone=phone_number).exists():
+#             return render(request, 'Home/sreg.html', {'message': "Phone number is already registered!"}) 
+#         if password != password2:
+#             return render(request,'Home/sreg.html',{'message':"password doesn't match"})   
+#         try:
+#             # Create the user
+#             login_data = LoginUser.objects.create_user(username=username, password=password, user_type='seller')
+#             # Create the seller data
+#             seller_data = Seller.objects.create(login_id=login_data, seller_name=seller_name, street=street,district=district,pincode=pincode, Email=email, phone=phone_number)
+#             return redirect(loginpage)
+#         except Exception:
+#             return render(request, 'Home/sreg.html', {'message': "An error occurred while processing your request."})      
+#     else:
+#         return render(request,'Home/sreg.html')
+def user_register(request):
     if request.method=='POST':
-        customer_name=request.POST['Customer_name']
+        user_name=request.POST['Customer_name']
         street=request.POST['street']
         district=request.POST['district']
         pincode=request.POST['pincode']
@@ -63,24 +63,24 @@ def customer_register(request):
         username = request.POST['username']
         password=request.POST['password']
         password1=request.POST['confirmPassword']
-        if LoginUser.objects.filter(username=username,user_type='customer').exists():
-            return render(request,'Home/creg.html',{'message':"username already exists!!"})
-        if Customer.objects.filter(Email=email).exists():
-            return render(request, 'Home/creg.html', {'message': "Email is already registered!"})
+        if LoginUser.objects.filter(username=username).exists():
+            return render(request,'Home/ureg.html',{'message':"username already exists!!"})
+        if User.objects.filter(Email=email).exists():
+            return render(request, 'Home/ureg.html', {'message': "Email is already registered!"})
 
         # Check if phone number already exists
-        if Customer.objects.filter(phone=phone_number).exists():
-            return render(request, 'Home/creg.html', {'message': "Phone number is already registered!"})
+        if User.objects.filter(phone=phone_number).exists():
+            return render(request, 'Home/ureg.html', {'message': "Phone number is already registered!"})
         if password != password1:
-            return render(request,'Home/creg.html',{'message':"password doesn't match"})
-        login_data=LoginUser.objects.create_user(username=username,password=password,user_type='customer')
+            return render(request,'Home/ureg.html',{'message':"password doesn't match"})
+        login_data=LoginUser.objects.create_user(username=username,password=password,user_type='user')
         login_data.save()
         log_id=LoginUser.objects.get(id=login_data.id)
-        customer_data=Customer.objects.create(login_id=log_id,Customer_name=customer_name,street=street,district=district,pincode=pincode,Email=email,phone=phone_number)
-        customer_data.save()
+        user_data=User.objects.create(login_id=log_id,user_name=user_name,street=street,district=district,pincode=pincode,Email=email,phone=phone_number)
+        user_data.save()
         return redirect(loginpage)
     else:
-        return render(request,'Home/creg.html')
+        return render(request,'Home/ureg.html')
 
     # return render(request,'Home/creg.html')
 def hospital_register(request):
@@ -127,9 +127,9 @@ def loginpage(request):
         print(data)
         if data is not None:
             login(request,data)
-            if data.user_type=="seller":
-                return redirect(seller_profile)
-            elif data.user_type=="customer":
+            # if data.user_type=="seller":
+            #     return redirect(seller_profile)
+            if data.user_type=="user":
                 return redirect(purchase)
             elif data.user_type=="hospital" and data.status=="approved":
                 return redirect(hospital_profile)
@@ -713,14 +713,16 @@ def vaccination_chart(request,id):
 
 
 def add_vdocument(request,id):
-    b_id=Baby_details.objects.get(id=id)
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    vaccine_id=Vaccination.objects.get(id=id) 
     if request.method=='POST':
         hospital_name=request.POST['hospital_name']
         document=request.POST['document']
-        vaccine_doc=VaccineDocument.objects.create(baby_id=b_id,hospital_name=hospital_name,document=document)
+        vaccine_doc=VaccineDocument.objects.create(parent_id=parent,vaccine_id=vaccine_id,hospital_name=hospital_name,document=document)
         vaccine_doc.save()
     else:
-        return render(request,'Parent/updationrequest.html')
+        return render(request,'Parent/updationrequest.html',{'vaccine':vaccine_id})
 
 
 @login_required(login_url='login/')
@@ -1052,178 +1054,178 @@ def chat__seller(request, product_id):
 ############################################        seller          ##############################################################
 
 
-@login_required(login_url='login/')
-def seller_profile(request):
-    log_id=LoginUser.objects.get(id=request.user.id)
-    seller=Seller.objects.get(login_id=log_id)
-    context={
-        'seller':seller
-    }
-    return render(request,'Seller/sellerprofile.html',context)
+# @login_required(login_url='login/')
+# def seller_profile(request):
+#     log_id=LoginUser.objects.get(id=request.user.id)
+#     seller=Seller.objects.get(login_id=log_id)
+#     context={
+#         'seller':seller
+#     }
+#     return render(request,'Seller/sellerprofile.html',context)
 
-@login_required(login_url='login/')
-def edit_seller(request):
-    log_id=LoginUser.objects.get(id=request.user.id)
-    seller=Seller.objects.get(login_id=log_id)
-    if request.method=='POST':
-        seller_name=request.POST['seller_name']
-        street=request.POST['street']
-        district=request.POST['district']
-        pincode=request.POST['pincode']
-        # phone_number=request.POST['phone']
-        # email=request.POST['email']
-        seller.seller_name=seller_name
-        seller.street=street
-        seller.district=district
-        seller.pincode=pincode
-        # seller.phone=phone_number
-        # seller.Email=email
-        seller.save()
-        # log_id.username=seller_name
-        # log_id.save()
-        return redirect(seller_profile)
-    else:
-        return render(request,'Seller/editsellerprofile.html',{'seller':seller})
+# @login_required(login_url='login/')
+# def edit_seller(request):
+#     log_id=LoginUser.objects.get(id=request.user.id)
+#     seller=Seller.objects.get(login_id=log_id)
+#     if request.method=='POST':
+#         seller_name=request.POST['seller_name']
+#         street=request.POST['street']
+#         district=request.POST['district']
+#         pincode=request.POST['pincode']
+#         # phone_number=request.POST['phone']
+#         # email=request.POST['email']
+#         seller.seller_name=seller_name
+#         seller.street=street
+#         seller.district=district
+#         seller.pincode=pincode
+#         # seller.phone=phone_number
+#         # seller.Email=email
+#         seller.save()
+#         # log_id.username=seller_name
+#         # log_id.save()
+#         return redirect(seller_profile)
+#     else:
+#         return render(request,'Seller/editsellerprofile.html',{'seller':seller})
     
-@login_required(login_url='login/')
-def add_product(request):
-    log_id=LoginUser.objects.get(id=request.user.id)
-    seller_id=Seller.objects.get(login_id=log_id)
-    if request.method=='POST':
-        product_name=request.POST['product_name']
-        price=request.POST['price']
-        product_details=request.POST['product_details']
-        location=request.POST['location']
-        image1=request.FILES['image1']
-        image2=request.FILES['image2']
-        image3=request.FILES['image3']
-        product_data=Product.objects.create(seller_id=seller_id,
-                                            product_name=product_name,
-                                            price=price,
-                                            product_details=product_details,
-                                            location=location,
-                                            image1=image1,
-                                            image2=image2,
-                                            image3=image3)
-        product_data.save()
-        return redirect(seller_viewproducts)
-    return render(request,'Seller/addproducts.html')
+# @login_required(login_url='login/')
+# def add_product(request):
+#     log_id=LoginUser.objects.get(id=request.user.id)
+#     seller_id=Seller.objects.get(login_id=log_id)
+#     if request.method=='POST':
+#         product_name=request.POST['product_name']
+#         price=request.POST['price']
+#         product_details=request.POST['product_details']
+#         location=request.POST['location']
+#         image1=request.FILES['image1']
+#         image2=request.FILES['image2']
+#         image3=request.FILES['image3']
+#         product_data=Product.objects.create(seller_id=seller_id,
+#                                             product_name=product_name,
+#                                             price=price,
+#                                             product_details=product_details,
+#                                             location=location,
+#                                             image1=image1,
+#                                             image2=image2,
+#                                             image3=image3)
+#         product_data.save()
+#         return redirect(seller_viewproducts)
+#     return render(request,'Seller/addproducts.html')
 
-@login_required(login_url='login/')
-def edit_product(request,id):
-    # log_id=LoginUser.objects.get(id=request.user.id)
-    # seller=Seller.objects.get(login_id=log_id)
-    product=Product.objects.get(id=id)
-    if request.method=='POST':
-        product_name=request.POST['product_name']
-        price=request.POST['price']
-        product_details=request.POST['product_details']
-        location=request.POST['location']
-        if 'image1' in request.FILES:
-            product.image1=request.FILES['image1']
-        if 'image2' in request.FILES:
-            product.image2=request.FILES['image2']
-        if 'image3' in request.FILES:
-            product.image3=request.FILES['image3']
-        product.product_name=product_name
-        product.price=price
-        product.product_details=product_details
-        product.location=location
-        product.save()
-        return redirect(seller_viewproducts)
-    else:
-        return render(request,'Seller/editproduct.html',{'product':product})
+# @login_required(login_url='login/')
+# def edit_product(request,id):
+#     # log_id=LoginUser.objects.get(id=request.user.id)
+#     # seller=Seller.objects.get(login_id=log_id)
+#     product=Product.objects.get(id=id)
+#     if request.method=='POST':
+#         product_name=request.POST['product_name']
+#         price=request.POST['price']
+#         product_details=request.POST['product_details']
+#         location=request.POST['location']
+#         if 'image1' in request.FILES:
+#             product.image1=request.FILES['image1']
+#         if 'image2' in request.FILES:
+#             product.image2=request.FILES['image2']
+#         if 'image3' in request.FILES:
+#             product.image3=request.FILES['image3']
+#         product.product_name=product_name
+#         product.price=price
+#         product.product_details=product_details
+#         product.location=location
+#         product.save()
+#         return redirect(seller_viewproducts)
+#     else:
+#         return render(request,'Seller/editproduct.html',{'product':product})
     
-@login_required(login_url='login/')
-def seller_viewproducts(request):
-    log_id=LoginUser.objects.get(id=request.user.id)
-    seller=Seller.objects.get(login_id=log_id)
-    product=Product.objects.filter(seller_id=seller)
-    print(product)
-    context={
-       'product':product
-    }
+# @login_required(login_url='login/')
+# def seller_viewproducts(request):
+#     log_id=LoginUser.objects.get(id=request.user.id)
+#     seller=Seller.objects.get(login_id=log_id)
+#     product=Product.objects.filter(seller_id=seller)
+#     print(product)
+#     context={
+#        'product':product
+#     }
     
-    return render(request,'Seller/sellerviewproduct.html',context)
+#     return render(request,'Seller/sellerviewproduct.html',context)
 
-@login_required(login_url='login/')
-def delete_product(request,id):
-    product=Product.objects.get(id=id)
-    product.delete()
-    return redirect(seller_viewproducts)
+# @login_required(login_url='login/')
+# def delete_product(request,id):
+#     product=Product.objects.get(id=id)
+#     product.delete()
+#     return redirect(seller_viewproducts)
 
-@login_required(login_url='login/')
-def seller_viewbookings(request):
-    log_id=LoginUser.objects.get(id=request.user.id)
-    seller=Seller.objects.get(login_id=log_id)
-    sorting_conditions = Case(
-        When(status='booked', then=Value(1)),
-        When(status='approved', then=Value(2)),
-        When(status='rejected', then=Value(3)),
-        default=Value(0),  # Assign a high value for any other status
-        output_field=IntegerField(),
-    )
+# @login_required(login_url='login/')
+# def seller_viewbookings(request):
+#     log_id=LoginUser.objects.get(id=request.user.id)
+#     seller=Seller.objects.get(login_id=log_id)
+#     sorting_conditions = Case(
+#         When(status='booked', then=Value(1)),
+#         When(status='approved', then=Value(2)),
+#         When(status='rejected', then=Value(3)),
+#         default=Value(0),  # Assign a high value for any other status
+#         output_field=IntegerField(),
+#     )
 
-    # Fetch bookings for products associated with the seller and order them using custom sorting conditions
-    product = Productbooking.objects.filter(product_id__seller_id=seller).order_by(sorting_conditions)
-    print(product)
-    context={
-        'product':product
-    }
-    return render(request,'Seller/viewbooking.html',context)
+#     # Fetch bookings for products associated with the seller and order them using custom sorting conditions
+#     product = Productbooking.objects.filter(product_id__seller_id=seller).order_by(sorting_conditions)
+#     print(product)
+#     context={
+#         'product':product
+#     }
+#     return render(request,'Seller/viewbooking.html',context)
 
-@login_required(login_url='login/')
-def booking_status(request,id):
-    booking=Productbooking.objects.get(id=id)
-    if request.method=='POST':
-        status=request.POST["status"]
-        if status=="approved":
-            booking.status=status
-            booking.save()
-            Productbooking.objects.filter(product_id=booking.product_id).exclude(status='approved').delete()
-            return redirect(seller_viewbookings)
-        elif status=="rejected":
-            booking.status=status
-            booking.save()
-            return redirect(seller_viewbookings)
+# @login_required(login_url='login/')
+# def booking_status(request,id):
+#     booking=Productbooking.objects.get(id=id)
+#     if request.method=='POST':
+#         status=request.POST["status"]
+#         if status=="approved":
+#             booking.status=status
+#             booking.save()
+#             Productbooking.objects.filter(product_id=booking.product_id).exclude(status='approved').delete()
+#             return redirect(seller_viewbookings)
+#         elif status=="rejected":
+#             booking.status=status
+#             booking.save()
+#             return redirect(seller_viewbookings)
         
-@login_required(login_url='login/')
-def confirm(request,id):
-    booking=Productbooking.objects.get(id=id)
-    booking.status="paid"
-    booking.save()
-    return redirect(seller_viewbookings)
+# @login_required(login_url='login/')
+# def confirm(request,id):
+#     booking=Productbooking.objects.get(id=id)
+#     booking.status="paid"
+#     booking.save()
+#     return redirect(seller_viewbookings)
 
 
-@login_required(login_url='login/')
-def chat(request,id):
-    seller = LoginUser.objects.get(id=request.user.id)
-    productbooking = Productbooking.objects.get(id=id)
-    customer_id = Customer.objects.get(id=productbooking.customer_id.id)
-    customer = customer_id.login_id
-    messages = Chat.objects.filter(Q(sender=seller.id, receiver=customer) | Q(sender=customer, receiver=seller.id)).order_by('timestamp')
-    return render(request, 'Seller/chat.html', {'sender': seller, 'receiver': customer, 'messages': messages})
+# @login_required(login_url='login/')
+# def chat(request,id):
+#     seller = LoginUser.objects.get(id=request.user.id)
+#     productbooking = Productbooking.objects.get(id=id)
+#     customer_id = Customer.objects.get(id=productbooking.customer_id.id)
+#     customer = customer_id.login_id
+#     messages = Chat.objects.filter(Q(sender=seller.id, receiver=customer) | Q(sender=customer, receiver=seller.id)).order_by('timestamp')
+#     return render(request, 'Seller/chat.html', {'sender': seller, 'receiver': customer, 'messages': messages})
 
 
-@login_required(login_url='login/')
-def chatt(request,id):
-    seller = LoginUser.objects.get(id=request.user.id)
-    productbooking = Productbooking.objects.get(id=id)
-    parent_id = Parent.objects.get(id=productbooking.parent_id.id)
-    parent = parent_id.login_id
-    messages = Chat.objects.filter(Q(sender=seller.id, receiver=parent) | Q(sender=parent, receiver=seller.id)).order_by('timestamp')
-    return render(request, 'Seller/chat.html', {'sender': seller, 'receiver': parent, 'messages': messages})
+# @login_required(login_url='login/')
+# def chatt(request,id):
+#     seller = LoginUser.objects.get(id=request.user.id)
+#     productbooking = Productbooking.objects.get(id=id)
+#     parent_id = Parent.objects.get(id=productbooking.parent_id.id)
+#     parent = parent_id.login_id
+#     messages = Chat.objects.filter(Q(sender=seller.id, receiver=parent) | Q(sender=parent, receiver=seller.id)).order_by('timestamp')
+#     return render(request, 'Seller/chat.html', {'sender': seller, 'receiver': parent, 'messages': messages})
 
 
 #########################################           customer             ############################################################
 
 
 @login_required(login_url='login/')
-def customer_profile(request):
+def user_profile(request):
     log_id=LoginUser.objects.get(id=request.user.id)
-    customer=Customer.objects.get(login_id=log_id)
+    user=User.objects.get(login_id=log_id)
     context={
-        'customer':customer
+        'user':user
     }
     return render(request,'Customer/customerprofile.html',context)
 
@@ -1231,13 +1233,33 @@ def customer_profile(request):
 def chat_seller(request, product_id):
     sender=request.user
     product=Product.objects.get(id=product_id)
-    seller=Seller.objects.get(id=product.seller_id_id)
-    receiver=seller.login_id
+    user=User.objects.get(id=product.user_id.id)
+    receiver=user.login_id
     print(sender.id)
     print(receiver.id)
     messages = Chat.objects.filter(Q(sender=sender, receiver=receiver) | Q(sender=receiver, receiver=sender)).order_by('timestamp')
     return render(request, 'Customer/chat.html', {'sender': sender, 'receiver': receiver, 'messages': messages})
 
+
+
+@login_required(login_url='login/')
+def chat(request,id):
+    seller = LoginUser.objects.get(id=request.user.id)
+    productbooking = Productbooking.objects.get(id=id)
+    customer_id = User.objects.get(id=productbooking.user_id.id)
+    customer = customer_id.login_id
+    messages = Chat.objects.filter(Q(sender=seller.id, receiver=customer) | Q(sender=customer, receiver=seller.id)).order_by('timestamp')
+    return render(request, 'Customer/chattt.html', {'sender': seller, 'receiver': customer, 'messages': messages})
+
+
+# @login_required(login_url='login/')
+# def chatt(request,id):
+#     seller = LoginUser.objects.get(id=request.user.id)
+#     productbooking = Productbooking.objects.get(id=id)
+#     parent_id = Parent.objects.get(id=productbooking.parent_id.id)
+#     parent = parent_id.login_id
+#     messages = Chat.objects.filter(Q(sender=seller.id, receiver=parent) | Q(sender=parent, receiver=seller.id)).order_by('timestamp')
+#     return render(request, 'Seller/chat.html', {'sender': seller, 'receiver': parent, 'messages': messages})
 
 @csrf_exempt
 def send_message(request, sender_id, receiver_id):
@@ -1266,24 +1288,24 @@ def send_message(request, sender_id, receiver_id):
 @login_required(login_url='login/')
 def edit_customer(request):
     log_id=LoginUser.objects.get(id=request.user.id)
-    customer=Customer.objects.get(login_id=log_id)
+    user=User.objects.get(login_id=log_id)
     if request.method=='POST':
-        customer_name=request.POST['Customer_name']
+        user_name=request.POST['user_name']
         street=request.POST['street']
         district=request.POST['district']
         pincode=request.POST['pincode']
         # email=request.POST['Email']
         # phone_number=request.POST['phone']
-        customer.Customer_name=customer_name
-        customer.street=street
-        customer.district=district
-        customer.pincode=pincode
+        user.user_name=user_name
+        user.street=street
+        user.district=district
+        user.pincode=pincode
         # customer.Email=email
         # customer.phone=phone_number
-        customer.save()
-        return redirect(customer_profile)
+        user.save()
+        return redirect(user_profile)
     else:
-        return render(request,'Customer/editprofile.html',{'customer':customer})
+        return render(request,'Customer/editprofile.html',{'user':user})
     
 
 
@@ -1291,7 +1313,7 @@ def edit_customer(request):
 @login_required(login_url='login/')
 def add__product(request):
     log_id=LoginUser.objects.get(id=request.user.id)
-    customer_id=Customer.objects.get(login_id=log_id)
+    user_id=User.objects.get(login_id=log_id)
     if request.method=='POST':
         product_name=request.POST['product_name']
         price=request.POST['price']
@@ -1300,7 +1322,7 @@ def add__product(request):
         image1=request.FILES['image1']
         image2=request.FILES['image2']
         image3=request.FILES['image3']
-        product_data=Product.objects.create(customer_id=customer_id,
+        product_data=Product.objects.create(user_id=user_id,
                                             product_name=product_name,
                                             price=price,
                                             product_details=product_details,
@@ -1341,8 +1363,8 @@ def edit__product(request,id):
 @login_required(login_url='login/')
 def seller__viewproducts(request):
     log_id=LoginUser.objects.get(id=request.user.id)
-    customer=Customer.objects.get(login_id=log_id)
-    product=Product.objects.filter(customer_id=customer)
+    user=User.objects.get(login_id=log_id)
+    product=Product.objects.filter(user_id=user)
     print(product)
     context={
        'product':product
@@ -1360,7 +1382,7 @@ def delete__product(request,id):
 @login_required(login_url='login/')
 def seller__viewbookings(request):
     log_id=LoginUser.objects.get(id=request.user.id)
-    customer=Customer.objects.get(login_id=log_id)
+    user=User.objects.get(login_id=log_id)
     sorting_conditions = Case(
         When(status='booked', then=Value(1)),
         When(status='approved', then=Value(2)),
@@ -1370,7 +1392,7 @@ def seller__viewbookings(request):
     )
 
     # Fetch bookings for products associated with the seller and order them using custom sorting conditions
-    product = Productbooking.objects.filter(product_id__customer_id=customer).order_by(sorting_conditions)
+    product = Productbooking.objects.filter(product_id__user_id=user).order_by(sorting_conditions)
     print(product)
     context={
         'product':product
@@ -1429,20 +1451,20 @@ def product_search(request):
 def add_to_cart(request,id):
     product=Product.objects.get(id=id)
     log_id=LoginUser.objects.get(id=request.user.id)
-    customer=Customer.objects.get(login_id=log_id)
-    cart_exists = Cart.objects.filter(product_id=product, customer_id=customer).exists()
+    user=User.objects.get(login_id=log_id)
+    cart_exists = Cart.objects.filter(product_id=product, user_id=user).exists()
     if cart_exists:
         return redirect(cart_view)
     else:
-        cart=Cart.objects.create(product_id=product,customer_id=customer)
+        cart=Cart.objects.create(product_id=product,user_id=user)
         cart.save()
         return redirect(cart_view)
     
 @login_required(login_url='login/')
 def cart_view(request):
     log_id=LoginUser.objects.get(id=request.user.id)
-    customer=Customer.objects.get(login_id=log_id)
-    cart=Cart.objects.filter(customer_id=customer)
+    user=User.objects.get(login_id=log_id)
+    cart=Cart.objects.filter(user_id=user)
     print(cart)
     context={
         'cart':cart
@@ -1458,14 +1480,14 @@ def cart_delete(request,id):
 @login_required(login_url='login/')
 def cart_booking(request):
     log_id=LoginUser.objects.get(id=request.user.id)
-    customer=Customer.objects.get(login_id=log_id)
-    cart=Cart.objects.filter(customer_id=customer)
+    user=User.objects.get(login_id=log_id)
+    cart=Cart.objects.filter(user_id=user)
     
     for i in cart:
      if Productbooking.objects.filter(product_id=i.product_id).exists():
         return redirect(my_orders)
      cartbooking=Productbooking.objects.create(product_id=i.product_id,
-                                                customer_id=i.customer_id,
+                                                user_id=i.user_id,
                                                 status='pending')
      
      cartbooking.save()
@@ -1481,10 +1503,10 @@ def view_product(request):
 def product_booking(request,id):
     product=Product.objects.get(id=id)
     log_id=LoginUser.objects.get(id=request.user.id)
-    customer=Customer.objects.get(login_id=log_id)
-    if Productbooking.objects.filter(product_id=product).exists():
+    user=User.objects.get(login_id=log_id)
+    if Productbooking.objects.filter(product_id=product,user_id=user,status__in=['approved', 'rejected','cancelled','pending']).exists():
         return redirect(my_orders)
-    booking=Productbooking.objects.create(product_id=product,customer_id=customer)
+    booking=Productbooking.objects.create(product_id=product,user_id=user)
     booking.save()
     return redirect(my_orders)
 
@@ -1492,7 +1514,8 @@ def product_booking(request,id):
 @login_required(login_url='login/')
 def my_orders(request):
     log_id=LoginUser.objects.get(id=request.user.id)
-    customer=Customer.objects.get(login_id=log_id)
+    user=User.objects.get(login_id=log_id)
+    print(user)
     sorting_conditions = Case(
         When(status='booked', then=Value(1)),
         When(status='approved', then=Value(2)),
@@ -1503,7 +1526,8 @@ def my_orders(request):
 
     # Fetch bookings for products associated with the seller and order them using custom sorting conditions
     # product = Productbooking.objects.filter(product_id__seller_id=seller).order_by(sorting_conditions)
-    product=Productbooking.objects.filter(customer_id=customer).order_by(sorting_conditions)
+    product=Productbooking.objects.filter(user_id=user).order_by(sorting_conditions)
+    print(product)
     context={
         'product':product
     }

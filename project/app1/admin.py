@@ -1,17 +1,17 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
-from .models import Seller,Customer,Hospital,LoginUser, Parent,Booking,Productbooking,Vaccination,Video,Baby_details,Cart,Nutritionist,Doctor,Baby_vaccine,Product,Chat
+from .models import User,Hospital,LoginUser, Parent,Booking,Productbooking,Vaccination,Video,Baby_details,Cart,Nutritionist,Doctor,Baby_vaccine,Product,Chat
 
 
-class seller(admin.ModelAdmin):
-    list_display = ('seller_name', 'Email','phone')
-    # list_filter = ('status')
-    readonly_fields = ('seller_name','Email','street','district','pincode','phone','login_id')
-    search_fields = ('seller_name',)
-class customer(admin.ModelAdmin):
-    list_display = ('Customer_name','Email','phone')
-    readonly_fields = ('Customer_name','Email','street','district','pincode','phone','login_id')
-    search_fields = ('Customer_name',)
+# class seller(admin.ModelAdmin):
+#     list_display = ('seller_name', 'Email','phone')
+#     # list_filter = ('status')
+#     readonly_fields = ('seller_name','Email','street','district','pincode','phone','login_id')
+#     search_fields = ('seller_name',)
+class user(admin.ModelAdmin):
+    list_display = ('user_name','Email','phone')
+    readonly_fields = ('user_name','Email','street','district','pincode','phone','login_id')
+    search_fields = ('user_name',)
 class hospital(admin.ModelAdmin):
     list_display = ('hospital_name','Email','phone')
     readonly_fields = ('hospital_name','Email','street','district','pincode','phone','licence_proof','login_id')
@@ -36,8 +36,8 @@ class users(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(Seller,seller)
-admin.site.register(Customer,customer)
+# admin.site.register(Seller,seller)
+admin.site.register(User,user)
 admin.site.register(Hospital,hospital)
 admin.site.register(LoginUser,users)
 admin.site.register(Parent,parent)

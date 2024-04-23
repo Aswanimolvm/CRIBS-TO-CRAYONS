@@ -23,29 +23,28 @@ urlpatterns = [
     
     #home#
     path('',views.home,name="home"),
-    path('sellerreg',views.seller_register,name="sellerreg"),
-    path('customerreg',views.customer_register,name="customerreg"),
+    # path('sellerreg',views.seller_register,name="sellerreg"),
+    path('customerreg',views.user_register,name="customerreg"),
     path('hospitalreg',views.hospital_register,name="hospitalreg"),
     path('login/',views.loginpage,name="login"),
     path('logout',views.loggout,name="logout"),
     path('about',views.about,name="about"),
 
     #seller#
-    path('sellerprofile',views.seller_profile,name="sellerprofile"),
-    path('editseller',views.edit_seller,name="editseller"),
-    path('addproduct',views.add_product,name="addproduct"),
-    path('editproduct/<int:id>',views.edit_product,name="editproduct"),
-    path('sellerviewproduct',views.seller_viewproducts,name="sellerviewproduct"),
-    path('sellerviewbooking',views.seller_viewbookings,name="sellerviewbooking"),
-    path('bookingstatus/<int:id>',views.booking_status,name="bookingstatus"),
-    path('confirmpayment/<int:id>',views.confirm,name="confirmpayment"),
-    path('chat/<int:id>',views.chat,name="chat"),
-    path('deleteproduct/<int:id>',views.delete_product,name="deleteproduct"),
-    path('chatt/<int:id>',views.chatt,name="chatt"),
+    # path('sellerprofile',views.seller_profile,name="sellerprofile"),
+    # path('editseller',views.edit_seller,name="editseller"),
+    # path('addproduct',views.add_product,name="addproduct"),
+    # path('editproduct/<int:id>',views.edit_product,name="editproduct"),
+    # path('sellerviewproduct',views.seller_viewproducts,name="sellerviewproduct"),
+    # path('sellerviewbooking',views.seller_viewbookings,name="sellerviewbooking"),
+    # path('bookingstatus/<int:id>',views.booking_status,name="bookingstatus"),
+    # path('confirmpayment/<int:id>',views.confirm,name="confirmpayment"),
+    # path('deleteproduct/<int:id>',views.delete_product,name="deleteproduct"),
+    # path('chatt/<int:id>',views.chatt,name="chatt"),
     
 
     #customer#
-    path('customerprofile',views.customer_profile,name="customerprofile"),
+    path('customerprofile',views.user_profile,name="customerprofile"),
     path('edicustomer',views.edit_customer,name="edicustomer"),
     path('purchase',views.purchase,name="purchase"),
     path('cart',views.cart_view,name="cart"),
@@ -70,6 +69,8 @@ urlpatterns = [
     path('seller__viewbookings',views.seller__viewbookings,name="seller__viewbookings"),   
     path('booking__status/<int:id>',views.booking__status,name="booking__status"),
     path('confirmm/<int:id>',views.confirmm,name="confirmm"),
+    path('chat/<int:id>',views.chat,name="chat"),
+
 
 
     #hospital#

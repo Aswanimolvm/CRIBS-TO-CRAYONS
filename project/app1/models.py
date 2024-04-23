@@ -9,9 +9,9 @@ class LoginUser(AbstractUser):
     status=models.CharField(choices=statuschoices,max_length=20,default='PENDING',null=True,blank=True)
     user_type=models.CharField(max_length=50)
 
-class Customer(models.Model):
+class User(models.Model):
     login_id=models.ForeignKey(LoginUser,on_delete=models.CASCADE)
-    Customer_name=models.CharField(max_length=20)
+    user_name=models.CharField(max_length=20)
     street=models.CharField(max_length=50)
     district=models.CharField(max_length=50)
     pincode=models.IntegerField()
@@ -19,19 +19,34 @@ class Customer(models.Model):
     phone=models.IntegerField()
 
     def __str__(self):
-        return self.Customer_name
+        return self.user_name
 
-class Seller(models.Model):
-    login_id=models.ForeignKey(LoginUser,on_delete=models.CASCADE)
-    seller_name=models.CharField(max_length=20)
-    street=models.CharField(max_length=50)
-    district=models.CharField(max_length=50)
-    pincode=models.IntegerField()    
-    Email=models.EmailField()
-    phone=models.IntegerField()
+# class Seller(models.Model):
+#     login_id=models.ForeignKey(LoginUser,on_delete=models.CASCADE)
+#     seller_name=models.CharField(max_length=20)
+#     street=models.CharField(max_length=50)
+#     district=models.CharField(max_length=50)
+#     pincode=models.IntegerField()    
+#     Email=models.EmailField()
+#     phone=models.IntegerField()
 
-    def __str__(self):
-        return self.seller_name
+#     def __str__(self):
+#         return self.seller_name
+    
+
+class Product(models.Model):
+    user_id=models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True)
+    product_name=models.CharField(max_length=30)
+    price=models.IntegerField()
+    product_details=models.CharField(max_length=100)
+    location=models.CharField(max_length=30)
+    image1=models.FileField(upload_to='product')
+    image2=models.FileField(upload_to='product')
+    image3=models.FileField(upload_to='product')
+
+
+
+
 
 class Hospital(models.Model):
     login_id=models.ForeignKey(LoginUser,on_delete=models.CASCADE)
@@ -109,6 +124,9 @@ class Vaccination(models.Model):
      
      def __str__(self):
         return self.Vaccination_name
+     
+
+
 
 class Baby_details(models.Model):
     parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE)
@@ -129,44 +147,19 @@ class Baby_vaccine(models.Model):
     date=models.DateField(null=True,blank=True)
 
 
-class Product(models.Model):
-    seller_id=models.ForeignKey(Seller,on_delete=models.CASCADE,null=True, blank=True)
-    customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE,null=True, blank=True)
-    product_name=models.CharField(max_length=30)
-    price=models.IntegerField()
-    product_details=models.CharField(max_length=100)
-    location=models.CharField(max_length=30)
-    image1=models.FileField(upload_to='product')
-    image2=models.FileField(upload_to='product')
-    image3=models.FileField(upload_to='product')
-
-
-class Video(models.Model):
-     hospital_id=models.ForeignKey(Hospital,on_delete=models.CASCADE)
-     title=models.CharField(max_length=30)
-     discription=models.CharField(max_length=100,null=True, blank=True)
-     upload_date=models.DateField(auto_now=True)
-     video=models.FileField(upload_to='videos')
-
-class VaccineDocument(models.Model):
-    baby_id=models.ForeignKey(Baby_details,on_delete=models.CASCADE)
-    vaccination_id=models.ForeignKey(Vaccination,on_delete=models.CASCADE)
-    hospital_name=models.CharField(max_length=40)
-    document=models.FileField(upload_to='document')
-    
 class Productbooking(models.Model):
-    customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE,null=True, blank=True)
+    user_id=models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True)
     parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE,null=True, blank=True)
     date=models.DateField(auto_now=True)
     product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
     status=models.CharField(max_length=15,default="pending")
 
+
 class Cart(models.Model):
     product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
-    customer_id=models.ForeignKey(Customer,on_delete=models.CASCADE,null=True, blank=True)
+    user_id=models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True)
     parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE,null=True, blank=True)
     date=models.DateField(auto_now=True)
-
 
 
 class Chat(models.Model):
@@ -176,6 +169,20 @@ class Chat(models.Model):
     timestamp=models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.sender} -> {self.receiver}: {self.message}"
+
+class Video(models.Model):
+     hospital_id=models.ForeignKey(Hospital,on_delete=models.CASCADE)
+     title=models.CharField(max_length=30)
+     discription=models.CharField(max_length=100,null=True, blank=True)
+     upload_date=models.DateField(auto_now=True)
+     video=models.FileField(upload_to='videos')
+
+class VaccineDocument(models.Model):
+    parent_id=models.ForeignKey(Parent,on_delete=models.CASCADE)
+    vaccination_id=models.ForeignKey(Vaccination,on_delete=models.CASCADE)
+    hospital_name=models.CharField(max_length=40)
+    document=models.FileField(upload_to='document')
+    
 
 
 

@@ -58,37 +58,58 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto">
-                      
+                  <div class="navbar-nav ms-auto">
+
                       <a href="{% url 'customerprofile'%}" class="nav-item nav-link">PROFILE</a>
-                        <a href="{% url 'purchase'%}" class="nav-item nav-link">SHOP HERE</a>
-                        <a href="{% url 'myorders'%}" class="nav-item nav-link active">ORDERS</a>
-                        <a href="{% url 'cart'%}" class="nav-item nav-link active">CART</a>
-  
-  
-                        <!-- <div class="nav-item dropdown">
-                            <a href="{% url 'purchase'%}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">SHOP HERE</a> -->
-                            <!-- <div class="dropdown-menu rounded-0 m-0">
-                                <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
-                                <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                                <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
-                                <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                            <!-- </div>
-                        </div> -->
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
-                                <a href="404.html" class="dropdown-item"></a>
-                            </div>
-                        </div> -->
-                        <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    
-                    <a href="{% url 'login'%}" class="nav-item nav-link active" >LOGOUT</a>
-                </div>
+                      <!-- <a href="{% url 'purchase'%}" class="nav-item nav-link">SHOP HERE</a> -->
+                      <a href="{% url 'myorders'%}" class="nav-item nav-link active">ORDERS</a>
+                      <a href="{% url 'cart'%}" class="nav-item nav-link active">CART</a>
+
+                      <div class="nav-item dropdown" style="color: #0400ff;">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">PRODUCT</a>
+                         <div class="dropdown-menu rounded-0 m-0" >
+                             
+                             <a href="{% url 'add__product'%}" class="dropdown-item" style="color: #1500ff;">ADD PRODUCT</a>
+                             <a href="{% url 'seller__viewproducts'%}" class="dropdown-item" style="color: #1500ff;"> VIEW PRODUCTS</a> 
+                             <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
+                         <!-- </div>
+                     </div> -->
+                     <!-- <div class="nav-item dropdown">
+                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
+                         <div class="dropdown-menu rounded-0 m-0">
+                             <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
+                             <a href="404.html" class="dropdown-item"></a>
+                         </div>
+                     </div> -->
+                     <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+                   </div>  
+                 </div>
+                 <a href="{% url 'purchase'%}" class="nav-item nav-link">SHOP HERE</a>
+
+                 <a href="{% url 'seller__viewbookings'%}" class="nav-item nav-link active">BOOKINGS</a>
+
+                      <!-- <div class="nav-item dropdown">
+                          <a href="{% url 'purchase'%}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">SHOP HERE</a> -->
+                      <!-- <div class="dropdown-menu rounded-0 m-0">
+                              <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
+                              <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
+                      <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
+                      <!-- </div>
+                      </div> -->
+                      <!-- <div class="nav-item dropdown">
+                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
+                          <div class="dropdown-menu rounded-0 m-0">
+                              <a href="testimonial.html" class="dropdown-item">HOSPITAL FACILITY</a>
+                              <a href="404.html" class="dropdown-item"></a>
+                          </div>
+                      </div> -->
+                      <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
+
+                      <a href="{% url 'login'%}" class="nav-item nav-link active">LOGOUT</a>
+                  </div>
               </div>
-              </nav>
-          </div>
+          </nav>
+      </div>
   <!-- Bootstrap CSS -->
   
 <br>
@@ -116,8 +137,8 @@
         {% for i in product %}
         <tr>
           <td>{{ forloop.counter }}</td>
-         <td>{{ i.customer_id.Customer_name }}</td>
-         <td>{{ i.customer_id.phone }}</td>
+         <td>{{ i.user_id.user_name }}</td>
+         <td>{{ i.user_id.phone }}</td>
          <td>{{ i.product_id.product_name }}</td>
         
          
@@ -138,7 +159,7 @@
                 {% endif %}
                 <td>{{ i.status }}</td>
                 <td>
-                  {% if i.customer_id  %}
+                  {% if i.user_id  %}
                   <a href="{% url 'chat' id=i.id %}" class="btn btn-primary">Message</a>
                 {% elif i.parent_id %}
                   <a href="{% url 'chatt' id=i.id %}" class="btn btn-primary">msg</a>
