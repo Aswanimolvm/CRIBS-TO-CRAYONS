@@ -342,10 +342,12 @@ def add_vaccination(requesst):
         vaccine_name=requesst.POST['Vaccination_name']
         dose=requesst.POST['Dose']
         age=requesst.POST['Age']
+        days=requesst.POST['days']
         vaccine=Vaccination.objects.create(hospital_id=hospital,
                                            Vaccination_name=vaccine_name,
                                            Dose=dose,
-                                           Age=age)
+                                           Age=age,
+                                           days=days)
         vaccine.save()
        
         return redirect(mainview_vaccine)
@@ -366,35 +368,64 @@ def mainview_vaccine(request):
 
 @login_required(login_url='login/')
 def viewbaby_vaccine(request,id):
+    b_id = Baby_details.objects.get(id=id)
+    # Retrieve parent's ID indirectly through baby's details
+    parent_id = b_id.parent_id.id
+
     log_id=LoginUser.objects.get(id=request.user.id)
     hospital=Hospital.objects.get(login_id=log_id)
     vaccine=Vaccination.objects.filter(hospital_id=hospital)
-    b_id=Baby_details.objects.get(id=id)
-    print(b_id)
     babyvaccine=Baby_vaccine.objects.filter(baby_id=b_id)
     taken_vaccine_ids = babyvaccine.values_list('vaccination_id', flat=True)
     not_taken_vaccines = vaccine.exclude(id__in=taken_vaccine_ids)
-    vaccine_document=VaccineDocument.objects.filter(baby_id=b_id)
-    print(vaccine_document)
     for vaccine in not_taken_vaccines:
-        vaccine.age_in_months = vaccine.Age
-        vaccine.vaccination_date = b_id.birth_date + timedelta(days=30 * vaccine.age_in_months)
+        months = vaccine.Age
+        days = vaccine.days if vaccine.days else 0
+        vaccination_date = b_id.birth_date + timedelta(days=30 * months + days)
 
-        notification_date = vaccine.vaccination_date - timedelta(days=7)
+        vaccine.age_in_months = months
+        vaccine.vaccination_date = vaccination_date
+
+        # Calculate notification date
+        notification_date = vaccination_date - timedelta(days=7)
 
         # if notification_date >= timezone.now().date():
-            # send_notification_to_parent(b_id, vaccine, notification_date)
+        #     send_notification_to_parent(b_id, vaccine, notification_date)
+
     not_taken_vaccines = sorted(not_taken_vaccines, key=lambda x: x.vaccination_date)
-    
+    # Pass parent_id with each vaccine object in the context
+    vaccines_with_parent_id = [{'vaccine': vaccine, 'parent_id': parent_id} for vaccine in not_taken_vaccines]
+
+    for vaccine_data in vaccines_with_parent_id:
+        vaccine = vaccine_data['vaccine']
+        # Check if the vaccine has any associated requests
+        vaccine_data['has_request'] = VaccineDocument.objects.filter(vaccination_id=vaccine.id).exists()
+
+
     context={
-            'vaccines':vaccine,
-            'baby':babyvaccine,
-            'not_taken_vaccines':not_taken_vaccines,
-            'b_id':b_id,
-            'vaccine_document':vaccine_document
-        
+        'vaccines':vaccine,
+        'baby':babyvaccine,
+        'not_taken_vaccines':vaccines_with_parent_id,
+        'b_id':b_id,
+
     }
     return render(request,'Hospital/babyvaccineview.html',context)
+
+def view_request(request, id, parent_id):
+    # Retrieve the vaccine object
+    vaccine = Vaccination.objects.get(id=id)
+
+    # Get update requests related to this vaccine
+    update_requests = VaccineDocument.objects.filter(vaccination_id=vaccine, parent_id=parent_id)
+    print(update_requests)
+    
+    # Pass the update requests to the template
+    context = {
+        'vaccine': vaccine,
+        'update_requests': update_requests,
+    }
+    
+    return render(request, 'Hospital/view_request.html', context)
 
  
 def send_notification_to_parent(baby, vaccine, notification_date):
@@ -411,6 +442,7 @@ def date_vtaken(request,id):
     if request.method=='POST':
         date=request.POST['date']
         vaccine=request.POST['vaccine_id']
+        print(vaccine)
         vaccine_id=Vaccination.objects.get(id=vaccine)
         vdate=Baby_vaccine.objects.create(date=date,
                                           vaccination_id=vaccine_id,
@@ -696,8 +728,15 @@ def vaccination_chart(request,id):
     taken_vaccine_ids = babyvaccine.values_list('vaccination_id', flat=True)
     not_taken_vaccines = vaccine.exclude(id__in=taken_vaccine_ids)
     for vaccine in not_taken_vaccines:
-        vaccine.age_in_months = vaccine.Age
-        vaccine.vaccination_date = b_id.birth_date + timedelta(days=30 * vaccine.age_in_months)
+        months = vaccine.Age
+        days = vaccine.days if vaccine.days else 0
+        vaccination_date = b_id.birth_date + timedelta(days=30 * months + days)
+
+        vaccine.age_in_months = months
+        vaccine.vaccination_date = vaccination_date
+
+        # Calculate notification date
+        notification_date = vaccination_date - timedelta(days=7)
     not_taken_vaccines = sorted(not_taken_vaccines, key=lambda x: x.vaccination_date)
     
     context={
@@ -718,11 +757,25 @@ def add_vdocument(request,id):
     vaccine_id=Vaccination.objects.get(id=id) 
     if request.method=='POST':
         hospital_name=request.POST['hospital_name']
-        document=request.POST['document']
-        vaccine_doc=VaccineDocument.objects.create(parent_id=parent,vaccine_id=vaccine_id,hospital_name=hospital_name,document=document)
+        document=request.FILES['document']
+        vaccine_doc=VaccineDocument.objects.create(parent_id=parent,vaccination_id=vaccine_id,hospital_name=hospital_name,document=document)
         vaccine_doc.save()
+        return redirect(view_vdocument, vaccine_id.id)
     else:
         return render(request,'Parent/updationrequest.html',{'vaccine':vaccine_id})
+    
+
+@login_required(login_url='login/')
+def view_vdocument(request,id):
+    log_id=LoginUser.objects.get(id=request.user.id)
+    parent=Parent.objects.get(login_id=log_id)
+    vaccine=Vaccination.objects.get(id=id)
+    vaccinedoc=VaccineDocument.objects.filter(parent_id=parent,vaccination_id=vaccine)
+    context={
+        'vaccinedoc':vaccinedoc
+    }
+    return render(request,'Parent/viewdoc.html',context)
+
 
 
 @login_required(login_url='login/')
@@ -1038,7 +1091,7 @@ def cash__on__delivery(request,id):
 def chat__seller(request, product_id):
     sender=request.user
     product=Product.objects.get(id=product_id)
-    seller=Seller.objects.get(id=product.seller_id_id)
+    seller=User.objects.get(id=product.user_id_id)
     receiver=seller.login_id
     print(sender.id)
     print(receiver.id)
@@ -1252,14 +1305,14 @@ def chat(request,id):
     return render(request, 'Customer/chattt.html', {'sender': seller, 'receiver': customer, 'messages': messages})
 
 
-# @login_required(login_url='login/')
-# def chatt(request,id):
-#     seller = LoginUser.objects.get(id=request.user.id)
-#     productbooking = Productbooking.objects.get(id=id)
-#     parent_id = Parent.objects.get(id=productbooking.parent_id.id)
-#     parent = parent_id.login_id
-#     messages = Chat.objects.filter(Q(sender=seller.id, receiver=parent) | Q(sender=parent, receiver=seller.id)).order_by('timestamp')
-#     return render(request, 'Seller/chat.html', {'sender': seller, 'receiver': parent, 'messages': messages})
+@login_required(login_url='login/')
+def chat_parent(request,id):
+    seller = LoginUser.objects.get(id=request.user.id)
+    productbooking = Productbooking.objects.get(id=id)
+    parent_id = Parent.objects.get(id=productbooking.parent_id.id)
+    parent = parent_id.login_id
+    messages = Chat.objects.filter(Q(sender=seller.id, receiver=parent) | Q(sender=parent, receiver=seller.id)).order_by('timestamp')
+    return render(request, 'Customer/pchat.html', {'sender': seller, 'receiver': parent, 'messages': messages})
 
 @csrf_exempt
 def send_message(request, sender_id, receiver_id):

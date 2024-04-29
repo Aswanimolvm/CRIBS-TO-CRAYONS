@@ -70,6 +70,7 @@ urlpatterns = [
     path('booking__status/<int:id>',views.booking__status,name="booking__status"),
     path('confirmm/<int:id>',views.confirmm,name="confirmm"),
     path('chat/<int:id>',views.chat,name="chat"),
+    path('chat_parent/<int:id>',views.chat_parent,name="chat_parent"),
 
 
 
@@ -101,6 +102,7 @@ urlpatterns = [
     path('mainviewvaccine',views.mainview_vaccine,name="mainviewvaccine"),
     path('viewbabyvaccine/<int:id>',views.viewbaby_vaccine,name="viewbabyvaccine"),
     path('vtaken/<int:id>',views.date_vtaken,name="vtaken"),
+    path('view_request/<int:id>/<int:parent_id>',views.view_request,name="view_request"),
     
 
     #nutritionist#
@@ -125,6 +127,7 @@ urlpatterns = [
     path('cancelbooking/<int:id>',views.cancel_booking,name="cancelbooking"),
     path('vaccinationchart/<int:id>',views.vaccination_chart,name="vaccinationchart"),
     path('add_vdocument/<int:id>',views.add_vdocument,name="add_vdocument"),
+    path('view_vdocument/<int:id>',views.view_vdocument,name="view_vdocument"),
     path('pviewvideos',views.pview_videos,name="pviewvideos"),
     path('chatnutritionist',views.chat_nutritionist,name="chatnutritionist"),
     path('msg',views.msg,name="msg"),

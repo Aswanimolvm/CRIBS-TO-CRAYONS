@@ -146,10 +146,14 @@
             <th>No.</th>
             <th>Vacine Name</th>
             <th>Dose</th>
-            <th>Age</th>
-            <th>Status</th>
+            <th>Age(months)</th>
+            <th>Age(days)</th>
             <th>Date to taken/Done</th>
             <th>taken date</th>
+            <th></th>
+            <th></th>
+
+            
 
 
 
@@ -165,6 +169,8 @@
             <td>{{ i.vaccination_id.Vaccination_name }}</td>
             <td>{{ i.vaccination_id.Dose }}</td>
             <td>{{ i.vaccination_id.Age }}</td>
+            <td>{{ i.vaccination_id.days }}</td>
+
             <td>Taken</td>
             <td>{{ i.date }}</td>
 
@@ -182,34 +188,39 @@
           {% for vaccine in not_taken_vaccines %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ vaccine.Vaccination_name }}</td>
-            <td>{{ vaccine.Dose }}</td>
-            <td>{{ vaccine.Age }}</td>
+            <td>{{ vaccine.vaccine.Vaccination_name }}</td>
+            <td>{{ vaccine.vaccine.Dose }}</td>
+            <td>{{ vaccine.vaccine.Age }}</td>
+            <td>{{ vaccine.vaccine.days }}</td>
+
             <td>Not Taken</td>
             <td>
-              {% if vaccine.vaccination_date %}
-              {{ vaccine.vaccination_date }}
+              {% if vaccine.vaccine.vaccination_date %}
+              {{ vaccine.vaccine.vaccination_date }}
               {% endif %}
             </td>
             
-            <td>
-              <div class="text-center mt-3">
-                <a href="#" class="btn btn-primary">Updation Request</a>
-              </div>
-            </td>
+            
             <td>
               <form action="{% url 'vtaken' id=b_id.id %}" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
                   <!-- <label for="username">Date of vaccination done</label> -->
                   <input type="date" class="form-control" id="username" name="date" required>
-                  <input type="hidden" name="vaccine_id" value="{{ vaccine.id }}">
+                  <input type="hidden" name="vaccine_id" value="{{ vaccine.vaccine.id }}">
                 </div>
 
                 <div class="d-flex mt-4">
                   <button type="submit" class="btn btn-primary btn-block mx-auto">SUBMIT</button>
                 </div>
               </form>
+            </td>
+           
+            <td>
+              {% if vaccine.has_request %}
+              <a href="{% url 'view_request' id=vaccine.vaccine.id parent_id=vaccine.parent_id %}" class="btn btn-primary">View Request</a>
+              {% else %}
+              {% endif %}
             </td>
           </tr>
           {% endfor %}

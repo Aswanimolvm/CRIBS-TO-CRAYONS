@@ -70,7 +70,6 @@
               <!-- <div class="nav-item dropdown">
                   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
                   <div class="dropdown-menu rounded-0 m-0">
-                      <a href="{% url 'sellerreg'%}" class="dropdown-item">SELLER</a>
                       <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
                       <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
                       <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
@@ -125,8 +124,8 @@
           {% for i in product %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ i.product_id.seller_id.seller_name }}</td>
-            <td>{{ i.product_id.seller_id.phone }}</td>
+            <td>{{ i.product_id.user_id.user_name }}</td>
+            <td>{{ i.product_id.user_id.phone }}</td>
             <td>{{ i.product_id.product_name }}</td>
 
 

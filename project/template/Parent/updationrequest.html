@@ -192,39 +192,13 @@ h4{
               {% csrf_token %}
               <div class="form-group">
                 <label for="username"style="color: black;">HOSPITAL NAME</label>
-                <input type="text" class="form-control" id="username" name="product_name" required>
-              <!-- </div><div class="form-group">
-                <label for="username"style="color: black;">Price</label>
-                <input type="text" class="form-control" id="username" name="price" required>
-              </div>
-              <div class="form-group">
-                <label for="username"style="color: black;">Location</label>
-                <input type="text" class="form-control" id="username" name="location" required>
-              </div> -->
+                <input type="text" class="form-control" id="username" name="hospital_name" required>
+             
               <div class="form-group">
                 <label for="username"style="color: black;">PROOF</label>
-                <input type="file"accept="image/*" class="form-control" id="username" name="image1" required>
+                <input type="file"accept="image/*" class="form-control" id="username" name="document" required>
               </div>
-              <!-- <div class="form-group">
-                <label for="username"style="color: black;">Image2</label>
-                <input type="file" accept="image/*" class="form-control" id="username" name="image2" required>
-              </div>
-              <div class="form-group">
-                <label for="username"style="color: black;">Image3</label>
-                <input type="file" accept="image/*" class="form-control" id="username" name="image3" required>
-              </div>
-              <div class="form-group">
-                <label for="email"style="color: black;">Product details</label>
-                <input type="text" class="form-control" id="email" name="product_details" required>
-              </div> -->
-              <!-- <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-              </div>
-              <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-              </div> -->
+              
               {% if message %}
               <div style="color: red;">
                 {{message}}

@@ -115,7 +115,8 @@
           <!-- <th>No.</th> -->
           <th>Vacine Name</th>
           <th>Dose</th>
-          <th>Age</th>
+          <th>Age(months)</th>
+          <th>Age(days)</th>
           <th>Status</th>
           <th>Date</th>
           ̌<th></th>
@@ -131,6 +132,8 @@
           <td>{{ i.vaccination_id.Vaccination_name }}</td>
           <td>{{ i.vaccination_id.Dose }}</td>
           <td>{{ i.vaccination_id.Age }}</td>
+          <td>{{ i.vaccination_id.days }}</td>
+
           <td>Taken</td>
           <td>{{ i.date }}</td>
          
@@ -151,6 +154,8 @@
             <td>{{ vaccine.Vaccination_name }}</td>
             <td>{{ vaccine.Dose }}</td>
             <td>{{ vaccine.Age }}</td>
+            <td>{{ vaccine.days }}</td>
+
             <td>Not Taken</td>
             <td>
               {% if vaccine.vaccination_date %}
@@ -159,7 +164,10 @@
             </td>
             <td>
               <div class="text-center mt-3">
-                <a href="{% url 'add_vdocument' id=vaccine.id%}" class="btn btn-primary">Updation Request</a>
+                <a href="{% url 'add_vdocument' id=vaccine.id %}" class="btn btn-primary">Updation Request</a>
+              </div>
+              <div class="text-center mt-3">
+                <a href="{% url 'view_vdocument' id=vaccine.id %}" class="btn btn-primary">View</a>
               </div>
             </td>
             </tr>

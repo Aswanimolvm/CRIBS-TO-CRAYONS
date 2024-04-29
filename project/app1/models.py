@@ -121,6 +121,7 @@ class Vaccination(models.Model):
      Vaccination_name=models.CharField(max_length=100,blank=True,null=True)
      Dose=models.IntegerField(null=True, blank=True)
      Age=models.IntegerField(null=True, blank=True)
+     days=models.IntegerField(null=True,blank=True)
      
      def __str__(self):
         return self.Vaccination_name

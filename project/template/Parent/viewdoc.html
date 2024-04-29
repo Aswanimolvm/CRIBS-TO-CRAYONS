@@ -2,9 +2,8 @@
 <html lang="en">
 
 {% load static %}
-
 <head>
-
+    
     <meta charset="utf-8">
     <title>CRIBS TO CRAYONS</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -13,17 +12,12 @@
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+    
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -42,8 +36,7 @@
 <body>
     <div class="container-xxl bg-white p-0">
         <!-- Spinner Start -->
-        <div id="spinner"
-            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
@@ -56,37 +49,32 @@
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
                 <a href="" class="navbar-brand d-flex align-items-center text-center">
                     <div class="icon p-2 me-2">
-                        <img class="img-fluid" src="{% static 'img/logo.gif' %}" alt="Icon"
-                            style="width: 30px; height: 30px;">
+                        <img class="img-fluid" src="{% static 'img/logo.gif' %}" alt="Icon" style="width: 30px; height: 30px;">
                     </div>
-                    <h1 class="m-0 ">CRIBS TO CRAYONS</h1>
-                </a>
+                    <h1 class="m-0 " >CRIBS TO CRAYONS</h1>
+                </a> 
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                      <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEW</a>
-                        <div class="dropdown-menu rounded-0 m-0">
-                            <a href="{% url 'parentprofile'%}" class="dropdown-item">PROFILE</a>
-                            <a href="{% url 'babydetails'%}" class="dropdown-item">BABY</a>
-                      <!-- <div class="nav-item dropdown">
-                          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">REGISTER</a>
-                          <div class="dropdown-menu rounded-0 m-0">
-                              <a href="{% url 'customerreg'%}" class="dropdown-item">CUSTOMER</a>
-                              <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a> -->
-                              <!-- <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
-                          </div>
-                      </div>
                         <!-- <a href="{% url 'home'%}" class="nav-item nav-link active">HOME</a> -->
                         <!-- <a href="{% url 'parentprofile'%}" class="nav-item nav-link">PROFILE</a> -->
                         <a href="{% url 'doctorlist' %}"class="nav-item nav-link">DOCTOR DETAILS</a>
                         <!-- <a href="{% url 'babydetails' %}" class="nav-item nav-link">BABY DETAILS</a> -->
-                        <a href="{% url 'pviewvideos' %}" class="nav-item nav-link">VIDEOS</a>
+                        <!-- <a href="#" class="nav-item nav-link">VIDEOS</a> -->
                         <a href="{% url 'myappoinments' %}" class="nav-item nav-link">APPOINMENTS</a>
                         <a href="#" class="nav-item nav-link">MESSAGES</a>
-                       
+  
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEW</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                <a href="{% url 'parentprofile'%}" class="dropdown-item">PROFILE</a>
+                                <a href="{% url 'babydetails'%}" class="dropdown-item">BABY DETAILS</a>
+                                <!-- <a href="{% url 'hospitalreg'%}" class="dropdown-item">HOSPITAL</a>
+                                <a href="property-agent.html" class="dropdown-item">POLICE STATION</a> -->
+                            </div>
+                        </div>
                         <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">FACILITIES</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -95,28 +83,23 @@
                             </div>
                         </div> -->
                         <!-- <a href="contact.html" class="nav-item nav-link">CONTACT</a> -->
-                    
+                   
                     <a href="{% url 'login'%}" class="nav-item nav-link" >LOGOUT</a>
                 </div>
-              </div>
-              </nav>
-          </div>
+            </div>
+            </nav>
+        </div>
         <!-- Navbar End -->
 
-        <style>
-            .header-carousel .owl-nav .owl-prev,
-            .header-carousel .owl-nav .owl-next {
-                display: none;
-            }
-        </style>
+
         <!-- Header Start -->
         <!-- <div class="container-fluid header bg-white p-0">
             <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
                 <div class="col-md-6 p-5 mt-lg-5">
                     <h1 class="display-5 animated fadeIn mb-4">WE CHERISH THE PRECIOUS MOMENTS OF EARLY PARENTHOOD!.</h1>
                     <p class="animated fadeIn mb-4 pb-2">A ROADMAP FOR JOYFUL PARENTING!</p> -->
-        <!-- <a href="" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Get Started</a> -->
-        <!-- </div>
+                    <!-- <a href="" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Get Started</a> -->
+                <!-- </div>
                 <div class="col-md-6 animated fadeIn">
                     <div class="owl-carousel header-carousel">
                         <div class="owl-carousel-item">
@@ -136,7 +119,38 @@
 
 
         <!-- Search Start -->
-
+        <!-- <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+            <div class="container">
+                <div class="row g-2">
+                    <div class="col-md-10">
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control border-0 py-3" placeholder="Search Keyword">
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select border-0 py-3">
+                                    <option selected>CATEGORY</option>
+                                    <option value="1">CATEGORY TYPE 1</option>
+                                    <option value="2">CATEGORY TYPE 2</option>
+                                    <option value="3">CATEGORY TYPE 3</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select border-0 py-3">
+                                    <option selected>LOCATION</option>
+                                    <option value="1">LOCATION 1</option>
+                                    <option value="2">LOCATION 2</option>
+                                    <option value="3">LOCATION 3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-dark border-0 w-100 py-3">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
         <!-- Search End -->
 
 
@@ -342,103 +356,55 @@
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                         <h1 class="mb-4">ABOUT US</h1>
                         <p class="mb-4">Welcome to Cribs to Crayons, your digital haven for navigating the beautiful chaos of parenthood. At Cribs to Crayons, we understand that every moment with your little one is precious, and we're here to help you make the most of it. From expert advice on baby care essentials like feeding and sleep schedules to tips on fostering early childhood development through play and exploration, our comprehensive resources empower you to embrace every stage of your child's growth with confidence and joy. Dive into our curated collection of articles, videos, and product reviews tailored to meet the unique needs of both you and your bundle of joy. Connect with fellow parents in our supportive community forums, where shared experiences and heartfelt advice abound. At Cribs to Crayons, we believe that every baby deserves a nurturing environment to thrive, and we're honored to be part of your parenting journey from cribs to crayons and beyond.</p> -->
-        <!-- <p><i class="fa fa-check text-primary me-3"></i>Tempor erat elitr rebum at clita</p>
+                        <!-- <p><i class="fa fa-check text-primary me-3"></i>Tempor erat elitr rebum at clita</p>
                         <p><i class="fa fa-check text-primary me-3"></i>Aliqu diam amet diam et eos</p>
                         <p><i class="fa fa-check text-primary me-3"></i>Clita duo justo magna dolore erat amet</p> -->
-        <!-- <a class="btn btn-primary py-3 px-5 mt-3" href="">Read More</a>
+                        <!-- <a class="btn btn-primary py-3 px-5 mt-3" href="">Read More</a>
                     </div>
                 </div>
             </div>
         </div> -->
         <!-- About End -->
-        <style>
-            .bb {
-                background-image: url("{% static 'img/t1.png' %}");
-                background-repeat: no-repeat;
-                background-size: 100%;
-            }
-              .nn{
-                display: flex;
-                flex-wrap: wrap;
-              }
-              .qq{
-                display: flex;
-                flex-wrap: wrap;
-                align-items: end;
-              }
-              .mm{
-                margin-left: 10px;
-                
-              }
-              .ff{
-                margin-left: 30px;
-              }
-              .vv{
-                color: blue;
-              }
-              .xx{
-                padding-top: 10px;
-              }
-            /* .cc{
-        flex-wrap: wrap;
-        justify-content: space-evenly; */
-            /* margin-left: 400px; */
-            /* }
-    .dd{ */
-            /* margin-right: 20px; */
-        </style>
-        <div class="bb">
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+<!-- <style>
+    .bb{
+      background-image: url("{% static 'img/t1.png' %}");
+      background-repeat: no-repeat;
+      background-size: 100% ;
+    }
+</style>
+<div class="bb">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
-            <div class="container-fluid">
-                <h3>
-                    "From Cribs to Toys, <br>
-                    Everything Your Little One Needs, Resold with Love!"<br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
+<div class="container-fluid">
+<h3>
+    "From Cribs to Toys, <br>
+Everything Your Little One Needs, Resold with Love!"<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-                </h3>
-            </div>
-        </div>
-        <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
-            <div class="container">
-                <div class="row g-2">
-                    <div class="col-md-6">
-
-                    </div>
-
-                    <form method="get" action="{% url 'product__search'%}">
-                        <div class=" col-md-6 d-flex ">
-                            <input type="text" class="form-control border-0 py-3" placeholder="Search Product"
-                                name="search">
-                            <div>
-                                <button class="btn btn-dark border-0 w-100 py-3">Search</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+</h3>
+</div>
+</div> -->
         <!-- Property List Start -->
         <!-- <div class="container-xxl py-5">
             <div class="container">
@@ -449,7 +415,7 @@
                             <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit diam justo sed rebum.</p>
                         </div>
                     </div> -->
-        <!-- <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
+                    <!-- <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
                         <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
                             <li class="nav-item me-2">
                                 <a class="btn btn-outline-primary active" data-bs-toggle="pill" href="#tab-1">Featured</a>
@@ -462,68 +428,48 @@
                             </li>
                         </ul>
                     </div> -->
-        <!-- <div class="w-50 h-50 mt-4 bg-black   ">
+                    <style>
+                        .nn{
+                            padding-top: 40px;
+                        }
+                        .ww{
+                            margin-left: 40px;
+                        }
+                        .qq{
+                            margin-left: 40px;
+                        }
+                    </style>
+                    <!-- <div class="w-50 h-50 mt-4 bg-black   ">
                         llkjlkjlkjl
                         </div> -->
-
-        <div class="d-flex justify-content-around w-100 gap-5 flex-wrap">
-
-            {% for i in product %}
-            <!-- <div class="d-flex flex-wrap "> -->
-            <div class="card" style="width: 25rem;">
-                <div class="owl-carousel header-carousel">
-                    <div class="owl-carousel-item">
-                        <img class="" src="{{ i.image1.url }}" alt="" height="250px">
-                    </div>
-                    <div class="owl-carousel-item">
-                        <img class="" src="{{ i.image2.url }}" alt="" height="250px">
-                    </div>
-                    <div class="owl-carousel-item">
-                        <img class="" src="{{ i.image3.url }}" alt="" height="250px">
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="qq">
-                        <div>
-                    <h5 class="card-title">{{ i.product_name }}</h5>
-                </div>
-                <div class="ff">
-                    <h6 class="card-title"><i class="fa-solid fa-indian-rupee-sign"></i>{{ i.price }}</h6>
-                </div>
-            </div>
-                    <div class="nn">
-                        <div>
-                    <h6 class="card-title"><i class="fa-solid fa-location-dot"></i>  {{ i.location }}</h6>
-                </div>
-                <div class="mm">
-                    <button onclick="handledetails(this)" style="border: none;">Show Details</button>
-                    <h6 class="card-title details" style="display: none">{{ i.product_details }}</h6>
-                </div>
-            </div>
-                    <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                    <div class="d-flex gap-2 xx">
-
-                        <a href="{% url 'add__tocart' id=i.id %}" class="btn btn-primary">Add to Cart</a>
-                        <a href="{% url 'product__booking' id=i.id %}" class="btn btn-primary">Buy Now</a>
+                        <div class="nn">
+                        <div class="d-flex justify-content-around w-100 gap-5 flex-wrap">
+                       
+                            {% for i in vaccinedoc %}
+                            <!-- <div class="d-flex flex-wrap "> -->
+                              <div class="card" style="width: 25rem;">
+                                <div class="ww">
+                                    <img src="{{ i.document.url }}" class="card-img-top" alt="Image">
+                                </div>
+                            </div>
+                            
+                        <div class="qq">
+                            <div class="card-body">
+                              <h5 class="card-title">{{ i.hospital_name }}</h5>
+                              <!-- <h6 class="card-title">{{ i.discription }}</h6>
+                              <h6 class="card-title">{{ i.upload_date }}</h6> -->
+                              <!-- <h6 class="card-title">{{ i.product_details }}</h6> -->
+                              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                              
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                        </div>
+                          {% endfor %}
+                       
                     </div>
                 </div>
-                <!-- </div> -->
-            </div>
-            {% endfor %}
-            <script>
-                function handledetails(btn) {
-                    let details = btn.parentElement.querySelector('.details');
-                    if (details.style.display === "none") {
-                        details.style.display = "block";
-                    } else {
-                        details.style.display = "none";
-                    }
-                }
-            </script>
-           
-
-        </div>
-        <!-- <div class="card" style="width: 18rem;">
+                          <!-- <div class="card" style="width: 18rem;">
                             <img class="card-img-top" src="{% static 'img/p1.jpg'%}" alt="Card image cap">
                             <div class="card-body">
                               <h5 class="card-title">Card title</h5>
@@ -568,15 +514,15 @@
 
                 -->
         <!-- Testimonial End -->
-
+        
 
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
             CRIBS TO CRAYONS
             <!-- <div class="container py-5"> -->
-            <!-- <div class="row g-5"> -->
-
-            <!-- <div class="col-lg-3 col-md-6">
+                <!-- <div class="row g-5"> -->
+                    
+                    <!-- <div class="col-lg-3 col-md-6">
                         <h5 class="text-white mb-4">Get In Touch</h5>
                         <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
                         <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
@@ -588,7 +534,7 @@
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div> -->
-            <!-- <div class="col-lg-3 col-md-6">
+                    <!-- <div class="col-lg-3 col-md-6">
                         <h5 class="text-white mb-4">Quick Links</h5>
                         <a class="btn btn-link text-white-50" href="">About Us</a>
                         <a class="btn btn-link text-white-50" href="">Contact Us</a>
@@ -619,7 +565,7 @@
                             </div>
                         </div>
                     </div> -->
-            <!-- <div class="col-lg-3 col-md-6">
+                    <!-- <div class="col-lg-3 col-md-6">
                         <h5 class="text-white mb-4">Newsletter</h5>
                         <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
                         <div class="position-relative mx-auto" style="max-width: 400px;">
@@ -627,16 +573,16 @@
                             <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
                         </div>
                     </div> -->
-            <!-- </div> -->
+                <!-- </div> -->
             <!-- </div> -->
             <div class="container">
                 <div class="copyright">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                             <!-- &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.  -->
-
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            <!-- Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> -->
+							
+							<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+							<!-- Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> -->
                         </div>
                         <!-- <div class="col-md-6 text-center text-md-end">
                             <div class="footer-menu">
@@ -656,11 +602,11 @@
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
+    
+    
 
 
-
-
-    </div>
+</div>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
