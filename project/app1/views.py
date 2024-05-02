@@ -1631,9 +1631,9 @@ def admin_home(request):
 
 @login_required(login_url='login/')
 def admin_customer(request):
-    customer_data=Customer.objects.all()
+    customer_data=User.objects.all()
     context={
-        'customer':customer_data
+        'user':customer_data
     }
     return render(request,'admin/customerview.html',context)
 

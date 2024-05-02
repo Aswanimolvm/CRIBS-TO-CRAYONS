@@ -79,7 +79,7 @@
                           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">VIEW</a>
                           <div class="dropdown-menu rounded-0 m-0"> -->
                               <!-- <a href="{% url 'viewparents'%}" class="nav-item nav-link active">CUSTOMERS </a> -->
-                              <a href="{% url 'adminseller' %}" class="nav-item nav-link active">SELLERS </a>
+                              <!-- <a href="{% url 'adminseller' %}" class="nav-item nav-link active">SELLERS </a> -->
                               <a href="{% url 'adminhospital' %}" class="nav-item nav-link active">HOSPITALS</a>
                               
   
@@ -176,11 +176,11 @@
      
       <tbody>
       
-        {% if customer %}
-        {% for i in customer %}
+        {% if user %}
+        {% for i in user %}
         <tr>
           <td>{{ forloop.counter }}</td>
-         <td>{{ i.Customer_name }}</td>
+         <td>{{ i.user_name }}</td>
          <td>{{ i.street }}
          {{ i.district }}
          {{ i.pincode }}</td>
@@ -207,27 +207,27 @@
    
   </table>
   <div style="color: red; text-align: center;">
-    <p>No customers</p>
+    <p>No user</p>
   </div>
   {% endif %}
     <!-- Pagination links -->
   <div class="pagination mt-3 d-flex justify-content-end pe-5 mb-4  fw-bold text-white text-end ">
     <span class="step-links  ">
-      {% if customer.has_previous %}
+      {% if user.has_previous %}
       <a class="btn btn-dark" href="?page=1">&laquo; first</a>
-      <a class="btn btn-dark" href="?page={{ customer.previous_page_number }}">previous</a>
+      <a class="btn btn-dark" href="?page={{ user.previous_page_number }}">previous</a>
       {% endif %}
-      {% if customer.has_next %}
+      {% if user.has_next %}
 
       <!-- <a href="?page={{ hist.paginator.num_pages }}" class="text-decoration-none text-white btn btn-dark ">last &raquo;</a> -->
       {% endif %}
       <span class="current text-dark">
-        Page {{ customer.number }} of {{ customer.paginator.num_pages }}.
+        Page {{ user.number }} of {{ user.paginator.num_pages }}.
       </span>
 
-      {% if customer.has_next %}WV
+      {% if user.has_next %}WV
 
-      <a href="?page={{ customer.next_page_number }}" class="text-decoration-none text-white btn btn-dark ">next</a>
+      <a href="?page={{ user.next_page_number }}" class="text-decoration-none text-white btn btn-dark ">next</a>
       {% endif %}
     </span>
   </div>
